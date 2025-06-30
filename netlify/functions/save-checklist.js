@@ -1,9 +1,11 @@
+const fetch = require('node-fetch'); // ✅ Node environment needs this
+
 exports.handler = async function (event) {
   try {
     const data = JSON.parse(event.body);
     const sheet = data.set || 'JourneyTogether';
 
-    const url = `https://script.google.com/macros/s/AKfycbzGyOrVGm3WRC34j34QKA2cjJA1upq9drnnOtXhRXedyT5SqFTjMMm-OgUNecfJd5YhRA/exec?sheet=${encodeURIComponent(sheet)}`;
+    const url = `https://script.google.com/macros/s/AKfycbxrYN4UG2uvTsgp2955QUioF4lfRudXUij8DdSN6KgSSXoPxjpRmCrdgg1m3ergiuHp/exec?sheet=${encodeURIComponent(sheet)}`;
 
     const response = await fetch(url, {
       method: 'POST',
@@ -17,13 +19,9 @@ exports.handler = async function (event) {
       body: JSON.stringify({ message: result })
     };
   } catch (error) {
-    console.error('Save checklist error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        error: 'Failed to save checklist',
-        details: error.message
-      })
+      body: JSON.stringify({ error: 'Failed to save checklist', details: error.message })
     };
   }
 };
