@@ -30,9 +30,12 @@ function Card({ card, mode, onCheckboxChange }) {
   }
 
   if (mode === 'master') {
-    if (isCommonOrUncommon || isTrainer) {
+    if (isCommonOrUncommon || isTrainer ) {
       checkboxes.push({ label: 'Standard', key: 'standard' });
       checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
+    }
+    if (!isCommonOrUncommon && !isRare && isTrainer ) {
+      checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
     }
     if (isRare) {
       checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
