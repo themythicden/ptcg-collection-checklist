@@ -28,6 +28,7 @@ export default function ChecklistPage() {
   const { setName: routeSetName } = useParams();
   const [setName, setSetName] = useState(routeSetName || 'JourneyTogether');
   const [cards, setCards] = useState([]);
+  const [progress, setProgress] = useState({});
   const [mode, setMode] = useState('base');
   const [hideCompleted, setHideCompleted] = useState(false);
   const [search, setSearch] = useState('');
@@ -39,12 +40,23 @@ export default function ChecklistPage() {
     try {
       const res = await fetch(`/.netlify/functions/fetch-checklist?set=${selectedSet}`);
       const data = await res.json();
-      const filtered = data.filter(card => card.name && !isNaN(parseInt(card.number)));
-      filtered.forEach(card => {
+
+      const specialRows = data.filter(card => card.name?.startsWith('__progress_'));
+      const realCards = data.filter(card => card.name && !card.name.startsWith('__progress_') && !isNaN(parseInt(card.number)));
+
+      realCards.forEach(card => {
         card.setCode = getSetCode(selectedSet);
         card.setName = selectedSet;
       });
-      setCards(filtered);
+
+      const progressData = {};
+      specialRows.forEach(row => {
+        const key = row.name.replace(/__progress_|__/g, '');
+        progressData[key] = row;
+      });
+
+      setProgress(progressData);
+      setCards(realCards);
     } catch (err) {
       console.error('Error fetching cards:', err);
     }
@@ -85,25 +97,61 @@ export default function ChecklistPage() {
 
     if (hideCompleted && collected) return false;
     if (search && !card.name.toLowerCase().includes(search.toLowerCase())) return false;
-    if ((mode === 'base' || mode === 'parallel') && parseInt(card.number) > BASE_COUNTS[setName]) return false;
+
+    const cardNumber = parseInt(card.number);
+    if ((mode === 'base' || mode === 'parallel') && cardNumber > BASE_COUNTS[setName]) return false;
+
     return true;
   });
 
   const collectedCount = cards.filter(card => {
     const rarity = card.rarity?.toLowerCase() || '';
+    const type = card.type?.toLowerCase() || '';
+    const isTrainer = type.includes('trainer');
     const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
     const isRare = rarity === 'rare';
+    const number = parseInt(card.number);
 
-    if (isCommonOrUncommon) return card.standard && card.reverseHolo;
-    if (isRare) return card.holoFoil && card.reverseHolo;
-    return card.holoFoil === true;
+    if (mode === 'base') {
+      if (isCommonOrUncommon || isTrainer) return card.standard;
+      if (isRare) return card.holoFoil;
+      return false;
+    }
+
+    if (mode === 'parallel') {
+      if ((isCommonOrUncommon || isTrainer) && number <= BASE_COUNTS[setName]) {
+        return card.standard && card.reverseHolo;
+      }
+      if (isRare && number <= BASE_COUNTS[setName]) {
+        return card.holoFoil && card.reverseHolo;
+      }
+      return false;
+    }
+
+    if (mode === 'master') {
+      return (
+        card.standard ||
+        card.reverseHolo ||
+        card.holoFoil ||
+        card.pokeball ||
+        card.masterball
+      );
+    }
+
+    return false;
   }).length;
 
-  const totalCount = mode === 'base'
-    ? BASE_COUNTS[setName]
-    : mode === 'parallel'
-    ? BASE_COUNTS[setName] * 2
-    : MASTER_COUNTS[setName];
+  const getTotalFromProgress = () => {
+    const row = progress[mode];
+    if (!row) return 0;
+    return (
+      (parseInt(row.standard) || 0) +
+      (parseInt(row.reverseHolo) || 0) +
+      (parseInt(row.holoFoil) || 0) +
+      (parseInt(row.pokeball) || 0) +
+      (parseInt(row.masterball) || 0)
+    );
+  };
 
   return (
     <div className="max-w-6xl mx-auto p-4">
@@ -133,7 +181,9 @@ export default function ChecklistPage() {
           <label>
             <input type="checkbox" checked={hideCompleted} onChange={() => setHideCompleted(!hideCompleted)} /> Hide Completed
           </label>
-          <span className="ml-auto text-blue-600 font-medium">{collectedCount} / {totalCount}</span>
+          <span className="ml-auto text-blue-600 font-medium">
+            {collectedCount} / {getTotalFromProgress()}
+          </span>
         </div>
       </div>
       {loading ? <p className="text-center">Loading...</p> : (
