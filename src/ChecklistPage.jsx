@@ -3,6 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Card from './components/Card';
 import './index.css';
 
+// Cards within base set range
+const baseCards = cards.filter(card => parseInt(card.number) <= BASE_COUNTS[setName]);
+
+// Count double rares for Parallel logic
+const doubleRaresInBase = baseCards.filter(card =>
+  card.rarity?.toLowerCase() === 'double rare'
+).length;
+
 const BASE_COUNTS = {
   JourneyTogether: 159,
   TemporalForces: 162,
@@ -66,6 +74,23 @@ export default function ChecklistPage() {
   useEffect(() => {
     fetchCards(setName);
   }, [setName]);
+
+  const collectedCount =
+  mode === 'base'
+    ? getBaseCollected()
+    : mode === 'parallel'
+    ? getParallelCollected().collected
+    : cards.filter(card =>
+        card.standard || card.reverseHolo || card.holoFoil || card.pokeball || card.masterball
+      ).length;
+
+const totalCount =
+  mode === 'base'
+    ? BASE_COUNTS[setName]
+    : mode === 'parallel'
+    ? getParallelCollected().total
+    : MASTER_COUNTS[setName];
+
 
   const onCheckboxChange = (card, key) => {
     const updatedValue = !card[key];
