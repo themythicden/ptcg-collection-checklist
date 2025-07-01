@@ -208,6 +208,8 @@ const totalCount =
           </label>
           <span className="ml-auto text-blue-600 font-medium">
             {collectedCount} / {getTotalFromProgress()} / {{BASE_COUNTS[setName]}
+            <span>{getTotalFromProgress()} / {totalCount}</span>
+
           </span>
         </div>
       </div>
