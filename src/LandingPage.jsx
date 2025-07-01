@@ -16,22 +16,34 @@ export default function LandingPage() {
   const [progress, setProgress] = useState({});
 
   useEffect(() => {
-    const getProgress = async () => {
-      const obj = {};
-      for (let set of Object.values(SET_NAME_MAP)) {
+  const getProgress = async () => {
+    const obj = {};
+    for (let set of Object.values(SET_NAME_MAP)) {
+      try {
         const res = await fetch(`/.netlify/functions/fetch-checklist?set=${set}`);
         const data = await res.json();
-        let count = 0;
-        data.forEach(card => {
-          const saved = JSON.parse(localStorage.getItem(card.name)) || {};
-          if (Object.values(saved).some(v => v === true)) count++;
-        });
-        obj[set] = count;
+        const progressRow = data.find(card => card.name === '__progress_master__');
+        if (progressRow) {
+          const total =
+            (parseInt(progressRow.standard) || 0) +
+            (parseInt(progressRow.reverseHolo) || 0) +
+            (parseInt(progressRow.holoFoil) || 0) +
+            (parseInt(progressRow.pokeball) || 0) +
+            (parseInt(progressRow.masterball) || 0);
+          obj[set] = total;
+        } else {
+          obj[set] = 0;
+        }
+      } catch (err) {
+        console.error(`Failed to load progress for ${set}:`, err);
+        obj[set] = 0;
       }
-      setProgress(obj);
-    };
-    getProgress();
-  }, []);
+    }
+    setProgress(obj);
+  };
+  getProgress();
+}, []);
+
 
   return (
     <div className="p-4 max-w-4xl mx-auto">
