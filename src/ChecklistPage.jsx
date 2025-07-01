@@ -207,7 +207,7 @@ const totalCount =
             <input type="checkbox" checked={hideCompleted} onChange={() => setHideCompleted(!hideCompleted)} /> Hide Completed
           </label>
           <span className="ml-auto text-blue-600 font-medium">
-            {collectedCount} / {getTotalFromProgress()}
+            {collectedCount} / {getTotalFromProgress()} / {{BASE_COUNTS[setName]}
           </span>
         </div>
       </div>
