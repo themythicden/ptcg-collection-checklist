@@ -3,14 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Card from './components/Card';
 import './index.css';
 
-// Cards within base set range
-const baseCards = cards.filter(card => parseInt(card.number) <= BASE_COUNTS[setName]);
-
-// Count double rares for Parallel logic
-const doubleRaresInBase = baseCards.filter(card =>
-  card.rarity?.toLowerCase() === 'double rare'
-).length;
-
 const BASE_COUNTS = {
   JourneyTogether: 159,
   TemporalForces: 162,
@@ -75,23 +67,6 @@ export default function ChecklistPage() {
     fetchCards(setName);
   }, [setName]);
 
-  const collectedCount =
-  mode === 'base'
-    ? getBaseCollected()
-    : mode === 'parallel'
-    ? getParallelCollected().collected
-    : cards.filter(card =>
-        card.standard || card.reverseHolo || card.holoFoil || card.pokeball || card.masterball
-      ).length;
-
-const totalCount =
-  mode === 'base'
-    ? BASE_COUNTS[setName]
-    : mode === 'parallel'
-    ? getParallelCollected().total
-    : MASTER_COUNTS[setName];
-
-
   const onCheckboxChange = (card, key) => {
     const updatedValue = !card[key];
     handleCheckboxChange(card.name, key, updatedValue);
@@ -129,43 +104,6 @@ const totalCount =
     return true;
   });
 
-  const collectedCount = cards.filter(card => {
-    const rarity = card.rarity?.toLowerCase() || '';
-    const type = card.type?.toLowerCase() || '';
-    const isTrainer = type.includes('trainer');
-    const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
-    const isRare = rarity === 'rare';
-    const number = parseInt(card.number);
-
-    if (mode === 'base') {
-      if (isCommonOrUncommon || isTrainer) return card.standard;
-      if (isRare) return card.holoFoil;
-      return false;
-    }
-
-    if (mode === 'parallel') {
-      if ((isCommonOrUncommon || isTrainer) && number <= BASE_COUNTS[setName]) {
-        return card.standard && card.reverseHolo;
-      }
-      if (isRare && number <= BASE_COUNTS[setName]) {
-        return card.holoFoil && card.reverseHolo;
-      }
-      return false;
-    }
-
-    if (mode === 'master') {
-      return (
-        card.standard ||
-        card.reverseHolo ||
-        card.holoFoil ||
-        card.pokeball ||
-        card.masterball
-      );
-    }
-
-    return false;
-  }).length;
-
   const getTotalFromProgress = () => {
     const row = progress[mode];
     if (!row) return 0;
@@ -177,6 +115,21 @@ const totalCount =
       (parseInt(row.masterball) || 0)
     );
   };
+
+  const collectedCount = getTotalFromProgress();
+
+  const getParallelTotal = () => {
+    const baseCards = cards.filter(card => parseInt(card.number) <= BASE_COUNTS[setName]);
+    const doubleRares = baseCards.filter(card => card.rarity?.toLowerCase() === 'double rare').length;
+    return (BASE_COUNTS[setName] * 2) - doubleRares;
+  };
+
+  const totalCount =
+    mode === 'base'
+      ? BASE_COUNTS[setName]
+      : mode === 'parallel'
+      ? getParallelTotal()
+      : MASTER_COUNTS[setName];
 
   return (
     <div className="max-w-6xl mx-auto p-4">
@@ -191,9 +144,15 @@ const totalCount =
 
           <div>
             <label className="mr-2">Mode:</label>
-            <label className="mr-2"><input type="radio" name="mode" value="base" checked={mode === 'base'} onChange={e => setMode(e.target.value)} /> Base</label>
-            <label className="mr-2"><input type="radio" name="mode" value="parallel" checked={mode === 'parallel'} onChange={e => setMode(e.target.value)} /> Parallel</label>
-            <label><input type="radio" name="mode" value="master" checked={mode === 'master'} onChange={e => setMode(e.target.value)} /> Master</label>
+            <label className="mr-2">
+              <input type="radio" name="mode" value="base" checked={mode === 'base'} onChange={e => setMode(e.target.value)} /> Base
+            </label>
+            <label className="mr-2">
+              <input type="radio" name="mode" value="parallel" checked={mode === 'parallel'} onChange={e => setMode(e.target.value)} /> Parallel
+            </label>
+            <label>
+              <input type="radio" name="mode" value="master" checked={mode === 'master'} onChange={e => setMode(e.target.value)} /> Master
+            </label>
           </div>
 
           <input
@@ -207,9 +166,7 @@ const totalCount =
             <input type="checkbox" checked={hideCompleted} onChange={() => setHideCompleted(!hideCompleted)} /> Hide Completed
           </label>
           <span className="ml-auto text-blue-600 font-medium">
-            {collectedCount} / {getTotalFromProgress()} / {{BASE_COUNTS[setName]}
-            <span>{getTotalFromProgress()} / {totalCount}</span>
-
+            {collectedCount} / {totalCount}
           </span>
         </div>
       </div>
