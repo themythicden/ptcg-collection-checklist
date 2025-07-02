@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 import useSetLogos from './hooks/useSetLogos';
 
 const SET_NAME_MAP = {
-  sv9: 'JourneyTogether',
-  sv5: 'TemporalForces',
+  
+  sv2: 'PaldeaEvolved',
   sv3: 'ObsidianFlames',
+  sv5: 'TemporalForces',
   sv8pt5: 'PrismaticEvolutions',
+  sv9: 'JourneyTogether',
   sv10: 'DestinedRivals'
 };
 
