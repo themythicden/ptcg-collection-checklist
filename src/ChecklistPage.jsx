@@ -26,6 +26,7 @@ const getSetCode = (setName) => ({
   JourneyTogether: 'sv9',
   PrismaticEvolutions: 'sv8pt5',
   TemporalForces: 'sv5',
+  ParadoxRift: 'sv4',
   ObsidianFlames: 'sv3',
   PaldeaEvolved:'sv2',
 }[setName] || 'sv9');
