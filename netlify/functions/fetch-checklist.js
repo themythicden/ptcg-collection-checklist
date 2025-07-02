@@ -6,6 +6,19 @@ const SHEET_NAMES = {
     DestinedRivals: 'DestinedRivals',
     PaldeaEvolved: 'PaldeaEvolved',
     ParadoxRift: 'ParadoxRift'
+
+    DestinedRivals: 'DestinedRivals',
+  JourneyTogether: 'JourneyTogether',
+  PrismaticEvolutions: 'PrismaticEvolutions',
+  SurgingSparks: 'SurgingSparks',
+  StellarCrown: 'StellarCrown',
+  TwilightMasquerade: 'TwilightMasquerade',
+  TemporalForces: 'TemporalForces',
+  ParadoxRift: 'ParadoxRift',
+  151: '151',
+  ObsidianFlames: 'ObsidianFlames',
+  PaldeaEvolved: 'PaldeaEvolved',
+  Scarlet&Violet: 'Scarlet&Violet'
   };
   
   exports.handler = async function (event) {
