@@ -7,33 +7,45 @@ const BASE_COUNTS = {
   DestinedRivals: 182,
   JourneyTogether: 159,
   PrismaticEvolutions: 131,
+  SurgingSparks: 191,
   StellarCrown: 142,
+  TwilightMasquerade: 167,
   TemporalForces: 162,
   ParadoxRift: 182,
+  151: 165,
   ObsidianFlames: 197,
-  PaldeaEvolved : 193
+  PaldeaEvolved : 193,
+  ScarletViolet: 198
 };
 
 const MASTER_COUNTS = {
   DestinedRivals: 244,
   JourneyTogether: 190,
   PrismaticEvolutions: 180,
+  SurgingSparks: 252,
   StellarCrown: 175,
+  TwilightMasquerade: 226,
   TemporalForces: 218,
   ParadoxRift: 266,
+  151: 207,
   ObsidianFlames: 230,
-  PaldeaEvolved : 279
+  PaldeaEvolved : 279,
+  ScarletViolet: 258
 };
 
 const getSetCode = (setName) => ({
   DestinedRivals: 'sv10',
   JourneyTogether: 'sv9',
   PrismaticEvolutions: 'sv8pt5',
+  SurgingSparks: 'sv8',
   StellarCrown: 'sv7',
+  TwilightMasquerade: 'sv6',
   TemporalForces: 'sv5',
   ParadoxRift: 'sv4',
+  151: 'sv3pt5',
   ObsidianFlames: 'sv3',
   PaldeaEvolved:'sv2',
+  ScarletViolet: 'sv1'
 }[setName] || 'sv9');
 
 export default function ChecklistPage() {
