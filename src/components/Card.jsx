@@ -1,4 +1,5 @@
-// Card.jsx
+import { Link } from 'react-router-dom';
+
 function Card({ card, mode, onCheckboxChange }) {
   const rarity = card.rarity?.toLowerCase() || '';
   const type = card.type?.toLowerCase() || '';
@@ -70,7 +71,9 @@ function Card({ card, mode, onCheckboxChange }) {
       />
       <div>
         <h2 className="text-lg font-bold">{card.name}</h2>
-        <p className="text-sm text-gray-400 italic">{card.setName}</p>
+        <Link to={`/set/${card.setName}`} className="text-sm text-blue-500 underline">
+          {card.setName}
+        </Link>
         <p className="text-sm text-gray-500">
           #{card.number} - {card.rarity}
         </p>
