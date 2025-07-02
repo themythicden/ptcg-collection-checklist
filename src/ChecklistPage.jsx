@@ -8,6 +8,7 @@ const BASE_COUNTS = {
   TemporalForces: 162,
   ObsidianFlames: 197,
   PrismaticEvolutions: 131,
+  DestinedRivals: 182
 };
 
 const MASTER_COUNTS = {
@@ -15,6 +16,7 @@ const MASTER_COUNTS = {
   TemporalForces: 218,
   ObsidianFlames: 230,
   PrismaticEvolutions: 180,
+  DestinedRivals: 244
 };
 
 const getSetCode = (setName) => ({
@@ -22,6 +24,7 @@ const getSetCode = (setName) => ({
   TemporalForces: 'sv5',
   ObsidianFlames: 'sv3',
   PrismaticEvolutions: 'sv8pt5',
+  DestinedRivals: 'sv10',
 }[setName] || 'sv9');
 
 export default function ChecklistPage() {
