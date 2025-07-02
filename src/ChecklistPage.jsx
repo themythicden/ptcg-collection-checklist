@@ -4,11 +4,13 @@ import Card from './components/Card';
 import './index.css';
 
 const BASE_COUNTS = {
-  JourneyTogether: 159,
-  TemporalForces: 162,
-  ObsidianFlames: 197,
-  PrismaticEvolutions: 131,
   DestinedRivals: 182,
+  JourneyTogether: 159,
+  PrismaticEvolutions: 131,
+  StellarCrown: 142,
+  TemporalForces: 162,
+  ParadoxRift: 182,
+  ObsidianFlames: 197,
   PaldeaEvolved : 193
 };
 
@@ -16,7 +18,9 @@ const MASTER_COUNTS = {
   DestinedRivals: 244,
   JourneyTogether: 190,
   PrismaticEvolutions: 180,
+  StellarCrown: 175,
   TemporalForces: 218,
+  ParadoxRift: 266,
   ObsidianFlames: 230,
   PaldeaEvolved : 279
 };
@@ -25,6 +29,7 @@ const getSetCode = (setName) => ({
   DestinedRivals: 'sv10',
   JourneyTogether: 'sv9',
   PrismaticEvolutions: 'sv8pt5',
+  StellarCrown: 'sv7',
   TemporalForces: 'sv5',
   ParadoxRift: 'sv4',
   ObsidianFlames: 'sv3',
@@ -95,21 +100,28 @@ export default function ChecklistPage() {
   };
 
   const filteredCards = cards.filter(card => {
-    const collected =
-      card.standard === true ||
-      card.reverseHolo === true ||
-      card.holoFoil === true ||
-      card.pokeball === true ||
-      card.masterball === true;
+  let collected = false;
+  const rarity = card.rarity?.toLowerCase() || '';
 
-    if (hideCompleted && collected) return false;
-    if (search && !card.name.toLowerCase().includes(search.toLowerCase())) return false;
+  if (rarity === 'common' || rarity === 'uncommon') {
+    collected = card.standard === true && card.reverseHolo === true;
+  } else if (rarity === 'rare') {
+    collected = card.reverseHolo === true && card.holoFoil === true;
+  } else if (rarity === 'double rare' || rarity === 'ultra rare') {
+    collected = card.holoFoil === true;
+  }
 
-    const cardNumber = parseInt(card.number);
-    if ((mode === 'base' || mode === 'parallel') && cardNumber > BASE_COUNTS[setName]) return false;
+  // Add Pokéball and Masterball variants
+  collected = collected || card.pokeball === true || card.masterball === true;
 
-    return true;
-  });
+  if (hideCompleted && collected) return false;
+  if (search && !card.name.toLowerCase().includes(search.toLowerCase())) return false;
+
+  const cardNumber = parseInt(card.number);
+  if ((mode === 'base' || mode === 'parallel') && cardNumber > BASE_COUNTS[setName]) return false;
+
+  return true;
+});
 
   const getTotalFromProgress = () => {
     const row = progress[mode];
