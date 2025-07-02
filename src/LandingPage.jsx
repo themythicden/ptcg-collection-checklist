@@ -9,7 +9,7 @@ const SET_NAME_MAP = {
   sv8pt5: 'PrismaticEvolutions',
   sv5: 'TemporalForces',
   sv3: 'ObsidianFlames',
-  sv2: 'PaldeaEvolved',
+  sv2: 'PaldeaEvolved'
 };
 
 export default function LandingPage() {
