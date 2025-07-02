@@ -102,26 +102,42 @@ export default function ChecklistPage() {
   const filteredCards = cards.filter(card => {
   let collected = false;
   const rarity = card.rarity?.toLowerCase() || '';
+  const number = parseInt(card.number);
+  const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
+  const isRare = rarity === 'rare';
 
-  if (rarity === 'common' || rarity === 'uncommon') {
-    collected = card.standard === true && card.reverseHolo === true;
-  } else if (rarity === 'rare') {
-    collected = card.reverseHolo === true && card.holoFoil === true;
-  } else if (rarity === 'double rare' || rarity === 'ultra rare') {
-    collected = card.holoFoil === true;
+  if (mode === 'base') {
+    if (isCommonOrUncommon) {
+      collected = card.standard === true;
+    } else if (isRare) {
+      collected = card.holoFoil === true;
+    }
   }
 
-  // Add Pokéball and Masterball variants
-  collected = collected || card.pokeball === true || card.masterball === true;
+  if (mode === 'parallel') {
+    if (isCommonOrUncommon) {
+      collected = card.standard === true && card.reverseHolo === true;
+    } else if (isRare) {
+      collected = card.holoFoil === true && card.reverseHolo === true;
+    }
+  }
+
+  if (mode === 'master') {
+    collected =
+      card.standard === true ||
+      card.reverseHolo === true ||
+      card.holoFoil === true ||
+      card.pokeball === true ||
+      card.masterball === true;
+  }
 
   if (hideCompleted && collected) return false;
   if (search && !card.name.toLowerCase().includes(search.toLowerCase())) return false;
-
-  const cardNumber = parseInt(card.number);
-  if ((mode === 'base' || mode === 'parallel') && cardNumber > BASE_COUNTS[setName]) return false;
+  if ((mode === 'base' || mode === 'parallel') && number > BASE_COUNTS[setName]) return false;
 
   return true;
 });
+
 
   const getTotalFromProgress = () => {
     const row = progress[mode];
