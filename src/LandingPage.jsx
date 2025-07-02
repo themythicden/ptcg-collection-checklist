@@ -8,6 +8,7 @@ const SET_NAME_MAP = {
   sv5: 'TemporalForces',
   sv3: 'ObsidianFlames',
   sv8pt5: 'PrismaticEvolutions',
+  sv10: 'DestinedRivals'
 };
 
 export default function LandingPage() {
