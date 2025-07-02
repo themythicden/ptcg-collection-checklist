@@ -105,11 +105,14 @@ export default function ChecklistPage() {
   const number = parseInt(card.number);
   const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
   const isRare = rarity === 'rare';
+  const isCommonOrUncommonOrRare = rarity === 'common'|| rarity === 'uncommon'|| rarity === 'rare';
 
   if (mode === 'base') {
     if (isCommonOrUncommon) {
       collected = card.standard === true;
     } else if (isRare) {
+      collected = card.holoFoil === true;
+    } else if(!isCommonOrUncommonOrRare){
       collected = card.holoFoil === true;
     }
   }
@@ -119,6 +122,8 @@ export default function ChecklistPage() {
       collected = card.standard === true && card.reverseHolo === true;
     } else if (isRare) {
       collected = card.holoFoil === true && card.reverseHolo === true;
+    } else if(!isCommonOrUncommonOrRare){
+      collected = card.holoFoil === true;
     }
   }
 
