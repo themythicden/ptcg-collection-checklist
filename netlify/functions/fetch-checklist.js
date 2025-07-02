@@ -3,7 +3,9 @@ const SHEET_NAMES = {
     TemporalForces: 'TemporalForces',
     PrismaticEvolutions: 'PrismaticEvolutions',
     JourneyTogether: 'JourneyTogether',
-    DestinedRivals: 'DestinedRivals'
+    DestinedRivals: 'DestinedRivals',
+    PaldeaEvolved: 'PaldeaEvolved',
+    ParadoxRift: 'ParadoxRift'
   };
   
   exports.handler = async function (event) {
