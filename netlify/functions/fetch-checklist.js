@@ -1,13 +1,5 @@
 const SHEET_NAMES = {
-    ObsidianFlames: 'ObsidianFlames', 
-    TemporalForces: 'TemporalForces',
-    PrismaticEvolutions: 'PrismaticEvolutions',
-    JourneyTogether: 'JourneyTogether',
-    DestinedRivals: 'DestinedRivals',
-    PaldeaEvolved: 'PaldeaEvolved',
-    ParadoxRift: 'ParadoxRift'
-
-    DestinedRivals: 'DestinedRivals',
+  DestinedRivals: 'DestinedRivals',
   JourneyTogether: 'JourneyTogether',
   PrismaticEvolutions: 'PrismaticEvolutions',
   SurgingSparks: 'SurgingSparks',
