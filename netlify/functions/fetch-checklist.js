@@ -1,8 +1,9 @@
 const SHEET_NAMES = {
-    JourneyTogether: 'JourneyTogether',
-    TemporalForces: 'TemporalForces',
     ObsidianFlames: 'ObsidianFlames', 
-    PrismaticEvolutions: 'PrismaticEvolutions'
+    TemporalForces: 'TemporalForces',
+    PrismaticEvolutions: 'PrismaticEvolutions',
+    JourneyTogether: 'JourneyTogether',
+    DestinedRivals: 'DestinedRivals'
   };
   
   exports.handler = async function (event) {
