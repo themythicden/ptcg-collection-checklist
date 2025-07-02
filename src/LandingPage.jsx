@@ -8,6 +8,7 @@ const SET_NAME_MAP = {
   sv9: 'JourneyTogether',
   sv8pt5: 'PrismaticEvolutions',
   sv5: 'TemporalForces',
+  sv4: 'ParadoxRift',
   sv3: 'ObsidianFlames',
   sv2: 'PaldeaEvolved'
 };
