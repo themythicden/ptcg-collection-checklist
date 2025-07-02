@@ -7,10 +7,15 @@ const SET_NAME_MAP = {
   sv10: 'DestinedRivals',
   sv9: 'JourneyTogether',
   sv8pt5: 'PrismaticEvolutions',
+  sv8: 'SurgingSparks',
+  sv7: 'StellarCrown',
+  sv6: 'TwilightMasquerade',
   sv5: 'TemporalForces',
   sv4: 'ParadoxRift',
+  sv3pt5: '151',
   sv3: 'ObsidianFlames',
-  sv2: 'PaldeaEvolved'
+  sv2: 'PaldeaEvolved',
+  sv1: 'Scarlet&Violet'
 };
 
 export default function LandingPage() {
