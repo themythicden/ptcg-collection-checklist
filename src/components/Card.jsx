@@ -70,6 +70,7 @@ function Card({ card, mode, onCheckboxChange }) {
       />
       <div>
         <h2 className="text-lg font-bold">{card.name}</h2>
+        <p className="text-sm text-gray-400 italic">{card.setName}</p>
         <p className="text-sm text-gray-500">
           #{card.number} - {card.rarity}
         </p>
