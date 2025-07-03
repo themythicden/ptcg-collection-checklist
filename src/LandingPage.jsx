@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import useSetLogos from './hooks/useSetLogos';
 import SearchBar from './components/SearchBar';
 
+
+//If it fetches the wrong cards and name
 const SET_NAME_MAP = {
   sv10: 'DestinedRivals',
   sv9: 'JourneyTogether',
