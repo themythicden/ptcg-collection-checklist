@@ -91,7 +91,7 @@ export default function LandingPage() {
       {loadingLogos || loadingCards ? (
         <p className="text-center mt-4">Loading...</p>
       ) : search.trim() ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
           {matchingCards.length === 0 ? (
             <p className="col-span-full text-center">No cards found.</p>
           ) : (
@@ -101,6 +101,11 @@ export default function LandingPage() {
                 className="border rounded-lg p-4 bg-white shadow hover:shadow-md cursor-pointer"
                 onClick={() => navigate(`/set/${card.setName}`)}
               >
+                <img
+        src={`https://images.pokemontcg.io/${card.setCode}/${card.number}.png`}
+        alt={card.name}
+        className="w-24 h-auto"
+      />
                 <h2 className="font-bold text-lg">{card.name}</h2>
                 <p className="text-sm text-gray-600">
                   #{card.number} • {card.rarity || 'N/A'}
