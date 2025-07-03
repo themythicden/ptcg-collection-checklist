@@ -16,7 +16,8 @@ const SET_NAME_MAP = {
   sv3pt5: '151',
   sv3: 'ObsidianFlames',
   sv2: 'PaldeaEvolved',
-  sv1: 'Scarlet&Violet'
+  sv1: 'Scarlet&Violet',
+  swsh12: 'Sword&Shield'
 };
 
 // Utility to format set name for display
