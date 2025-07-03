@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Card from './components/Card';
 import './index.css';
+import SearchBar from './components/SearchBar';
 
 const BASE_COUNTS = {
   DestinedRivals: 182,
@@ -58,6 +59,8 @@ export default function ChecklistPage() {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+const [search, setSearch] = useState('');
+
 
   const fetchCards = async (selectedSet) => {
     setLoading(true);
@@ -207,13 +210,7 @@ export default function ChecklistPage() {
             </label>
           </div>
 
-          <input
-            type="text"
-            placeholder="Search..."
-            className="border rounded px-2 py-1"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
+          <SearchBar value={search} onChange={e => setSearch(e.target.value)} placeholder="Search cards..."/>
           <label>
             <input type="checkbox" checked={hideCompleted} onChange={() => setHideCompleted(!hideCompleted)} /> Hide Completed
           </label>
