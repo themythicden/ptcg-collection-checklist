@@ -10,7 +10,8 @@ const SHEET_NAMES = {
   151: '151',
   ObsidianFlames: 'ObsidianFlames',
   PaldeaEvolved: 'PaldeaEvolved',
-  ScarletViolet: 'Scarlet&Violet'
+  ScarletViolet: 'Scarlet&Violet',
+  SilverTempest: 'SilverTempest'
   };
   
   exports.handler = async function (event) {
