@@ -22,7 +22,6 @@ const SET_NAME_MAP = {
 
 export default function LandingPage() {
 
-const [search, setSearch] = useState('');
   const navigate = useNavigate();
   const { logos, loading } = useSetLogos();
   const [progress, setProgress] = useState({});
