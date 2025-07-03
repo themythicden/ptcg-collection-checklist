@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { MASTER_COUNTS } from './constants';
 import { useEffect, useState } from 'react';
 import useSetLogos from './hooks/useSetLogos';
+import SearchBar from './components/SearchBar';
+
 
 const SET_NAME_MAP = {
   sv10: 'DestinedRivals',
@@ -19,6 +21,8 @@ const SET_NAME_MAP = {
 };
 
 export default function LandingPage() {
+
+const [search, setSearch] = useState('');
   const navigate = useNavigate();
   const { logos, loading } = useSetLogos();
   const [progress, setProgress] = useState({});
@@ -77,15 +81,11 @@ export default function LandingPage() {
         Pokémon Master Set Checklist
       </h1>
 
-      <div className="mb-6 text-center">
-        <input
-          type="text"
-          placeholder="Search all cards..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="border border-gray-300 px-4 py-2 rounded w-full max-w-md"
-        />
-      </div>
+      <SearchBar
+    value={search}
+    onChange={e => setSearch(e.target.value)}
+    placeholder="Search all cards..."
+  />
 
       {loading ? (
         <p className="text-center">Loading sets...</p>
