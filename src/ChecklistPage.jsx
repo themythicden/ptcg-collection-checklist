@@ -59,7 +59,6 @@ export default function ChecklistPage() {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-const [search, setSearch] = useState('');
 
 
   const fetchCards = async (selectedSet) => {
