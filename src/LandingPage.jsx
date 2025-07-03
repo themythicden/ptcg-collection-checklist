@@ -19,6 +19,10 @@ const SET_NAME_MAP = {
   sv1: 'Scarlet&Violet'
 };
 
+// Utility to format set name for display
+const formatSetName = (name) =>
+  name.replace(/([A-Z])/g, ' $1').replace(/&/g, ' & ').trim();
+
 export default function LandingPage() {
   const navigate = useNavigate();
   const { logos, loading: loadingLogos } = useSetLogos();
@@ -56,12 +60,16 @@ export default function LandingPage() {
 
             // Match cards (if searching)
             if (search.trim()) {
+              const setCode = Object.keys(SET_NAME_MAP).find(code => SET_NAME_MAP[code] === setName);
+
               data
                 .filter(card =>
                   card.name?.toLowerCase().includes(search.toLowerCase()) &&
                   !card.name.startsWith('__progress_')
                 )
-                .forEach(card => matches.push({ ...card, setName }));
+                .forEach(card => {
+                  matches.push({ ...card, setName, setCode });
+                });
             }
           } catch (err) {
             console.error(`Error loading ${setName}:`, err);
@@ -88,7 +96,7 @@ export default function LandingPage() {
         placeholder="Search all cards..."
       />
 
-      {loadingLogos || loadingCards ? (
+      {(loadingLogos || loadingCards) ? (
         <p className="text-center mt-4">Loading...</p>
       ) : search.trim() ? (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
@@ -102,15 +110,17 @@ export default function LandingPage() {
                 onClick={() => navigate(`/set/${card.setName}`)}
               >
                 <img
-        src={`https://images.pokemontcg.io/${card.setCode}/${card.number}.png`}
-        alt={card.name}
-        className="w-24 h-auto"
-      />
+                  src={`https://images.pokemontcg.io/${card.setCode}/${card.number}.png`}
+                  alt={card.name}
+                  className="w-24 h-auto mb-2"
+                />
                 <h2 className="font-bold text-lg">{card.name}</h2>
                 <p className="text-sm text-gray-600">
                   #{card.number} • {card.rarity || 'N/A'}
                 </p>
-                <p className="text-sm text-blue-700">Set: {card.setName}</p>
+                <p className="text-sm text-blue-700">
+                  Set: {formatSetName(card.setName)}
+                </p>
               </div>
             ))
           )}
@@ -128,9 +138,7 @@ export default function LandingPage() {
                 alt={displayName}
                 className="mx-auto mb-2 h-12 w-auto object-contain"
               />
-              <div className="font-semibold">
-                {displayName.replace(/([A-Z])/g, ' $1')}
-              </div>
+              <div className="font-semibold">{formatSetName(displayName)}</div>
               <p className="text-sm text-gray-600">
                 {progress[displayName] || 0} / {MASTER_COUNTS[displayName]} cards
               </p>
