@@ -17,6 +17,7 @@ const BASE_COUNTS = {
   ObsidianFlames: 197,
   PaldeaEvolved : 193,
   ScarletViolet: 198,
+  SilverTempest: 195
 };
 
 const MASTER_COUNTS = {
@@ -32,6 +33,7 @@ const MASTER_COUNTS = {
   ObsidianFlames: 230,
   PaldeaEvolved : 279,
   ScarletViolet: 258,
+  SilverTempest: 215
 };
 
 const getSetCode = (setName) => ({
@@ -46,7 +48,8 @@ const getSetCode = (setName) => ({
   151: 'sv3pt5',
   ObsidianFlames: 'sv3',
   PaldeaEvolved:'sv2',
-  ScarletViolet: 'sv1'
+  ScarletViolet: 'sv1',
+  SilverTempest: 'swsh12'
 }[setName] || 'sv9');
 
 export default function ChecklistPage() {
