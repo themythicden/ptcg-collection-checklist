@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import useSetLogos from './hooks/useSetLogos';
 import SearchBar from './components/SearchBar';
 
-
 const SET_NAME_MAP = {
   sv10: 'DestinedRivals',
   sv9: 'JourneyTogether',
@@ -21,94 +20,117 @@ const SET_NAME_MAP = {
 };
 
 export default function LandingPage() {
-
   const navigate = useNavigate();
-  const { logos, loading } = useSetLogos();
-  const [progress, setProgress] = useState({});
+  const { logos, loading: loadingLogos } = useSetLogos();
+
   const [search, setSearch] = useState('');
-  const [matchingSets, setMatchingSets] = useState(Object.values(SET_NAME_MAP)); // Default: show all
+  const [progress, setProgress] = useState({});
+  const [matchingCards, setMatchingCards] = useState([]);
+  const [loadingCards, setLoadingCards] = useState(false);
 
   useEffect(() => {
-    const getProgressAndSearch = async () => {
-      const obj = {};
-      const matched = [];
+    const fetchAllData = async () => {
+      setLoadingCards(true);
+      const progressObj = {};
+      const matches = [];
 
-      for (let set of Object.values(SET_NAME_MAP)) {
-        try {
-          const res = await fetch(`/.netlify/functions/fetch-checklist?set=${set}`);
-          const data = await res.json();
+      await Promise.all(
+        Object.values(SET_NAME_MAP).map(async (setName) => {
+          try {
+            const res = await fetch(`/.netlify/functions/fetch-checklist?set=${setName}`);
+            const data = await res.json();
 
-          // Progress count from __progress_master__ row
-          const progressRow = data.find(card => card.name === '__progress_master__');
-          if (progressRow) {
-            const total =
-              (parseInt(progressRow.standard) || 0) +
-              (parseInt(progressRow.reverseHolo) || 0) +
-              (parseInt(progressRow.holoFoil) || 0) +
-              (parseInt(progressRow.pokeball) || 0) +
-              (parseInt(progressRow.masterball) || 0);
-            obj[set] = total;
-          } else {
-            obj[set] = 0;
+            // Progress row
+            const progressRow = data.find(card => card.name === '__progress_master__');
+            if (progressRow) {
+              const total =
+                (parseInt(progressRow.standard) || 0) +
+                (parseInt(progressRow.reverseHolo) || 0) +
+                (parseInt(progressRow.holoFoil) || 0) +
+                (parseInt(progressRow.pokeball) || 0) +
+                (parseInt(progressRow.masterball) || 0);
+              progressObj[setName] = total;
+            } else {
+              progressObj[setName] = 0;
+            }
+
+            // Match cards (if searching)
+            if (search.trim()) {
+              data
+                .filter(card =>
+                  card.name?.toLowerCase().includes(search.toLowerCase()) &&
+                  !card.name.startsWith('__progress_')
+                )
+                .forEach(card => matches.push({ ...card, setName }));
+            }
+          } catch (err) {
+            console.error(`Error loading ${setName}:`, err);
+            progressObj[setName] = 0;
           }
+        })
+      );
 
-          // Search matching cards
-          if (search) {
-            const matchedCard = data.find(card =>
-              card.name?.toLowerCase().includes(search.toLowerCase())
-            );
-            if (matchedCard) matched.push(set);
-          } else {
-            matched.push(set); // show all if no search
-          }
-        } catch (err) {
-          console.error(`Failed to load data for ${set}:`, err);
-          obj[set] = 0;
-        }
-      }
-
-      setProgress(obj);
-      setMatchingSets(matched);
+      setProgress(progressObj);
+      setMatchingCards(matches);
+      setLoadingCards(false);
     };
 
-    getProgressAndSearch();
+    fetchAllData();
   }, [search]);
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4 text-center">
-        Pokémon Master Set Checklist
-      </h1>
+    <div className="p-4 max-w-5xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4 text-center">Pokémon Master Set Checklist</h1>
 
       <SearchBar
-    value={search}
-    onChange={e => setSearch(e.target.value)}
-    placeholder="Search all cards..."
-  />
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        placeholder="Search all cards..."
+      />
 
-      {loading ? (
-        <p className="text-center">Loading sets...</p>
-      ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {Object.entries(SET_NAME_MAP)
-            .filter(([_, displayName]) => matchingSets.includes(displayName))
-            .map(([setId, displayName]) => (
+      {loadingLogos || loadingCards ? (
+        <p className="text-center mt-4">Loading...</p>
+      ) : search.trim() ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+          {matchingCards.length === 0 ? (
+            <p className="col-span-full text-center">No cards found.</p>
+          ) : (
+            matchingCards.map((card, index) => (
               <div
-                key={setId}
-                className="border rounded-xl p-4 hover:shadow cursor-pointer text-center bg-white transition duration-200 hover:scale-105"
-                onClick={() => navigate(`/set/${displayName}`)}
+                key={card.name + card.number + index}
+                className="border rounded-lg p-4 bg-white shadow hover:shadow-md cursor-pointer"
+                onClick={() => navigate(`/set/${card.setName}`)}
               >
-                <img
-                  src={logos[setId] || '/fallback-logo.png'}
-                  alt={displayName}
-                  className="mx-auto mb-2 h-12 w-auto object-contain"
-                />
-                <div className="font-semibold">{displayName.replace(/([A-Z])/g, ' $1')}</div>
+                <h2 className="font-bold text-lg">{card.name}</h2>
                 <p className="text-sm text-gray-600">
-                  {progress[displayName] || 0} / {MASTER_COUNTS[displayName]} cards
+                  #{card.number} • {card.rarity || 'N/A'}
                 </p>
+                <p className="text-sm text-blue-700">Set: {card.setName}</p>
               </div>
-            ))}
+            ))
+          )}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
+          {Object.entries(SET_NAME_MAP).map(([setId, displayName]) => (
+            <div
+              key={setId}
+              className="border rounded-xl p-4 hover:shadow cursor-pointer text-center bg-white transition duration-200 hover:scale-105"
+              onClick={() => navigate(`/set/${displayName}`)}
+            >
+              <img
+                src={logos[setId] || '/fallback-logo.png'}
+                alt={displayName}
+                className="mx-auto mb-2 h-12 w-auto object-contain"
+              />
+              <div className="font-semibold">
+                {displayName.replace(/([A-Z])/g, ' $1')}
+              </div>
+              <p className="text-sm text-gray-600">
+                {progress[displayName] || 0} / {MASTER_COUNTS[displayName]} cards
+              </p>
+            </div>
+          ))}
         </div>
       )}
     </div>
