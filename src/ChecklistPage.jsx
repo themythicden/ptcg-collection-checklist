@@ -15,7 +15,7 @@ const BASE_COUNTS = {
   151: 165,
   ObsidianFlames: 197,
   PaldeaEvolved : 193,
-  ScarletViolet: 198
+  ScarletViolet: 198,
 };
 
 const MASTER_COUNTS = {
@@ -30,7 +30,7 @@ const MASTER_COUNTS = {
   151: 207,
   ObsidianFlames: 230,
   PaldeaEvolved : 279,
-  ScarletViolet: 258
+  ScarletViolet: 258,
 };
 
 const getSetCode = (setName) => ({
@@ -141,10 +141,10 @@ export default function ChecklistPage() {
 
   if (mode === 'master') {
     collected =
-      card.standard === true ||
-      card.reverseHolo === true ||
-      card.holoFoil === true ||
-      card.pokeball === true ||
+      card.standard === true &&
+      card.reverseHolo === true &&
+      card.holoFoil === true &&
+      card.pokeball === true &&
       card.masterball === true;
   }
 
