@@ -3,7 +3,7 @@ import { MASTER_COUNTS } from './constants';
 import { useEffect, useState } from 'react';
 import useSetLogos from './hooks/useSetLogos';
 import SearchBar from './components/SearchBar';
-import PrintableListWrapper from '../components/PrintableListWrapper';
+//import PrintableListWrapper from '../components/PrintableListWrapper';
 
 
 
