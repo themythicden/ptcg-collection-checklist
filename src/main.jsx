@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './LandingPage';
 import ChecklistPage from './ChecklistPage';
 import './index.css';
-import PrintableList from './PrintableList';
+import PrintPage from './pages/PrintPage';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
