@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Card from './components/Card';
-import './index.css';
 import SearchBar from './components/SearchBar';
-//import PrintableListWrapper from '../components/PrintableListWrapper';
-
+import './index.css';
 
 const BASE_COUNTS = {
   DestinedRivals: 182,
@@ -72,7 +70,9 @@ export default function ChecklistPage() {
       const data = await res.json();
 
       const specialRows = data.filter(card => card.name?.startsWith('__progress_'));
-      const realCards = data.filter(card => card.name && !card.name.startsWith('__progress_') && !isNaN(parseInt(card.number)));
+      const realCards = data.filter(card =>
+        card.name && !card.name.startsWith('__progress_') && !isNaN(parseInt(card.number))
+      );
 
       realCards.forEach(card => {
         card.setCode = getSetCode(selectedSet);
@@ -97,6 +97,66 @@ export default function ChecklistPage() {
     fetchCards(setName);
   }, [setName]);
 
+  const isCollected = (card) => {
+    const rarity = card.rarity?.toLowerCase() || '';
+    const type = card.type?.toLowerCase() || '';
+    const number = parseInt(card.number);
+    const baseLimit = BASE_COUNTS[setName];
+    const isTrainer = type.includes('trainer');
+    const isAceSpec = type.includes('ace spec');
+    const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
+    const isRare = rarity === 'rare';
+    const isPrismatic = setName === 'PrismaticEvolutions';
+
+    if (mode === 'base') {
+      if (isPrismatic) {
+        if (isCommonOrUncommon || isTrainer) return card.standard;
+        return card.holoFoil;
+      }
+      if (isAceSpec) return card.holoFoil;
+      if (isCommonOrUncommon || isTrainer) return card.standard;
+      if (isRare) return card.holoFoil;
+      return card.holoFoil;
+    }
+
+    if (mode === 'parallel') {
+      if (isPrismatic) {
+        if (isCommonOrUncommon || isTrainer) {
+          return card.standard && card.reverseHolo && card.pokeball;
+        }
+        if (isRare) {
+          return card.reverseHolo && card.holoFoil && card.pokeball;
+        }
+        return card.holoFoil;
+      }
+      if (isAceSpec) return card.holoFoil;
+      if (isCommonOrUncommon || isTrainer) return card.standard && card.reverseHolo;
+      if (isRare) return card.reverseHolo && card.holoFoil;
+      return card.holoFoil;
+    }
+
+    if (mode === 'master') {
+      if (isAceSpec) return card.holoFoil;
+      if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
+        return card.standard && card.reverseHolo && card.pokeball && card.masterball;
+      }
+      if (isRare) {
+        return card.reverseHolo && card.holoFoil && card.pokeball && card.masterball;
+      }
+      return card.holoFoil;
+    }
+
+    return false;
+  };
+
+  const filteredCards = cards.filter(card => {
+    const collected = isCollected(card);
+    if (hideCompleted && collected) return false;
+    if (search && !card.name.toLowerCase().includes(search.toLowerCase())) return false;
+    if ((mode === 'base' || mode === 'parallel') && parseInt(card.number) > BASE_COUNTS[setName]) return false;
+    return true;
+  });
+
   const onCheckboxChange = (card, key) => {
     const updatedValue = !card[key];
     handleCheckboxChange(card.name, key, updatedValue);
@@ -116,59 +176,6 @@ export default function ChecklistPage() {
       console.error('Save error:', err);
     }
   };
-
-  const isTrainer = (card) => card.type?.toLowerCase().includes('trainer');
-  const isCollected = (card) => {
-    const rarity = card.rarity?.toLowerCase() || '';
-    const number = parseInt(card.number);
-    const baseLimit = BASE_COUNTS[setName];
-
-    if (mode === 'base') {
-      if (setName === 'PrismaticEvolutions') {
-        if ((rarity === 'common' || rarity === 'uncommon') || isTrainer(card)) return card.standard;
-        return card.holoFoil;
-      }
-      if (rarity === 'common' || rarity === 'uncommon') return card.standard;
-      if (rarity === 'rare') return card.holoFoil;
-      return card.holoFoil;
-    }
-
-    if (mode === 'parallel') {
-      if (setName === 'PrismaticEvolutions') {
-        if ((rarity === 'common' || rarity === 'uncommon') || isTrainer(card)) {
-          return card.standard && card.reverseHolo && card.pokeball;
-        }
-        if (rarity === 'rare') {
-          return card.reverseHolo && card.holoFoil && card.pokeball;
-        }
-        return card.holoFoil;
-      }
-
-      if (rarity === 'common' || rarity === 'uncommon') return card.standard && card.reverseHolo;
-      if (rarity === 'rare') return card.reverseHolo && card.holoFoil;
-      return card.holoFoil;
-    }
-
-    if (mode === 'master') {
-      if ((rarity === 'common' || rarity === 'uncommon') && number <= BASE_COUNTS[setName]) {
-        return card.standard && card.reverseHolo && card.pokeball && card.masterball;
-      }
-      if (rarity === 'rare') {
-        return card.reverseHolo && card.holoFoil && card.pokeball && card.masterball;
-      }
-      return card.holoFoil;
-    }
-
-    return false;
-  };
-
-  const filteredCards = cards.filter(card => {
-    if (hideCompleted && isCollected(card)) return false;
-    if (search && !card.name.toLowerCase().includes(search.toLowerCase())) return false;
-    const number = parseInt(card.number);
-    if ((mode === 'base' || mode === 'parallel') && number > BASE_COUNTS[setName]) return false;
-    return true;
-  });
 
   const getTotalFromProgress = () => {
     const row = progress[mode];
@@ -201,10 +208,7 @@ export default function ChecklistPage() {
     <div className="max-w-6xl mx-auto p-4">
       <div className="sticky top-0 bg-white z-10 shadow p-4 mb-4">
         <div className="flex flex-wrap gap-4 items-center">
-          <button
-            onClick={() => navigate('/')}
-            className="text-blue-600 underline"
-          >
+          <button onClick={() => navigate('/')} className="text-blue-600 underline">
             ← Back to Sets
           </button>
 
@@ -236,7 +240,10 @@ export default function ChecklistPage() {
           </button>
         </div>
       </div>
-      {loading ? <p className="text-center">Loading...</p> : (
+
+      {loading ? (
+        <p className="text-center">Loading...</p>
+      ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {filteredCards.map(card => (
             <Card key={card.name + card.number} card={card} mode={mode} onCheckboxChange={onCheckboxChange} />
