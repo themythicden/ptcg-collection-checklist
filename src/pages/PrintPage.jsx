@@ -95,29 +95,30 @@ export default function PrintPage() {
       // Expected variants
       let expected = [];
 
-      if (isAceSpec) {
-        expected = ['holoFoil'];
-      } else if (isPrismatic) {
-        if ((isCommonOrUncommon || isTrainer) && number <= baseCount) {
-          expected = ['standard', 'reverseHolo', 'pokeball', 'masterball'];
-        } else if (isRare) {
-          expected = ['reverseHolo', 'holoFoil', 'pokeball', 'masterball'];
-        } else if (isTrainer && number <= baseCount) {
-          expected = ['standard', 'reverseHolo', 'pokeball'];
-        } else {
-          expected = ['holoFoil'];
-        }
-      } else {
-        if ((isCommonOrUncommon || isTrainer) && number <= baseCount) {
-          expected = ['standard', 'reverseHolo', 'pokeball', 'masterball'];
-        } else if (isRare) {
-          expected = ['reverseHolo', 'holoFoil', 'pokeball', 'masterball'];
-        } else if (isTrainer && number <= baseCount) {
-          expected = ['standard', 'reverseHolo', 'pokeball'];
-        } else {
-          expected = ['holoFoil'];
-        }
-      }
+if (isAceSpec) {
+  expected = ['holoFoil'];
+} else if (isPrismatic) {
+  if ((isCommonOrUncommon || isTrainer) && number <= baseCount) {
+    expected = ['standard', 'reverseHolo', 'pokeball', 'masterball'];
+  } else if (isRare) {
+    expected = ['reverseHolo', 'holoFoil', 'pokeball', 'masterball'];
+  } else if (isTrainer && number <= baseCount) {
+    expected = ['standard', 'reverseHolo', 'pokeball'];
+  } else {
+    expected = ['holoFoil'];
+  }
+} else {
+  if ((isCommonOrUncommon || isTrainer) && number <= baseCount) {
+    expected = ['standard', 'reverseHolo'];
+  } else if (isRare) {
+    expected = ['reverseHolo', 'holoFoil'];
+  } else if (isTrainer && number <= baseCount) {
+    expected = ['standard', 'reverseHolo'];
+  } else {
+    expected = ['holoFoil'];
+  }
+}
+
 
       const missing = expected.filter(key => card[key] !== true);
 
