@@ -15,7 +15,7 @@ const BASE_COUNTS = {
   ParadoxRift: 182,
   151: 165,
   ObsidianFlames: 197,
-  PaldeaEvolved : 193,
+  PaldeaEvolved: 193,
   ScarletViolet: 198,
   SilverTempest: 195
 };
@@ -31,7 +31,7 @@ const MASTER_COUNTS = {
   ParadoxRift: 266,
   151: 207,
   ObsidianFlames: 230,
-  PaldeaEvolved : 279,
+  PaldeaEvolved: 279,
   ScarletViolet: 258,
   SilverTempest: 215
 };
@@ -47,7 +47,7 @@ const getSetCode = (setName) => ({
   ParadoxRift: 'sv4',
   151: 'sv3pt5',
   ObsidianFlames: 'sv3',
-  PaldeaEvolved:'sv2',
+  PaldeaEvolved: 'sv2',
   ScarletViolet: 'sv1',
   SilverTempest: 'swsh12'
 }[setName] || 'sv9');
@@ -62,7 +62,6 @@ export default function ChecklistPage() {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
 
   const fetchCards = async (selectedSet) => {
     setLoading(true);
@@ -116,50 +115,58 @@ export default function ChecklistPage() {
     }
   };
 
+  const isTrainer = (card) => card.type?.toLowerCase().includes('trainer');
+  const isCollected = (card) => {
+    const rarity = card.rarity?.toLowerCase() || '';
+    const number = parseInt(card.number);
+    const baseLimit = BASE_COUNTS[setName];
+
+    if (mode === 'base') {
+      if (setName === 'PrismaticEvolutions') {
+        if ((rarity === 'common' || rarity === 'uncommon') || isTrainer(card)) return card.standard;
+        return card.holoFoil;
+      }
+      if (rarity === 'common' || rarity === 'uncommon') return card.standard;
+      if (rarity === 'rare') return card.holoFoil;
+      return card.holoFoil;
+    }
+
+    if (mode === 'parallel') {
+      if (setName === 'PrismaticEvolutions') {
+        if ((rarity === 'common' || rarity === 'uncommon') || isTrainer(card)) {
+          return card.standard && card.reverseHolo && card.pokeball;
+        }
+        if (rarity === 'rare') {
+          return card.reverseHolo && card.holoFoil && card.pokeball;
+        }
+        return card.holoFoil;
+      }
+
+      if (rarity === 'common' || rarity === 'uncommon') return card.standard && card.reverseHolo;
+      if (rarity === 'rare') return card.reverseHolo && card.holoFoil;
+      return card.holoFoil;
+    }
+
+    if (mode === 'master') {
+      if ((rarity === 'common' || rarity === 'uncommon') && number <= BASE_COUNTS[setName]) {
+        return card.standard && card.reverseHolo && card.pokeball && card.masterball;
+      }
+      if (rarity === 'rare') {
+        return card.reverseHolo && card.holoFoil && card.pokeball && card.masterball;
+      }
+      return card.holoFoil;
+    }
+
+    return false;
+  };
+
   const filteredCards = cards.filter(card => {
-  let collected = false;
-  const rarity = card.rarity?.toLowerCase() || '';
-  const number = parseInt(card.number);
-  const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
-  const isRare = rarity === 'rare';
-  const isCommonOrUncommonOrRare = rarity === 'common'|| rarity === 'uncommon'|| rarity === 'rare';
-
-  if (mode === 'base') {
-    if (isCommonOrUncommon) {
-      collected = card.standard === true;
-    } else if (isRare) {
-      collected = card.holoFoil === true;
-    } else if(!isCommonOrUncommonOrRare){
-      collected = card.holoFoil === true;
-    }
-  }
-
-  if (mode === 'parallel') {
-    if (isCommonOrUncommon) {
-      collected = card.standard === true && card.reverseHolo === true;
-    } else if (isRare) {
-      collected = card.holoFoil === true && card.reverseHolo === true;
-    } else if(!isCommonOrUncommonOrRare){
-      collected = card.holoFoil === true;
-    }
-  }
-
-  if (mode === 'master') {
-    collected =
-      card.standard === true &&
-      card.reverseHolo === true &&
-      card.holoFoil === true &&
-      card.pokeball === true &&
-      card.masterball === true;
-  }
-
-  if (hideCompleted && collected) return false;
-  if (search && !card.name.toLowerCase().includes(search.toLowerCase())) return false;
-  if ((mode === 'base' || mode === 'parallel') && number > BASE_COUNTS[setName]) return false;
-
-  return true;
-});
-
+    if (hideCompleted && isCollected(card)) return false;
+    if (search && !card.name.toLowerCase().includes(search.toLowerCase())) return false;
+    const number = parseInt(card.number);
+    if ((mode === 'base' || mode === 'parallel') && number > BASE_COUNTS[setName]) return false;
+    return true;
+  });
 
   const getTotalFromProgress = () => {
     const row = progress[mode];
@@ -212,13 +219,19 @@ export default function ChecklistPage() {
             </label>
           </div>
 
-          <SearchBar value={search} onChange={e => setSearch(e.target.value)} placeholder="Search cards..."/>
+          <SearchBar value={search} onChange={e => setSearch(e.target.value)} placeholder="Search cards..." />
           <label>
             <input type="checkbox" checked={hideCompleted} onChange={() => setHideCompleted(!hideCompleted)} /> Hide Completed
           </label>
           <span className="ml-auto text-blue-600 font-medium">
             {collectedCount} / {totalCount}
           </span>
+          <button
+            className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm"
+            onClick={() => window.open(`/print/${setName}`, '_blank')}
+          >
+            🖨️ Print Missing
+          </button>
         </div>
       </div>
       {loading ? <p className="text-center">Loading...</p> : (
