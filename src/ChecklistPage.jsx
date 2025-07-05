@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Card from './components/Card';
 import './index.css';
 import SearchBar from './components/SearchBar';
-import PrintableListWrapper from '../components/PrintableListWrapper';
+//import PrintableListWrapper from '../components/PrintableListWrapper';
 
 
 const BASE_COUNTS = {
