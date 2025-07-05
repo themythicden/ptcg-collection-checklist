@@ -108,6 +108,8 @@ function Card({ card, mode, onCheckboxChange }) {
       } else if (isRare) {
         checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
         checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+      } else if(isTrainer && !isCommon && !isUncommon && !isRare && !isAceSpec){
+        checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
       } else {
         checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
       }
