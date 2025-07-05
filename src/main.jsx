@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './LandingPage';
 import ChecklistPage from './ChecklistPage';
 import './index.css';
+import PrintableList from './PrintableList';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -12,6 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/set/:setName" element={<ChecklistPage />} />
+        <Route path="/print/:setName" element={<PrintableListWrapper />} />
       </Routes>
     </Router>
   </React.StrictMode>
