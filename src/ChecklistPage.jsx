@@ -103,7 +103,7 @@ export default function ChecklistPage() {
     const number = parseInt(card.number);
     const baseLimit = BASE_COUNTS[setName];
     const isTrainer = type.includes('trainer');
-    const isAceSpec = type.includes('ace spec');
+    const isAceSpec = rarity.includes('ace spec');
     const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
     const isRare = rarity === 'rare';
     const isPrismatic = setName === 'PrismaticEvolutions';
