@@ -80,19 +80,22 @@ function Card({ card, mode, onCheckboxChange }) {
     if (isAceSpec) {
       checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
     } else if (isPrismatic) {
-      if (isCommon || isUncommon || isTrainer) {
+      if (isCommon || isUncommon ) {
         checkboxes.push({ label: 'Standard', key: 'standard' });
         checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
         checkboxes.push({ label: 'Poké Ball', key: 'pokeball' });        
       checkboxes.push({ label: 'Master Ball', key: 'masterball' });
-      } else if (isTrainer){
+      } else if (isTrainer  && !isAceSpec){
         checkboxes.push({ label: 'Standard', key: 'standard' });
         checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
         checkboxes.push({ label: 'Poké Ball', key: 'pokeball' });  
       }else if (isRare) {
-        checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
+        
         checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+        checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
         checkboxes.push({ label: 'Poké Ball', key: 'pokeball' });
+     
+      checkboxes.push({ label: 'Master Ball', key: 'masterball' });
       } else {
         checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
       }
