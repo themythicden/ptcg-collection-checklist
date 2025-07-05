@@ -70,27 +70,71 @@ export default function PrintPage() {
         Missing Cards – {setName.replace(/([A-Z])/g, ' $1')}
       </h1>
       <table className="w-full table-auto border-collapse text-sm print:text-xs">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border px-2 py-1 text-left">#</th>
-            <th className="border px-2 py-1 text-left">Name</th>
-            <th className="border px-2 py-1 text-left">Rarity</th>
-            <th className="border px-2 py-1 text-left">Type</th>
-            <th className="border px-2 py-1 text-left">Set</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cards.map((card, idx) => (
-            <tr key={card.name + card.number} className={idx % 2 ? 'bg-gray-100' : ''}>
-              <td className="border px-2 py-1">{card.number}</td>
-              <td className="border px-2 py-1">{card.name}</td>
-              <td className="border px-2 py-1 capitalize">{card.rarity}</td>
-              <td className="border px-2 py-1 capitalize">{card.type}</td>
-              <td className="border px-2 py-1">{setName}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  <thead>
+    <tr className="bg-gray-200">
+      <th className="border px-2 py-1 text-left">#</th>
+      <th className="border px-2 py-1 text-left">Name</th>
+      <th className="border px-2 py-1 text-left">Rarity</th>
+      <th className="border px-2 py-1 text-left">Type</th>
+      <th className="border px-2 py-1 text-left">Missing Variants</th>
+      <th className="border px-2 py-1 text-left">Set</th>
+    </tr>
+  </thead>
+  <tbody>
+    {cards.map((card, idx) => {
+      const rarity = card.rarity?.toLowerCase() || '';
+      const type = card.type?.toLowerCase() || '';
+      const number = parseInt(card.number);
+      const isTrainer = type.includes('trainer');
+      const isAceSpec = type.includes('ace spec');
+      const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
+      const isRare = rarity === 'rare';
+      const isPrismatic = setName === 'PrismaticEvolutions';
+      const baseCount = BASE_COUNTS[setName] || 0;
+
+      // Expected variants
+      let expected = [];
+
+      if (isAceSpec) {
+        expected = ['holoFoil'];
+      } else if (isPrismatic) {
+        if ((isCommonOrUncommon || isTrainer) && number <= baseCount) {
+          expected = ['standard', 'reverseHolo', 'pokeball', 'masterball'];
+        } else if (isRare) {
+          expected = ['reverseHolo', 'holoFoil', 'pokeball', 'masterball'];
+        } else if (isTrainer && number <= baseCount) {
+          expected = ['standard', 'reverseHolo', 'pokeball'];
+        } else {
+          expected = ['holoFoil'];
+        }
+      } else {
+        if ((isCommonOrUncommon || isTrainer) && number <= baseCount) {
+          expected = ['standard', 'reverseHolo', 'pokeball', 'masterball'];
+        } else if (isRare) {
+          expected = ['reverseHolo', 'holoFoil', 'pokeball', 'masterball'];
+        } else if (isTrainer && number <= baseCount) {
+          expected = ['standard', 'reverseHolo', 'pokeball'];
+        } else {
+          expected = ['holoFoil'];
+        }
+      }
+
+      const missing = expected.filter(key => card[key] !== true);
+
+      return (
+        <tr key={card.name + card.number} className={idx % 2 ? 'bg-gray-100' : ''}>
+          <td className="border px-2 py-1">{card.number}</td>
+          <td className="border px-2 py-1">{card.name}</td>
+          <td className="border px-2 py-1 capitalize">{card.rarity}</td>
+          <td className="border px-2 py-1 capitalize">{card.type}</td>
+          <td className="border px-2 py-1">{missing.join(', ')}</td>
+          <td className="border px-2 py-1">{setName}</td>
+        </tr>
+      );
+    })}
+  </tbody>
+</table>
+
       <p className="mt-4 text-sm text-gray-500">Total missing: {cards.length}</p>
     </div>
   );
