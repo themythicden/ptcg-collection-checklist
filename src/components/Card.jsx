@@ -25,7 +25,7 @@ function Card({ card, mode, onCheckboxChange }) {
   const isCommon = rarity === 'common';
   const isUncommon = rarity === 'uncommon';
   const isRare = rarity === 'rare';
-  const isAceSpec = type.includes('ace spec');
+  const isAceSpec = rarity.includes('ace spec');
   const isPrismatic = card.setCode === 'sv8pt5';
 
   const checkboxes = [];
