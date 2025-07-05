@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/set/:setName" element={<ChecklistPage />} />
-        <Route path="/print/:setName" element={<PrintableListWrapper />} />
+        <Route path="/print/:setName" element={<PrintPage />} />
       </Routes>
     </Router>
   </React.StrictMode>
