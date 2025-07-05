@@ -1,105 +1,102 @@
- import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+const BASE_COUNTS = {
+  DestinedRivals: 182,
+  JourneyTogether: 159,
+  PrismaticEvolutions: 131,
+  SurgingSparks: 191,
+  StellarCrown: 142,
+  TwilightMasquerade: 167,
+  TemporalForces: 162,
+  ParadoxRift: 182,
+  151: 165,
+  ObsidianFlames: 197,
+  PaldeaEvolved: 193,
+  ScarletViolet: 198,
+  SilverTempest: 195
+};
 
 function Card({ card, mode, onCheckboxChange }) {
   const rarity = card.rarity?.toLowerCase() || '';
   const type = card.type?.toLowerCase() || '';
   const number = parseInt(card.number);
-  const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
-  const isRare = rarity === 'rare';
-  const isAceSpec = rarity ==='ace spec rare';
+  const baseLimit = BASE_COUNTS[card.setName];
   const isTrainer = type.includes('trainer');
-  
+  const isCommon = rarity === 'common';
+  const isUncommon = rarity === 'uncommon';
+  const isRare = rarity === 'rare';
+  const isAceSpec = type.includes('ace spec');
   const isPrismatic = card.setCode === 'sv8pt5';
-  const baseCount = {
-    PrismaticEvolutions: 131,
-    // Add other sets here if needed
-  }[card.setName] || 0;
 
   const checkboxes = [];
 
-  // --- BASE MODE ---
   if (mode === 'base') {
-  if (isPrismatic) {
-    if (isCommonOrUncommon) {
-      checkboxes.push({ label: 'Standard', key: 'standard' });
-    } else if (isAceSpec) {
+    if (isAceSpec) {
       checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+    } else if (isPrismatic) {
+      if (isCommon || isUncommon || isTrainer) {
+        checkboxes.push({ label: 'Standard', key: 'standard' });
+      } else {
+        checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+      }
     } else {
-      checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
-    }
-  } else {
-    if (isCommonOrUncommon || isTrainer) {
-      checkboxes.push({ label: 'Standard', key: 'standard' });
-    } else {
-      checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+      if (isCommon || isUncommon || isTrainer) {
+        checkboxes.push({ label: 'Standard', key: 'standard' });
+      } else {
+        checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+      }
     }
   }
-}
 
-
-  // --- PARALLEL MODE ---
   if (mode === 'parallel') {
-  if (isPrismatic) {
-    if (isCommonOrUncommon) {
-      checkboxes.push({ label: 'Standard', key: 'standard' });
-      checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
-      checkboxes.push({ label: 'Poké Ball', key: 'pokeball' });
-    } else if (isRare) {
+    if (isAceSpec) {
       checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
-      checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
-      checkboxes.push({ label: 'Poké Ball', key: 'pokeball' });
-    } else if (isAceSpec) {
-      checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+    } else if (isPrismatic) {
+      if (isCommon || isUncommon || isTrainer) {
+        checkboxes.push({ label: 'Standard', key: 'standard' });
+        checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
+        checkboxes.push({ label: 'Poké Ball', key: 'pokeball' });
+      } else if (isRare) {
+        checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
+        checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+        checkboxes.push({ label: 'Poké Ball', key: 'pokeball' });
+      } else {
+        checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+      }
     } else {
-      checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
-    }
-  } else {
-    if (isCommonOrUncommon || isTrainer) {
-      checkboxes.push({ label: 'Standard', key: 'standard' });
-      checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
-    } else if (isRare) {
-      checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
-      checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
-    } else {
-      checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+      if (isCommon || isUncommon || isTrainer) {
+        checkboxes.push({ label: 'Standard', key: 'standard' });
+        checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
+      } else if (isRare) {
+        checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
+        checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+      } else {
+        checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+      }
     }
   }
-}
 
-
-  // --- MASTER MODE ---
   if (mode === 'master') {
-  if (isPrismatic) {
-    if (isCommonOrUncommon) {
+    if (isAceSpec) {
+      checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+    } else if ((isCommon || isUncommon) && number <= baseLimit) {
       checkboxes.push({ label: 'Standard', key: 'standard' });
       checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
       checkboxes.push({ label: 'Poké Ball', key: 'pokeball' });
       checkboxes.push({ label: 'Master Ball', key: 'masterball' });
-    } else if (isRare) {
-      checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+    } else if (isTrainer && number <= baseLimit) {
+      checkboxes.push({ label: 'Standard', key: 'standard' });
       checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
       checkboxes.push({ label: 'Poké Ball', key: 'pokeball' });
-      checkboxes.push({ label: 'Master Ball', key: 'masterball' });
-    } else if (isAceSpec) {
+    } else if (isRare) {
+      checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
       checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
+      checkboxes.push({ label: 'Poké Ball', key: 'pokeball' });
+      checkboxes.push({ label: 'Master Ball', key: 'masterball' });
     } else {
       checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
     }
-  } else {
-    if (isCommonOrUncommon) {
-      checkboxes.push({ label: 'Standard', key: 'standard' });
-      checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
-    }
-    if (isRare) {
-      checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
-      checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
-    }
-    if (isAceSpec || (!isCommonOrUncommon && !isRare && !isTrainer)) {
-      checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
-    }
   }
-}
-
 
   return (
     <div className="bg-white shadow rounded-xl p-4 flex gap-4 card">
