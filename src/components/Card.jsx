@@ -25,6 +25,8 @@ function Card({ card, mode, onCheckboxChange }) {
   const isCommon = rarity === 'common';
   const isUncommon = rarity === 'uncommon';
   const isRare = rarity === 'rare';
+  
+  const isUltraRare = rarity === 'ultra rare';
   const isAceSpec = rarity.includes('ace spec');
   const isPrismatic = card.setCode === 'sv8pt5';
 
@@ -64,7 +66,7 @@ function Card({ card, mode, onCheckboxChange }) {
         checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
       }
     } else {
-      if (isCommon || isUncommon || isTrainer) {
+      if (isCommon || isUncommon) {
         checkboxes.push({ label: 'Standard', key: 'standard' });
         checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
       } else if (isRare) {
@@ -94,13 +96,12 @@ function Card({ card, mode, onCheckboxChange }) {
         checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
         checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
         checkboxes.push({ label: 'Poké Ball', key: 'pokeball' });
-     
-      checkboxes.push({ label: 'Master Ball', key: 'masterball' });
+        checkboxes.push({ label: 'Master Ball', key: 'masterball' });
       } else {
         checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
       }
     } else {
-      if (isCommon || isUncommon || isTrainer) {
+      if (isCommon || isUncommon ) {
         checkboxes.push({ label: 'Standard', key: 'standard' });
         checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
       } else if(isTrainer && isAceSpec){
@@ -108,7 +109,7 @@ function Card({ card, mode, onCheckboxChange }) {
       } else if (isRare) {
         checkboxes.push({ label: 'Reverse Holo', key: 'reverseHolo' });
         checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
-      } else if(isTrainer && !isCommon && !isUncommon && !isRare && !isAceSpec){
+      } else if(isTrainer && isUltraRare){
         checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
       } else {
         checkboxes.push({ label: 'Holo Foil', key: 'holoFoil' });
