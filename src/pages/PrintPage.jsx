@@ -7,6 +7,7 @@ const BASE_COUNTS = {
   PrismaticEvolutions: 131,
   SurgingSparks: 191,
   StellarCrown: 142,
+  ShroudedFable: 64,
   TwilightMasquerade: 167,
   TemporalForces: 162,
   PaldeanFates: 91,
