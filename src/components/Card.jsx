@@ -6,6 +6,7 @@ const BASE_COUNTS = {
   PrismaticEvolutions: 131,
   SurgingSparks: 191,
   StellarCrown: 142,
+  ShroudedFable: 64,
   TwilightMasquerade: 167,
   TemporalForces: 162,
   PaldeanFates: 91,
@@ -26,11 +27,9 @@ function Card({ card, mode, onCheckboxChange }) {
   const isCommon = rarity === 'common';
   const isUncommon = rarity === 'uncommon';
   const isRare = rarity === 'rare';
-  
   const isUltraRare = rarity === 'ultra rare';
   const isAceSpec = rarity.includes('ace spec');
   const isPrismatic = card.setCode === 'sv8pt5';
-
   const checkboxes = [];
 
   if (mode === 'base') {
