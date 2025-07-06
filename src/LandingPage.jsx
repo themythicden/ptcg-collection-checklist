@@ -16,6 +16,7 @@ const SET_NAME_MAP = {
   sv7: 'StellarCrown',
   sv6: 'TwilightMasquerade',
   sv5: 'TemporalForces',
+  sv4pt5: 'PaldeanFates',
   sv4: 'ParadoxRift',
   sv3pt5: '151',
   sv3: 'ObsidianFlames',
