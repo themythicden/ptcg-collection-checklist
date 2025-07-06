@@ -136,15 +136,38 @@ export default function ChecklistPage() {
     }
 
     if (mode === 'master') {
-      if (isAceSpec) return card.holoFoil;
-      if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
-        return card.standard && card.reverseHolo && card.pokeball && card.masterball;
-      }
-      if (isRare) {
-        return card.reverseHolo && card.holoFoil && card.pokeball && card.masterball;
-      }
-      return card.holoFoil;
+  if (isAceSpec) return card.holoFoil;
+
+  // Special rule for PrismaticEvolutions
+  if (isPrismatic) {
+    if (isCommonOrUncommon) {
+      return card.standard && card.reverseHolo && card.pokeball && card.masterball;
     }
+    if (isRare) {
+      return card.holoFoil && card.reverseHolo && card.pokeball && card.masterball;
+    }
+    if (isTrainer && number <= baseLimit) {
+      return card.standard && card.reverseHolo && card.pokeball; // ❌ no masterball
+    }
+    return card.holoFoil;
+  }
+
+  // Default logic (non-Prismatic)
+  if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
+    return card.standard && card.reverseHolo && card.pokeball && card.masterball;
+  }
+
+  if (isRare) {
+    return card.holoFoil && card.reverseHolo && card.pokeball && card.masterball;
+  }
+
+  if (isTrainer && number <= baseLimit) {
+    return card.standard && card.reverseHolo && card.pokeball; // ❌ no masterball
+  }
+
+  return card.holoFoil;
+}
+
 
     return false;
   };
