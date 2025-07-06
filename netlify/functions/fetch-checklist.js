@@ -11,7 +11,7 @@ const SHEET_NAMES = {
   151: '151',
   ObsidianFlames: 'ObsidianFlames',
   PaldeaEvolved: 'PaldeaEvolved',
-  ScarletViolet: 'Scarlet&Violet',
+  "Scarlet&Violet": 'Scarlet&Violet',
   SilverTempest: 'SilverTempest'
   };
   
