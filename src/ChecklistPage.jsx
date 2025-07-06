@@ -18,7 +18,7 @@ const BASE_COUNTS = {
   151: 165,
   ObsidianFlames: 197,
   PaldeaEvolved: 193,
-  ScarletViolet: 198,
+  Scarlet&Violet: 198,
   SilverTempest: 195
 };
 
@@ -36,7 +36,7 @@ const MASTER_COUNTS = {
   151: 207,
   ObsidianFlames: 230,
   PaldeaEvolved: 279,
-  ScarletViolet: 258,
+  Scarlet&Violet: 258,
   SilverTempest: 215
 };
 
