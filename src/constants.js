@@ -17,11 +17,22 @@ export const MASTER_COUNTS = {
 };
   
   export const BASE_COUNTS = {
-    JourneyTogether: 159,
-    TemporalForces: 162,
-    ObsidianFlames: 197,
-    PrismaticEvolutions: 131,
-  };
+  DestinedRivals: 182,
+  JourneyTogether: 159,
+  PrismaticEvolutions: 131,
+  SurgingSparks: 191,
+  StellarCrown: 142,
+  ShroudedFable: 64,
+  TwilightMasquerade: 167,
+  TemporalForces: 162,
+  PaldeanFates: 91,
+  ParadoxRift: 182,
+  "151": 165,
+  ObsidianFlames: 197,
+  PaldeaEvolved: 193,
+  "Scarlet&Violet": 198,
+  SilverTempest: 195
+};
   
   export const SET_CODES = {
     DestinedRivals: 'sv10',
