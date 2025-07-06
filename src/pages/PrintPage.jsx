@@ -9,6 +9,7 @@ const BASE_COUNTS = {
   StellarCrown: 142,
   TwilightMasquerade: 167,
   TemporalForces: 162,
+  PaldeanFates: 91,
   ParadoxRift: 182,
   151: 165,
   ObsidianFlames: 197,
