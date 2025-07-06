@@ -101,9 +101,9 @@ export default function PrintPage() {
             <th className="border px-2 py-1 text-left">#</th>
             <th className="border px-2 py-1 text-left">Name</th>
             <th className="border px-2 py-1 text-left">Rarity</th>
+            <th className="border px-2 py-1 text-left">Missing Variants</th>
             <th className="border px-2 py-1 text-left">Type</th>
             <th className="border px-2 py-1 text-left">Set</th>
-            <th className="border px-2 py-1 text-left">Missing Variants</th>
           </tr>
         </thead>
         <tbody>
@@ -112,9 +112,9 @@ export default function PrintPage() {
               <td className="border px-2 py-1">{card.number}</td>
               <td className="border px-2 py-1">{card.name}</td>
               <td className="border px-2 py-1 capitalize">{card.rarity}</td>
+              <td className="border px-2 py-1">{card.missing.map(v => variantLabel(v)).join(', ')}</td>
               <td className="border px-2 py-1 capitalize">{card.type}</td>
               <td className="border px-2 py-1">{setName}</td>
-              <td className="border px-2 py-1">{card.missing.map(v => variantLabel(v)).join(', ')}</td>
             </tr>
           ))}
         </tbody>
