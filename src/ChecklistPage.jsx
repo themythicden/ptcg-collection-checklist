@@ -63,37 +63,37 @@ export default function ChecklistPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const fetchCards = async (selectedSet) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`/.netlify/functions/fetch-checklist?set=${selectedSet}`);
-      const data = await res.json();
-
-      const specialRows = data.filter(card => card.name?.startsWith('__progress_'));
-      const realCards = data.filter(card =>
-        card.name && !card.name.startsWith('__progress_') && !isNaN(parseInt(card.number))
-      );
-
-      realCards.forEach(card => {
-        card.setCode = getSetCode(selectedSet);
-        card.setName = selectedSet;
-      });
-
-      const progressData = {};
-      specialRows.forEach(row => {
-        const key = row.name.replace(/__progress_|__/g, '');
-        progressData[key] = row;
-      });
-
-      setProgress(progressData);
-      setCards(realCards);
-    } catch (err) {
-      console.error('Error fetching cards:', err);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
+    const fetchCards = async (selectedSet) => {
+      setLoading(true);
+      try {
+        const res = await fetch(`/.netlify/functions/fetch-checklist?set=${selectedSet}`);
+        const data = await res.json();
+
+        const specialRows = data.filter(card => card.name?.startsWith('__progress_'));
+        const realCards = data.filter(card =>
+          card.name && !card.name.startsWith('__progress_') && !isNaN(parseInt(card.number))
+        );
+
+        realCards.forEach(card => {
+          card.setCode = getSetCode(selectedSet);
+          card.setName = selectedSet;
+        });
+
+        const progressData = {};
+        specialRows.forEach(row => {
+          const key = row.name.replace(/__progress_|__/g, '');
+          progressData[key] = row;
+        });
+
+        setProgress(progressData);
+        setCards(realCards);
+      } catch (err) {
+        console.error('Error fetching cards:', err);
+      }
+      setLoading(false);
+    };
+
     fetchCards(setName);
   }, [setName]);
 
@@ -136,38 +136,33 @@ export default function ChecklistPage() {
     }
 
     if (mode === 'master') {
-  if (isAceSpec) return card.holoFoil;
+      if (isAceSpec) return card.holoFoil;
 
-  // Special rule for PrismaticEvolutions
-  if (isPrismatic) {
-    if (isCommonOrUncommon) {
-      return card.standard && card.reverseHolo && card.pokeball && card.masterball;
+      if (isPrismatic) {
+        if (isCommonOrUncommon) {
+          return card.standard && card.reverseHolo && card.pokeball && card.masterball;
+        }
+        if (isRare) {
+          return card.holoFoil && card.reverseHolo && card.pokeball && card.masterball;
+        }
+        if (isTrainer && number <= baseLimit) {
+          return card.standard && card.reverseHolo && card.pokeball;
+        }
+        return card.holoFoil;
+      }
+
+      // Non-Prismatic logic
+      if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
+        return card.standard && card.reverseHolo;
+      }
+      if (isRare) {
+        return card.holoFoil && card.reverseHolo;
+      }
+      if (isTrainer && number <= baseLimit) {
+        return card.standard && card.reverseHolo;
+      }
+      return card.holoFoil;
     }
-    if (isRare) {
-      return card.holoFoil && card.reverseHolo && card.pokeball && card.masterball;
-    }
-    if (isTrainer && number <= baseLimit) {
-      return card.standard && card.reverseHolo && card.pokeball; // ❌ no masterball
-    }
-    return card.holoFoil;
-  }
-
-  // Default logic (non-Prismatic)
-  if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
-    return card.standard && card.reverseHolo && card.pokeball && card.masterball;
-  }
-
-  if (isRare) {
-    return card.holoFoil && card.reverseHolo && card.pokeball && card.masterball;
-  }
-
-  if (isTrainer && number <= baseLimit) {
-    return card.standard && card.reverseHolo && card.pokeball; // ❌ no masterball
-  }
-
-  return card.holoFoil;
-}
-
 
     return false;
   };
@@ -231,9 +226,7 @@ export default function ChecklistPage() {
     <div className="max-w-6xl mx-auto p-4">
       <div className="sticky top-0 bg-white z-10 shadow p-4 mb-4">
         <div className="flex flex-wrap gap-4 items-center">
-          <button onClick={() => navigate('/')} className="text-blue-600 underline">
-            ← Back to Sets
-          </button>
+          <button onClick={() => navigate('/')} className="text-blue-600 underline">← Back to Sets</button>
 
           <div>
             <label className="mr-2">Mode:</label>
@@ -252,9 +245,8 @@ export default function ChecklistPage() {
           <label>
             <input type="checkbox" checked={hideCompleted} onChange={() => setHideCompleted(!hideCompleted)} /> Hide Completed
           </label>
-          <span className="ml-auto text-blue-600 font-medium">
-            {collectedCount} / {totalCount}
-          </span>
+          <span className="ml-auto text-blue-600 font-medium">{collectedCount} / {totalCount}</span>
+
           <button
             className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm"
             onClick={() => window.open(`/print/${setName}`, '_blank')}
