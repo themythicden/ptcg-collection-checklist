@@ -40,6 +40,24 @@ const BASE_COUNTS = {
   SilverTempest: 195
 };
 
+const MASTER_COUNTS = {
+  DestinedRivals: 244,
+  JourneyTogether: 190,
+  PrismaticEvolutions: 180,
+  SurgingSparks: 252,
+  StellarCrown: 175,
+  ShroudedFable: 99,
+  TwilightMasquerade: 226,
+  TemporalForces: 218,
+  PaldeanFates: 245,
+  ParadoxRift: 266,
+  "151": 207,
+  ObsidianFlames: 230,
+  PaldeaEvolved: 279,
+  "Scarlet&Violet": 258,
+  SilverTempest: 215
+};
+
 const formatSetName = (name) =>
   name.replace(/([A-Z])/g, ' $1').replace(/&/g, ' & ').trim();
 
