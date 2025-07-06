@@ -30,54 +30,55 @@ export default function PrintPage() {
         const baseCount = BASE_COUNTS[setName] || 0;
         const isPrismatic = setName === 'PrismaticEvolutions';
 
-        const filtered = data.filter(card => {
-          if (!card.name || isNaN(parseInt(card.number)) || card.name.startsWith('__progress_')) return false;
+        const filtered = data
+          .filter(card => card.name && !card.name.startsWith('__progress_') && !isNaN(parseInt(card.number)))
+          .map(card => {
+            const rarity = card.rarity?.toLowerCase() || '';
+            const number = parseInt(card.number);
+            const type = card.type?.toLowerCase() || '';
+            const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
+            const isRare = rarity === 'rare';
+            const isTrainer = type.includes('trainer');
+            const isAceSpec = type.includes('ace spec');
 
-          const rarity = card.rarity?.toLowerCase() || '';
-          const number = parseInt(card.number);
-          const type = card.type?.toLowerCase() || '';
-          const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
-          const isRare = rarity === 'rare';
-          const isTrainer = type.includes('trainer');
-          const isAceSpec = type.includes('ace spec');
+            let expected = [];
 
-          let expected = [];
-
-          // --- Logic for PRISMATIC ---
-          if (isPrismatic) {
-            if (isCommonOrUncommon) {
-              expected = ['standard', 'reverseHolo', 'pokeball', 'masterball'];
-            } else if (isRare) {
-              expected = ['reverseHolo', 'holoFoil', 'pokeball', 'masterball'];
-            } else if (isTrainer && number <= baseCount) {
-              expected = ['standard', 'reverseHolo', 'pokeball'];
+            // Prismatic logic
+            if (isPrismatic) {
+              if (isCommonOrUncommon) {
+                expected = ['standard', 'reverseHolo', 'pokeball', 'masterball'];
+              } else if (isRare) {
+                expected = ['reverseHolo', 'holoFoil', 'pokeball', 'masterball'];
+              } else if (isTrainer && number <= baseCount) {
+                expected = ['standard', 'reverseHolo', 'pokeball'];
+              } else {
+                expected = ['holoFoil'];
+              }
             } else {
-              expected = ['holoFoil'];
+              // Normal logic
+              if (isAceSpec) {
+                expected = ['holoFoil'];
+              } else if ((isCommonOrUncommon || isTrainer) && number <= baseCount) {
+                expected = ['standard', 'reverseHolo'];
+              } else if (isRare) {
+                expected = ['reverseHolo', 'holoFoil'];
+              } else {
+                expected = ['holoFoil'];
+              }
             }
-          }
 
-          // --- Logic for all OTHER SETS ---
-          else {
-            if (isAceSpec) {
-              expected = ['holoFoil'];
-            } else if ((isCommonOrUncommon || isTrainer) && number <= baseCount) {
-              expected = ['standard', 'reverseHolo'];
-            } else if (isRare) {
-              expected = ['reverseHolo', 'holoFoil'];
-            } else {
-              expected = ['holoFoil'];
-            }
-          }
+            // Get missing variants
+            const missing = expected.filter(variant => card[variant] !== true);
 
-          // Only include if any of the expected variants are not checked
-          return expected.some(variant => card[variant] !== true);
-        });
+            return missing.length > 0 ? { ...card, missing } : null;
+          })
+          .filter(Boolean);
 
         setCards(filtered);
         setLoading(false);
 
-        // Only open print preview AFTER cards are loaded and state is updated
-        setTimeout(() => window.print(), 200);
+        // Trigger print after cards are loaded
+        setTimeout(() => window.print(), 300);
       } catch (err) {
         console.error('Error fetching cards:', err);
         setLoading(false);
@@ -90,7 +91,7 @@ export default function PrintPage() {
   if (loading) return <p className="text-center mt-8">Generating list...</p>;
 
   return (
-    <div className="p-6 max-w-5xl mx-auto print:p-0 print:m-0 print:w-full">
+    <div className="p-6 max-w-6xl mx-auto print:p-0 print:m-0 print:w-full">
       <h1 className="text-2xl font-bold mb-4 text-center print:text-left">
         Missing Cards – {setName.replace(/([A-Z])/g, ' $1')}
       </h1>
@@ -102,6 +103,7 @@ export default function PrintPage() {
             <th className="border px-2 py-1 text-left">Rarity</th>
             <th className="border px-2 py-1 text-left">Type</th>
             <th className="border px-2 py-1 text-left">Set</th>
+            <th className="border px-2 py-1 text-left">Missing Variants</th>
           </tr>
         </thead>
         <tbody>
@@ -112,6 +114,7 @@ export default function PrintPage() {
               <td className="border px-2 py-1 capitalize">{card.rarity}</td>
               <td className="border px-2 py-1 capitalize">{card.type}</td>
               <td className="border px-2 py-1">{setName}</td>
+              <td className="border px-2 py-1">{card.missing.map(v => variantLabel(v)).join(', ')}</td>
             </tr>
           ))}
         </tbody>
@@ -119,4 +122,16 @@ export default function PrintPage() {
       <p className="mt-4 text-sm text-gray-500">Total missing: {cards.length}</p>
     </div>
   );
+}
+
+// Helper to convert keys to labels
+function variantLabel(key) {
+  const map = {
+    standard: 'Standard',
+    reverseHolo: 'Reverse Holo',
+    holoFoil: 'Holo Foil',
+    pokeball: 'Poké Ball',
+    masterball: 'Master Ball'
+  };
+  return map[key] || key;
 }
