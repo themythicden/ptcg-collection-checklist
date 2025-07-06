@@ -15,10 +15,10 @@ const BASE_COUNTS = {
   TemporalForces: 162,
   PaldeanFates: 91,
   ParadoxRift: 182,
-  151: 165,
+  "151": 165,
   ObsidianFlames: 197,
   PaldeaEvolved: 193,
-  Scarlet&Violet: 198,
+  "Scarlet&Violet": 198,
   SilverTempest: 195
 };
 
@@ -33,10 +33,10 @@ const MASTER_COUNTS = {
   TemporalForces: 218,
   PaldeanFates: 245,
   ParadoxRift: 266,
-  151: 207,
+  "151": 207,
   ObsidianFlames: 230,
   PaldeaEvolved: 279,
-  Scarlet&Violet: 258,
+  "Scarlet&Violet": 258,
   SilverTempest: 215
 };
 
