@@ -14,7 +14,7 @@ const BASE_COUNTS = {
   151: 165,
   ObsidianFlames: 197,
   PaldeaEvolved: 193,
-  ScarletViolet: 198,
+  "Scarlet&Violet": 198,
   SilverTempest: 195
 };
 
