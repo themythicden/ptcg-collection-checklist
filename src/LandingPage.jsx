@@ -14,6 +14,7 @@ const SET_NAME_MAP = {
   sv8pt5: 'PrismaticEvolutions',
   sv8: 'SurgingSparks',
   sv7: 'StellarCrown',
+  sv6pt5: 'ShroudedFable',
   sv6: 'TwilightMasquerade',
   sv5: 'TemporalForces',
   sv4pt5: 'PaldeanFates',
