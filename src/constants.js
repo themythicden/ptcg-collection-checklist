@@ -24,8 +24,20 @@ export const MASTER_COUNTS = {
   };
   
   export const SET_CODES = {
-    JourneyTogether: 'sv9',
-    TemporalForces: 'sv5',
-    ObsidianFlames: 'sv3',
-    PrismaticEvolutions: 'sv8pt5'
+    DestinedRivals: 'sv10',
+  JourneyTogether: 'sv9',
+  PrismaticEvolutions: 'sv8pt5',
+  SurgingSparks: 'sv8',
+  StellarCrown: 'sv7',
+  ShroudedFable: 'sv6pt5',
+  TwilightMasquerade: 'sv6',
+  TemporalForces: 'sv5',
+  PaldeanFates: 'sv4pt5',
+  ParadoxRift: 'sv4',
+  151: 'sv3pt5',
+  ObsidianFlames: 'sv3',
+  PaldeaEvolved: 'sv2',
+  ScarletViolet: 'sv1',
+    
+  SilverTempest: 'swsh12'
   };  
