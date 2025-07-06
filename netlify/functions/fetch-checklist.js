@@ -4,6 +4,7 @@ const SHEET_NAMES = {
   PrismaticEvolutions: 'PrismaticEvolutions',
   SurgingSparks: 'SurgingSparks',
   StellarCrown: 'StellarCrown',
+  ShroudedFable: 'ShroudedFable',
   TwilightMasquerade: 'TwilightMasquerade',
   TemporalForces: 'TemporalForces',
   ParadoxRift: 'ParadoxRift',
