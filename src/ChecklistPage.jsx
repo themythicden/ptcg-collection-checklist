@@ -38,7 +38,7 @@ const MASTER_COUNTS = {
   ObsidianFlames: 230,
   PaldeaEvolved: 279,
   "Scarlet&Violet": 258,
-  SilverTempest: 215
+  SilverTempest: 215,
   SteamSiege: 116
 };
 
