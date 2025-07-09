@@ -4,25 +4,15 @@ import { useEffect, useState } from 'react';
 import useSetLogos from './hooks/useSetLogos';
 import SearchBar from './components/SearchBar';
 
-// Safe internal set name mapping
-const SET_NAME_MAP = {
-  sv10: 'DestinedRivals',
-  sv9: 'JourneyTogether',
-  sv8pt5: 'PrismaticEvolutions',
-  sv8: 'SurgingSparks',
-  sv7: 'StellarCrown',
-  sv6pt5: 'ShroudedFable',
-  sv6: 'TwilightMasquerade',
-  sv5: 'TemporalForces',
-  sv4pt5: 'PaldeanFates',
-  sv4: 'ParadoxRift',
-  sv3pt5: '151',
-  sv3: 'ObsidianFlames',
-  sv2: 'PaldeaEvolved',
-  sv1: 'ScarletViolet',
-  swsh12: 'SilverTempest',
-  xy11: 'SteamSiege'
-};
+import {
+  BASE_COUNTS,
+  MASTER_COUNTS,
+  SET_CODES,
+  formatSetName
+} from './constants';
+
+const SET_NAME_LIST = Object.keys(SET_CODES); // or Object.entries(SET_CODES)
+
 
 // Optional display name override for cleaner formatting
 const DISPLAY_NAMES = {
