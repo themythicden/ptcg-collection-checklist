@@ -1,65 +1,10 @@
+// ChecklistPage.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Card from './components/Card';
 import SearchBar from './components/SearchBar';
+import { BASE_COUNTS, MASTER_COUNTS, SET_CODES } from './constants';
 import './index.css';
-
-const BASE_COUNTS = {
-  DestinedRivals: 182,
-  JourneyTogether: 159,
-  PrismaticEvolutions: 131,
-  SurgingSparks: 191,
-  StellarCrown: 142,
-  ShroudedFable: 64,
-  TwilightMasquerade: 167,
-  TemporalForces: 162,
-  PaldeanFates: 91,
-  ParadoxRift: 182,
-  "151": 165,
-  ObsidianFlames: 197,
-  PaldeaEvolved: 193,
-  "Scarlet&Violet": 198,
-  SilverTempest: 195,
-  SteamSiege: 114
-};
-
-const MASTER_COUNTS = {
-  DestinedRivals: 244,
-  JourneyTogether: 190,
-  PrismaticEvolutions: 180,
-  SurgingSparks: 252,
-  StellarCrown: 175,
-  ShroudedFable: 99,
-  TwilightMasquerade: 226,
-  TemporalForces: 218,
-  PaldeanFates: 245,
-  ParadoxRift: 266,
-  "151": 207,
-  ObsidianFlames: 230,
-  PaldeaEvolved: 279,
-  "Scarlet&Violet": 258,
-  SilverTempest: 215,
-  SteamSiege: 116
-};
-
-const getSetCode = (setName) => ({
-  DestinedRivals: 'sv10',
-  JourneyTogether: 'sv9',
-  PrismaticEvolutions: 'sv8pt5',
-  SurgingSparks: 'sv8',
-  StellarCrown: 'sv7',
-  ShroudedFable: 'sv6pt5',
-  TwilightMasquerade: 'sv6',
-  TemporalForces: 'sv5',
-  PaldeanFates: 'sv4pt5',
-  ParadoxRift: 'sv4',
-  151: 'sv3pt5',
-  ObsidianFlames: 'sv3',
-  PaldeaEvolved: 'sv2',
-  ScarletViolet: 'sv1',
-  SilverTempest: 'swsh12',
-  SteamSiege: 'xy11'
-}[setName] || 'sv9');
 
 export default function ChecklistPage() {
   const { setName: routeSetName } = useParams();
@@ -72,37 +17,35 @@ export default function ChecklistPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const fetchCards = async (selectedSet) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/.netlify/functions/fetch-checklist?set=${selectedSet}`);
+      const data = await res.json();
+
+      const specialRows = data.filter(card => card.name?.startsWith('__progress_'));
+      const realCards = data.filter(card => card.name && !card.name.startsWith('__progress_') && !isNaN(parseInt(card.number)));
+
+      realCards.forEach(card => {
+        card.setCode = SET_CODES[selectedSet];
+        card.setName = selectedSet;
+      });
+
+      const progressData = {};
+      specialRows.forEach(row => {
+        const key = row.name.replace(/__progress_|__/g, '');
+        progressData[key] = row;
+      });
+
+      setProgress(progressData);
+      setCards(realCards);
+    } catch (err) {
+      console.error('Error fetching cards:', err);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchCards = async (selectedSet) => {
-      setLoading(true);
-      try {
-        const res = await fetch(`/.netlify/functions/fetch-checklist?set=${selectedSet}`);
-        const data = await res.json();
-
-        const specialRows = data.filter(card => card.name?.startsWith('__progress_'));
-        const realCards = data.filter(card =>
-          card.name && !card.name.startsWith('__progress_') && !isNaN(parseInt(card.number))
-        );
-
-        realCards.forEach(card => {
-          card.setCode = getSetCode(selectedSet);
-          card.setName = selectedSet;
-        });
-
-        const progressData = {};
-        specialRows.forEach(row => {
-          const key = row.name.replace(/__progress_|__/g, '');
-          progressData[key] = row;
-        });
-
-        setProgress(progressData);
-        setCards(realCards);
-      } catch (err) {
-        console.error('Error fetching cards:', err);
-      }
-      setLoading(false);
-    };
-
     fetchCards(setName);
   }, [setName]);
 
@@ -146,7 +89,6 @@ export default function ChecklistPage() {
 
     if (mode === 'master') {
       if (isAceSpec) return card.holoFoil;
-
       if (isPrismatic) {
         if (isCommonOrUncommon) {
           return card.standard && card.reverseHolo && card.pokeball && card.masterball;
@@ -159,16 +101,14 @@ export default function ChecklistPage() {
         }
         return card.holoFoil;
       }
-
-      // Non-Prismatic logic
       if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
-        return card.standard && card.reverseHolo;
+        return card.standard && card.reverseHolo && card.pokeball && card.masterball;
       }
       if (isRare) {
-        return card.holoFoil && card.reverseHolo;
+        return card.holoFoil && card.reverseHolo && card.pokeball && card.masterball;
       }
       if (isTrainer && number <= baseLimit) {
-        return card.standard && card.reverseHolo;
+        return card.standard && card.reverseHolo && card.pokeball;
       }
       return card.holoFoil;
     }
@@ -235,7 +175,9 @@ export default function ChecklistPage() {
     <div className="max-w-6xl mx-auto p-4">
       <div className="sticky top-0 bg-white z-10 shadow p-4 mb-4">
         <div className="flex flex-wrap gap-4 items-center">
-          <button onClick={() => navigate('/')} className="text-blue-600 underline">← Back to Sets</button>
+          <button onClick={() => navigate('/')} className="text-blue-600 underline">
+            ← Back to Sets
+          </button>
 
           <div>
             <label className="mr-2">Mode:</label>
@@ -254,8 +196,9 @@ export default function ChecklistPage() {
           <label>
             <input type="checkbox" checked={hideCompleted} onChange={() => setHideCompleted(!hideCompleted)} /> Hide Completed
           </label>
-          <span className="ml-auto text-blue-600 font-medium">{collectedCount} / {totalCount}</span>
-
+          <span className="ml-auto text-blue-600 font-medium">
+            {collectedCount} / {totalCount}
+          </span>
           <button
             className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm"
             onClick={() => window.open(`/print/${setName}`, '_blank')}
