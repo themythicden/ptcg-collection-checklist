@@ -16,7 +16,8 @@ const BASE_COUNTS = {
   ObsidianFlames: 197,
   PaldeaEvolved: 193,
   "Scarlet&Violet": 198,
-  SilverTempest: 195
+  SilverTempest: 195,
+  SteamSiege: 114
 };
 
 export default function PrintPage() {
