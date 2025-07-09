@@ -1,22 +1,6 @@
-export const MASTER_COUNTS = {
-  DestinedRivals: 244,
-  JourneyTogether: 190,
-  PrismaticEvolutions: 180,
-  SurgingSparks: 252,
-  StellarCrown: 175,
-  ShroudedFable: 99,
-  TwilightMasquerade: 226,
-  TemporalForces: 218,
-  PaldeanFates: 245,
-  ParadoxRift: 266,
-  "151": 207,
-  ObsidianFlames: 230,
-  PaldeaEvolved: 279,
-  "Scarlet&Violet": 258,
-  SilverTempest: 215
-};
-  
-  export const BASE_COUNTS = {
+// constants.js
+
+export const BASE_COUNTS = {
   DestinedRivals: 182,
   JourneyTogether: 159,
   PrismaticEvolutions: 131,
@@ -30,12 +14,32 @@ export const MASTER_COUNTS = {
   "151": 165,
   ObsidianFlames: 197,
   PaldeaEvolved: 193,
-  "Scarlet&Violet": 198,
-  SilverTempest: 195
+  ScarletViolet: 198,
+  SilverTempest: 195,
+  SteamSiege: 114
 };
-  
-  export const SET_CODES = {
-    DestinedRivals: 'sv10',
+
+export const MASTER_COUNTS = {
+  DestinedRivals: 244,
+  JourneyTogether: 190,
+  PrismaticEvolutions: 180,
+  SurgingSparks: 252,
+  StellarCrown: 175,
+  ShroudedFable: 95,
+  TwilightMasquerade: 226,
+  TemporalForces: 218,
+  PaldeanFates: 123,
+  ParadoxRift: 266,
+  "151": 207,
+  ObsidianFlames: 230,
+  PaldeaEvolved: 279,
+  ScarletViolet: 258,
+  SilverTempest: 215,
+  SteamSiege: 116
+};
+
+export const SET_CODES = {
+  DestinedRivals: 'sv10',
   JourneyTogether: 'sv9',
   PrismaticEvolutions: 'sv8pt5',
   SurgingSparks: 'sv8',
@@ -45,10 +49,19 @@ export const MASTER_COUNTS = {
   TemporalForces: 'sv5',
   PaldeanFates: 'sv4pt5',
   ParadoxRift: 'sv4',
-  151: 'sv3pt5',
+  "151": 'sv3pt5',
   ObsidianFlames: 'sv3',
   PaldeaEvolved: 'sv2',
   ScarletViolet: 'sv1',
-    
-  SilverTempest: 'swsh12'
-  };  
+  SilverTempest: 'swsh12',
+  SteamSeige: 'xy11'
+};
+
+export const DISPLAY_NAMES = {
+  ScarletViolet: 'Scarlet & Violet',
+  "151": '151'
+  // other sets match their key, so no need to include unless formatting needed
+};
+
+// Utility function to get formatted set name
+export const formatSetName = (name) => DISPLAY_NAMES[name] || name.replace(/([A-Z])/g, ' $1').trim();
