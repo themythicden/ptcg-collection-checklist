@@ -19,7 +19,8 @@ const SET_NAME_MAP = {
   sv3: 'ObsidianFlames',
   sv2: 'PaldeaEvolved',
   sv1: 'Scarlet&Violet',
-  swsh12: 'SilverTempest'
+  swsh12: 'SilverTempest',
+  xy11: 'SteamSiege'
 };
 
 const BASE_COUNTS = {
@@ -37,7 +38,8 @@ const BASE_COUNTS = {
   ObsidianFlames: 197,
   PaldeaEvolved: 193,
   "Scarlet&Violet": 198,
-  SilverTempest: 195
+  SilverTempest: 195,
+  SteamSiege: 114,
 };
 
 
