@@ -1,4 +1,4 @@
-const BASE_COUNTS = {
+export const BASE_COUNTS = {
   DestinedRivals: 182,
   JourneyTogether: 159,
   PrismaticEvolutions: 131,
@@ -17,7 +17,7 @@ const BASE_COUNTS = {
   SteamSiege: 114
 };
 
-const MASTER_COUNTS = {
+export const MASTER_COUNTS = {
   DestinedRivals: 244,
   JourneyTogether: 190,
   PrismaticEvolutions: 180,
@@ -36,7 +36,7 @@ const MASTER_COUNTS = {
   SteamSiege: 116
 };
 
-const SET_CODES = {
+export const SET_CODES = {
   DestinedRivals: 'sv10',
   JourneyTogether: 'sv9',
   PrismaticEvolutions: 'sv8pt5',
@@ -55,29 +55,21 @@ const SET_CODES = {
   SteamSiege: 'xy11'
 };
 
-const SET_NAME_MAP = Object.fromEntries(
+export const SET_NAME_MAP = Object.fromEntries(
   Object.entries(SET_CODES).map(([name, code]) => [code, name])
 );
 
-const SHEET_NAMES = Object.fromEntries(
+export const SHEET_NAMES = Object.fromEntries(
   Object.keys(SET_CODES).map((key) => [key, key])
 );
 
-const DISPLAY_NAMES = {
+export const DISPLAY_NAMES = {
   ScarletViolet: 'Scarlet & Violet',
   "151": '151'
 };
 
-function formatSetName(name) {
+export function formatSetName(name) {
   return DISPLAY_NAMES[name] || name.replace(/([A-Z])/g, ' $1').trim();
 }
 
-module.exports = {
-  BASE_COUNTS,
-  MASTER_COUNTS,
-  SET_CODES,
-  SET_NAME_MAP,
-  SHEET_NAMES,
-  DISPLAY_NAMES,
-  formatSetName
-};
+
