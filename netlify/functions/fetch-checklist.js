@@ -1,10 +1,15 @@
 // netlify/functions/fetch-checklist.js
-const { SHEET_NAMES } = require('../shared/constants'); // Adjust path as needed
+const { SHEET_NAMES } = require('../src/constants'); // Adjust path as needed
 const fetch = require('node-fetch'); // Ensure node-fetch is available
 
 exports.handler = async function (event) {
   const querySet = event.queryStringParameters.set;
-  const sheetName = SHEET_NAMES[querySet] || 'JourneyTogether';
+  //const sheetName = SHEET_NAMES[querySet] || 'JourneyTogether';
+  const sheetName = SHEET_NAMES[event.queryStringParameters.set] || 'JourneyTogether';
+
+console.log('Requested set:', event.queryStringParameters.set);
+console.log('Resolved sheet name:', sheetName);
+
 
   const url = `https://script.google.com/macros/s/AKfycbzGyOrVGm3WRC34j34QKA2cjJA1upq9drnnOtXhRXedyT5SqFTjMMm-OgUNecfJd5YhRA/exec?sheet=${encodeURIComponent(sheetName)}`;
 
