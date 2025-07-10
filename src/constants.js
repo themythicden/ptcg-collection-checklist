@@ -56,7 +56,10 @@ export const SET_CODES = {
   SilverTempest: 'swsh12',
   SteamSeige: 'xy11'
 };
-
+const SHEET_NAMES = {
+  "Scarlet&Violet": "Scarlet&Violet", // ✅ quoted key
+  // others...
+};
 export const DISPLAY_NAMES = {
   ScarletViolet: 'Scarlet & Violet',
   "151": '151'
