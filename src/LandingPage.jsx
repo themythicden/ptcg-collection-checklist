@@ -1,28 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-//import { MASTER_COUNTS } from './constants';
 import { useEffect, useState } from 'react';
 import useSetLogos from './hooks/useSetLogos';
 import SearchBar from './components/SearchBar';
-// ✅ Import SET_NAME_MAP from your shared constants
-import { SET_NAME_MAP } from './constants'; // Adjust path as needed
-
 
 import {
   BASE_COUNTS,
   MASTER_COUNTS,
   SET_CODES,
+  SET_NAME_MAP,
   formatSetName
 } from './constants';
-
-const SET_NAME_LIST = Object.keys(SET_CODES); // or Object.entries(SET_CODES)
-
-
-// Optional display name override for cleaner formatting
-const DISPLAY_NAMES = {
-  ScarletViolet: 'Scarlet & Violet',
-};
-
-//const formatSetName = (name) => DISPLAY_NAMES[name] || name.replace(/([A-Z])/g, ' $1').trim();
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -125,21 +112,25 @@ export default function LandingPage() {
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
-          {Object.entries(SET_NAME_MAP).map(([setId, displayName]) => (
+          {Object.entries(SET_NAME_MAP).map(([setCode, setName]) => (
             <div
-              key={setId}
+              key={setCode}
               className="border rounded-xl p-4 hover:shadow cursor-pointer text-center bg-white transition duration-200 hover:scale-105"
-              onClick={() => navigate(`/set/${displayName}`)}
+              onClick={() => navigate(`/set/${setName}`)}
             >
               <img
-                src={logos[setId] || '/fallback-logo.png'}
-                alt={displayName}
+                src={logos[setCode] || '/fallback-logo.png'}
+                alt={setName}
                 className="mx-auto mb-2 h-12 w-auto object-contain"
               />
-              <div className="font-semibold">{formatSetName(displayName)}</div>
-              <img src={`https://images.pokemontcg.io/${setId}/symbol.png`} className="mx-auto" />
+              <div className="font-semibold">{formatSetName(setName)}</div>
+              <img
+                src={`https://images.pokemontcg.io/${setCode}/symbol.png`}
+                className="mx-auto"
+                alt="set symbol"
+              />
               <p className="text-sm text-gray-600">
-                {progress[displayName] || 0} / {MASTER_COUNTS[displayName]} cards
+                {progress[setName] || 0} / {MASTER_COUNTS[setName]} cards
               </p>
             </div>
           ))}
