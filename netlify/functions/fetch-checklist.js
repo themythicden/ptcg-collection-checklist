@@ -1,4 +1,4 @@
-const { SHEET_NAMES } = require('../shared/constants');
+const { SHEET_NAMES } = require('../src/constants');
 const fetch = require('node-fetch');
 
 exports.handler = async function (event) {
