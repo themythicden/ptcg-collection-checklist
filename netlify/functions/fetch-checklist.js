@@ -1,5 +1,4 @@
-// netlify/functions/fetch-checklist.js
-const { SHEET_NAMES } = require('../shared/constants');
+const { SHEET_NAMES } = require('../shared/constants'); // Update the path if needed
 const fetch = require('node-fetch');
 
 exports.handler = async function (event) {
@@ -12,29 +11,26 @@ exports.handler = async function (event) {
     const response = await fetch(url);
     const text = await response.text();
 
+    let json;
     try {
-      const json = JSON.parse(text);
-
-      if (!Array.isArray(json)) {
-        throw new Error("Parsed JSON is not an array");
-      }
-
-      return {
-        statusCode: 200,
-        body: JSON.stringify(json),
-      };
-    } catch (parseError) {
-      console.error("Failed to parse JSON:", text);
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'Invalid JSON response', details: parseError.message })
-      };
+      json = JSON.parse(text);
+    } catch (parseErr) {
+      throw new Error(`Invalid JSON: ${text.slice(0, 300)}`);
     }
+
+    if (!Array.isArray(json)) {
+      throw new Error('Expected an array of card objects, got: ' + JSON.stringify(json));
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(json)
+    };
   } catch (error) {
     console.error('Fetch failed:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to fetch data', details: error.message })
+      body: JSON.stringify({ error: 'Failed to fetch checklist data', details: error.message })
     };
   }
 };
