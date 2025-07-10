@@ -1,4 +1,4 @@
-const { SHEET_NAMES } = require('../shared/constants'); // Update the path if needed
+const { SHEET_NAMES } = require('../shared/constants');
 const fetch = require('node-fetch');
 
 exports.handler = async function (event) {
@@ -11,26 +11,29 @@ exports.handler = async function (event) {
     const response = await fetch(url);
     const text = await response.text();
 
+    // Log raw response for debugging
+    console.log(`Raw response for ${querySet}:`, text.slice(0, 300));
+
     let json;
     try {
       json = JSON.parse(text);
-    } catch (parseErr) {
-      throw new Error(`Invalid JSON: ${text.slice(0, 300)}`);
+    } catch (err) {
+      throw new Error(`Invalid JSON returned: ${text.slice(0, 200)}`);
     }
 
     if (!Array.isArray(json)) {
-      throw new Error('Expected an array of card objects, got: ' + JSON.stringify(json));
+      throw new Error(`Expected array, but got: ${typeof json}`);
     }
 
     return {
       statusCode: 200,
-      body: JSON.stringify(json)
+      body: JSON.stringify(json),
     };
-  } catch (error) {
-    console.error('Fetch failed:', error);
+  } catch (err) {
+    console.error('Function error:', err.message);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to fetch checklist data', details: error.message })
+      body: JSON.stringify({ error: 'Failed to fetch checklist', details: err.message }),
     };
   }
 };
