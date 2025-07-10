@@ -71,7 +71,7 @@ export const SET_NAME_MAP = {
   sv3pt5: '151',
   sv3: 'ObsidianFlames',
   sv2: 'PaldeaEvolved',
-  sv1: 'Scarlet&Violet',
+  sv1: 'ScarletViolet',
   swsh12: 'SilverTempest',
   xy11: 'SteamSiege'
 };
@@ -90,7 +90,7 @@ export const SHEET_NAMES = {
   "151": '151',
   ObsidianFlames: 'ObsidianFlames',
   PaldeaEvolved: 'PaldeaEvolved',
-  "Scarlet&Violet": "Scarlet&Violet", // ✅ quoted key
+  "ScarletViolet": "ScarletViolet", // ✅ quoted key
   SilverTempest: 'SilverTempest',
   SteamSiege: 'SteamSiege'
 };
