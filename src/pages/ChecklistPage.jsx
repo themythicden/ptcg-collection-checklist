@@ -10,7 +10,7 @@ import {
   SHEET_NAMES,
   DISPLAY_NAMES,
   formatSetName
-} from '../shared/constants';
+} from '../../shared/constants';
 
 export default function ChecklistPage() {
   const { setName } = useParams();
