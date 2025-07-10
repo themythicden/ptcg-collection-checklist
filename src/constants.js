@@ -54,9 +54,29 @@ export const SET_CODES = {
   PaldeaEvolved: 'sv2',
   ScarletViolet: 'sv1',
   SilverTempest: 'swsh12',
-  SteamSeige: 'xy11'
+  SteamSiege: 'xy11'
 };
-const SHEET_NAMES = {
+
+export const SET_NAME_MAP = {
+  sv10: 'DestinedRivals',
+  sv9: 'JourneyTogether',
+  sv8pt5: 'PrismaticEvolutions',
+  sv8: 'SurgingSparks',
+  sv7: 'StellarCrown',
+  sv6pt5: 'ShroudedFable',
+  sv6: 'TwilightMasquerade',
+  sv5: 'TemporalForces',
+  sv4pt5: 'PaldeanFates',
+  sv4: 'ParadoxRift',
+  sv3pt5: '151',
+  sv3: 'ObsidianFlames',
+  sv2: 'PaldeaEvolved',
+  sv1: 'Scarlet&Violet',
+  swsh12: 'SilverTempest'
+  xy11: 'SteamSiege'
+};
+
+export const SHEET_NAMES = {
   "Scarlet&Violet": "Scarlet&Violet", // ✅ quoted key
   // others...
 };
