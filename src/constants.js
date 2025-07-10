@@ -72,7 +72,7 @@ export const SET_NAME_MAP = {
   sv3: 'ObsidianFlames',
   sv2: 'PaldeaEvolved',
   sv1: 'Scarlet&Violet',
-  swsh12: 'SilverTempest'
+  swsh12: 'SilverTempest',
   xy11: 'SteamSiege'
 };
 
