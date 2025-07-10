@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { MASTER_COUNTS } from './constants';
+//import { MASTER_COUNTS } from './constants';
 import { useEffect, useState } from 'react';
 import useSetLogos from './hooks/useSetLogos';
 import SearchBar from './components/SearchBar';
@@ -19,7 +19,7 @@ const DISPLAY_NAMES = {
   ScarletViolet: 'Scarlet & Violet',
 };
 
-const formatSetName = (name) => DISPLAY_NAMES[name] || name.replace(/([A-Z])/g, ' $1').trim();
+//const formatSetName = (name) => DISPLAY_NAMES[name] || name.replace(/([A-Z])/g, ' $1').trim();
 
 export default function LandingPage() {
   const navigate = useNavigate();
