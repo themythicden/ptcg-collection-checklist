@@ -76,9 +76,7 @@ export const SET_NAME_MAP = {
   xy11: 'SteamSiege'
 };
 
-export const SHEET_NAMES = {
-  "Scarlet&Violet": "Scarlet&Violet", // ✅ quoted key
-  
+export const SHEET_NAMES = {  
   DestinedRivals: 'DestinedRivals',
   JourneyTogether: 'JourneyTogether',
   PrismaticEvolutions: 'PrismaticEvolutions',
@@ -92,7 +90,7 @@ export const SHEET_NAMES = {
   "151": '151',
   ObsidianFlames: 'ObsidianFlames',
   PaldeaEvolved: 'PaldeaEvolved',
-  ScarletViolet: 198,
+  "Scarlet&Violet": "Scarlet&Violet", // ✅ quoted key
   SilverTempest: 'SilverTempest',
   SteamSiege: 'SteamSiege'
 };
