@@ -14,7 +14,7 @@ exports.handler = async function (event) {
 console.log('Querying sheet:', sheetName);
 console.log('Raw response JSON:', json);
 
-    f (!Array.isArray(json)) {
+    if (!Array.isArray(json)) {
   console.error("Invalid sheet data:", json); // Add this
   throw new Error("Invalid sheet data returned");
 }
