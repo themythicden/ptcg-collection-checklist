@@ -78,7 +78,23 @@ export const SET_NAME_MAP = {
 
 export const SHEET_NAMES = {
   "Scarlet&Violet": "Scarlet&Violet", // ✅ quoted key
-  // others...
+  
+  DestinedRivals: 'DestinedRivals',
+  JourneyTogether: 'JourneyTogether',
+  PrismaticEvolutions: 'PrismaticEvolutions',
+  SurgingSparks: 'SurgingSparks',
+  StellarCrown: 'StellarCrown',
+  ShroudedFable: 'ShroudedFable',
+  TwilightMasquerade: 'TwilightMasquerade',
+  TemporalForces: 'TemporalForces',
+  PaldeanFates: 'PaldeanFates',
+  ParadoxRift: 'ParadoxRift',
+  "151": '151',
+  ObsidianFlames: 'ObsidianFlames',
+  PaldeaEvolved: 'PaldeaEvolved',
+  ScarletViolet: 198,
+  SilverTempest: 'SilverTempest',
+  SteamSiege: 'SteamSiege'
 };
 export const DISPLAY_NAMES = {
   ScarletViolet: 'Scarlet & Violet',
