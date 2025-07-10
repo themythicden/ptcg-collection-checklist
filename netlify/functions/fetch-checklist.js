@@ -1,7 +1,7 @@
-const { SHEET_NAMES } = require('../shared/constants');
-const fetch = require('node-fetch');
+import { SHEET_NAMES } from '../shared/constants.js'; // ✅ Make sure constants file also uses ESM exports
+import fetch from 'node-fetch'; // ✅ ESM import
 
-exports.handler = async function (event) {
+export async function handler(event) {
   const set = event.queryStringParameters.set;
 
   if (!set || !SHEET_NAMES[set]) {
@@ -12,7 +12,7 @@ exports.handler = async function (event) {
   }
 
   const sheetName = SHEET_NAMES[set];
-  const url = `https://script.google.com/macros/s/PASTE-YOUR-URL/exec?sheet=${encodeURIComponent(sheetName)}`;
+  const url = `https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?sheet=${encodeURIComponent(sheetName)}`;
 
   try {
     const response = await fetch(url);
@@ -33,4 +33,4 @@ exports.handler = async function (event) {
       body: JSON.stringify({ error: 'Server error', details: error.message }),
     };
   }
-};
+}
