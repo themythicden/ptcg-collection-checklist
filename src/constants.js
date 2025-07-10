@@ -1,7 +1,4 @@
-module.exports = {
-  // constants.js
-
-export const BASE_COUNTS = {
+const BASE_COUNTS = {
   DestinedRivals: 182,
   JourneyTogether: 159,
   PrismaticEvolutions: 131,
@@ -20,7 +17,7 @@ export const BASE_COUNTS = {
   SteamSiege: 114
 };
 
-export const MASTER_COUNTS = {
+const MASTER_COUNTS = {
   DestinedRivals: 244,
   JourneyTogether: 190,
   PrismaticEvolutions: 180,
@@ -39,7 +36,7 @@ export const MASTER_COUNTS = {
   SteamSiege: 116
 };
 
-export const SET_CODES = {
+const SET_CODES = {
   DestinedRivals: 'sv10',
   JourneyTogether: 'sv9',
   PrismaticEvolutions: 'sv8pt5',
@@ -58,7 +55,7 @@ export const SET_CODES = {
   SteamSiege: 'xy11'
 };
 
-export const SET_NAME_MAP = {
+const SET_NAME_MAP = {
   sv10: 'DestinedRivals',
   sv9: 'JourneyTogether',
   sv8pt5: 'PrismaticEvolutions',
@@ -77,7 +74,7 @@ export const SET_NAME_MAP = {
   xy11: 'SteamSiege'
 };
 
-export const SHEET_NAMES = {  
+const SHEET_NAMES = {
   DestinedRivals: 'DestinedRivals',
   JourneyTogether: 'JourneyTogether',
   PrismaticEvolutions: 'PrismaticEvolutions',
@@ -95,12 +92,21 @@ export const SHEET_NAMES = {
   SilverTempest: 'SilverTempest',
   SteamSiege: 'SteamSiege'
 };
-export const DISPLAY_NAMES = {
+
+const DISPLAY_NAMES = {
   ScarletViolet: 'Scarlet & Violet',
   "151": '151'
-  // other sets match their key, so no need to include unless formatting needed
 };
 
-// Utility function to get formatted set name
-export const formatSetName = (name) => DISPLAY_NAMES[name] || name.replace(/([A-Z])/g, ' $1').trim();
+const formatSetName = (name) =>
+  DISPLAY_NAMES[name] || name.replace(/([A-Z])/g, ' $1').trim();
+
+module.exports = {
+  BASE_COUNTS,
+  MASTER_COUNTS,
+  SET_CODES,
+  SET_NAME_MAP,
+  SHEET_NAMES,
+  DISPLAY_NAMES,
+  formatSetName
 };
