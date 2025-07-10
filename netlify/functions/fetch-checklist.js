@@ -11,6 +11,8 @@ exports.handler = async function (event) {
   try {
     const response = await fetch(url);
     const json = await response.json();
+console.log('Querying sheet:', sheetName);
+console.log('Raw response JSON:', json);
 
     if (!Array.isArray(json)) {
       throw new Error("Invalid sheet data returned");
