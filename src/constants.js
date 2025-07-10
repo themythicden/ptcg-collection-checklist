@@ -90,7 +90,7 @@ export const SHEET_NAMES = {
   "151": '151',
   ObsidianFlames: 'ObsidianFlames',
   PaldeaEvolved: 'PaldeaEvolved',
-  "ScarletViolet": "ScarletViolet", // ✅ quoted key
+  ScarletViolet: 'ScarletViolet',
   SilverTempest: 'SilverTempest',
   SteamSiege: 'SteamSiege'
 };
