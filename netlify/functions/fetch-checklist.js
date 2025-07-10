@@ -1,4 +1,4 @@
-import { SHEET_NAMES } from '../shared/constants.js'; // ✅ Make sure constants file also uses ESM exports
+import { SHEET_NAMES } from './utils/constants.js'; // ✅ Make sure constants file also uses ESM exports
 import fetch from 'node-fetch'; // ✅ ESM import
 
 export async function handler(event) {
