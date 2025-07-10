@@ -1,4 +1,4 @@
-const BASE_COUNTS = {
+export const BASE_COUNTS = {
   DestinedRivals: 182,
   JourneyTogether: 159,
   PrismaticEvolutions: 131,
@@ -17,7 +17,7 @@ const BASE_COUNTS = {
   SteamSiege: 114
 };
 
-const MASTER_COUNTS = {
+export const MASTER_COUNTS = {
   DestinedRivals: 244,
   JourneyTogether: 190,
   PrismaticEvolutions: 180,
@@ -36,7 +36,7 @@ const MASTER_COUNTS = {
   SteamSiege: 116
 };
 
-const SET_CODES = {
+export const SET_CODES = {
   DestinedRivals: 'sv10',
   JourneyTogether: 'sv9',
   PrismaticEvolutions: 'sv8pt5',
@@ -55,7 +55,7 @@ const SET_CODES = {
   SteamSiege: 'xy11'
 };
 
-const SET_NAME_MAP = {
+export const SET_NAME_MAP = {
   sv10: 'DestinedRivals',
   sv9: 'JourneyTogether',
   sv8pt5: 'PrismaticEvolutions',
@@ -74,7 +74,7 @@ const SET_NAME_MAP = {
   xy11: 'SteamSiege'
 };
 
-const SHEET_NAMES = {
+export const SHEET_NAMES = {
   DestinedRivals: 'DestinedRivals',
   JourneyTogether: 'JourneyTogether',
   PrismaticEvolutions: 'PrismaticEvolutions',
@@ -93,7 +93,7 @@ const SHEET_NAMES = {
   SteamSiege: 'SteamSiege'
 };
 
-const DISPLAY_NAMES = {
+export const DISPLAY_NAMES = {
   ScarletViolet: 'Scarlet & Violet',
   "151": '151'
 };
