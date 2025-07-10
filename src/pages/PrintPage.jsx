@@ -1,112 +1,115 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-const BASE_COUNTS = {
-  DestinedRivals: 182,
-  JourneyTogether: 159,
-  PrismaticEvolutions: 131,
-  SurgingSparks: 191,
-  StellarCrown: 142,
-  ShroudedFable: 64,
-  TwilightMasquerade: 167,
-  TemporalForces: 162,
-  PaldeanFates: 91,
-  ParadoxRift: 182,
-  151: 165,
-  ObsidianFlames: 197,
-  PaldeaEvolved: 193,
-  "Scarlet&Violet": 198,
-  SilverTempest: 195,
-  SteamSiege: 114
-};
+import {
+  BASE_COUNTS,
+  SET_CODES,
+  formatSetName
+} from '../constants';
 
 export default function PrintPage() {
   const { setName } = useParams();
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const baseCount = BASE_COUNTS[setName];
+  const isPrismatic = setName === 'PrismaticEvolutions';
+
   useEffect(() => {
     const fetchCards = async () => {
+      setLoading(true);
       try {
         const res = await fetch(`/.netlify/functions/fetch-checklist?set=${setName}`);
         const data = await res.json();
-        const baseCount = BASE_COUNTS[setName] || 0;
-        const isPrismatic = setName === 'PrismaticEvolutions';
 
-        const filtered = data
-          .filter(card => card.name && !card.name.startsWith('__progress_') && !isNaN(parseInt(card.number)))
+        const realCards = data.filter(card =>
+          card.name &&
+          !card.name.startsWith('__progress_') &&
+          !isNaN(parseInt(card.number))
+        );
+
+        const missing = realCards
           .map(card => {
             const rarity = card.rarity?.toLowerCase() || '';
-            const number = parseInt(card.number);
             const type = card.type?.toLowerCase() || '';
+            const number = parseInt(card.number);
             const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
             const isRare = rarity === 'rare';
             const isTrainer = type.includes('trainer');
-            const isAceSpec = type.includes('ace spec');
+            const isAceSpec = rarity.includes('ace spec');
 
-            let expected = [];
+            const variants = [];
 
-            // Prismatic logic
+            if (isAceSpec) {
+              if (!card.holoFoil) variants.push('Holo Foil');
+              return variants.length ? { ...card, missing: variants } : null;
+            }
+
             if (isPrismatic) {
               if (isCommonOrUncommon) {
-                expected = ['standard', 'reverseHolo', 'pokeball', 'masterball'];
+                if (!card.standard) variants.push('Standard');
+                if (!card.reverseHolo) variants.push('Reverse Holo');
+                if (!card.pokeball) variants.push('Poké Ball');
+                if (!card.masterball) variants.push('Master Ball');
               } else if (isRare) {
-                expected = ['reverseHolo', 'holoFoil', 'pokeball', 'masterball'];
+                if (!card.holoFoil) variants.push('Holo Foil');
+                if (!card.reverseHolo) variants.push('Reverse Holo');
+                if (!card.pokeball) variants.push('Poké Ball');
+                if (!card.masterball) variants.push('Master Ball');
               } else if (isTrainer && number <= baseCount) {
-                expected = ['standard', 'reverseHolo', 'pokeball'];
+                if (!card.standard) variants.push('Standard');
+                if (!card.reverseHolo) variants.push('Reverse Holo');
+                if (!card.pokeball) variants.push('Poké Ball');
               } else {
-                expected = ['holoFoil'];
+                if (!card.holoFoil) variants.push('Holo Foil');
               }
             } else {
-              // Normal logic
-              if (isAceSpec) {
-                expected = ['holoFoil'];
-              } else if ((isCommonOrUncommon || isTrainer) && number <= baseCount) {
-                expected = ['standard', 'reverseHolo'];
+              if (isCommonOrUncommon || (isTrainer && number <= baseCount)) {
+                if (!card.standard) variants.push('Standard');
+                if (!card.reverseHolo) variants.push('Reverse Holo');
               } else if (isRare) {
-                expected = ['reverseHolo', 'holoFoil'];
+                if (!card.holoFoil) variants.push('Holo Foil');
+                if (!card.reverseHolo) variants.push('Reverse Holo');
               } else {
-                expected = ['holoFoil'];
+                if (!card.holoFoil) variants.push('Holo Foil');
               }
             }
 
-            // Get missing variants
-            const missing = expected.filter(variant => card[variant] !== true);
-
-            return missing.length > 0 ? { ...card, missing } : null;
+            return variants.length ? { ...card, missing: variants } : null;
           })
           .filter(Boolean);
 
-        setCards(filtered);
-        setLoading(false);
-
-        // Trigger print after cards are loaded
-        setTimeout(() => window.print(), 300);
+        setCards(missing);
       } catch (err) {
         console.error('Error fetching cards:', err);
-        setLoading(false);
       }
+      setLoading(false);
     };
 
     fetchCards();
   }, [setName]);
 
+  useEffect(() => {
+    if (!loading) {
+      setTimeout(() => window.print(), 600);
+    }
+  }, [loading]);
+
   if (loading) return <p className="text-center mt-8">Generating list...</p>;
 
   return (
-    <div className="p-6 max-w-6xl mx-auto print:p-0 print:m-0 print:w-full">
+    <div className="p-6 max-w-5xl mx-auto print:p-0 print:m-0 print:w-full">
       <h1 className="text-2xl font-bold mb-4 text-center print:text-left">
-        Missing Cards – {setName.replace(/([A-Z])/g, ' $1')}
+        Missing Cards – {formatSetName(setName)}
       </h1>
+
       <table className="w-full table-auto border-collapse text-sm print:text-xs">
         <thead>
           <tr className="bg-gray-200">
             <th className="border px-2 py-1 text-left">#</th>
             <th className="border px-2 py-1 text-left">Name</th>
             <th className="border px-2 py-1 text-left">Rarity</th>
-            <th className="border px-2 py-1 text-left">Missing Variants</th>
             <th className="border px-2 py-1 text-left">Type</th>
-            <th className="border px-2 py-1 text-left">Set</th>
+            <th className="border px-2 py-1 text-left">Missing Variants</th>
           </tr>
         </thead>
         <tbody>
@@ -115,26 +118,16 @@ export default function PrintPage() {
               <td className="border px-2 py-1">{card.number}</td>
               <td className="border px-2 py-1">{card.name}</td>
               <td className="border px-2 py-1 capitalize">{card.rarity}</td>
-              <td className="border px-2 py-1">{card.missing.map(v => variantLabel(v)).join(', ')}</td>
               <td className="border px-2 py-1 capitalize">{card.type}</td>
-              <td className="border px-2 py-1">{setName}</td>
+              <td className="border px-2 py-1">{card.missing.join(', ')}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <p className="mt-4 text-sm text-gray-500">Total missing: {cards.length}</p>
+
+      <p className="mt-4 text-sm text-gray-500">
+        Total missing: {cards.length} cards
+      </p>
     </div>
   );
-}
-
-// Helper to convert keys to labels
-function variantLabel(key) {
-  const map = {
-    standard: 'Standard',
-    reverseHolo: 'Reverse Holo',
-    holoFoil: 'Holo Foil',
-    pokeball: 'Poké Ball',
-    masterball: 'Master Ball'
-  };
-  return map[key] || key;
 }
