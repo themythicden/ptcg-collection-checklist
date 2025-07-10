@@ -32,7 +32,9 @@ export default function LandingPage() {
             const res = await fetch(`/.netlify/functions/fetch-checklist?set=${setName}`);
             const data = await res.json();
 
-            const progressRow = data.find(card => card.name === '__progress_master__');
+            //const progressRow = data.find(card => card.name === '__progress_master__');
+            const progressRow = Array.isArray(data) ? data.find(card => card.name === '__progress_master__') : null;
+
             if (progressRow) {
               const total =
                 (parseInt(progressRow.standard) || 0) +
