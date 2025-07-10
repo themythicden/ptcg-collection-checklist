@@ -98,7 +98,7 @@ export const DISPLAY_NAMES = {
   "151": '151'
 };
 
-const formatSetName = (name) =>
+export const formatSetName = (name) =>
   DISPLAY_NAMES[name] || name.replace(/([A-Z])/g, ' $1').trim();
 
 module.exports = {
