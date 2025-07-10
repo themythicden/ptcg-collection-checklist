@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useSetLogos from './hooks/useSetLogos';
 import SearchBar from './components/SearchBar';
+// ✅ Import SET_NAME_MAP from your shared constants
+import { SET_NAME_MAP } from './constants'; // Adjust path as needed
+
 
 import {
   BASE_COUNTS,
