@@ -1,4 +1,5 @@
-// constants.js
+module.exports = {
+  // constants.js
 
 export const BASE_COUNTS = {
   DestinedRivals: 182,
@@ -102,3 +103,4 @@ export const DISPLAY_NAMES = {
 
 // Utility function to get formatted set name
 export const formatSetName = (name) => DISPLAY_NAMES[name] || name.replace(/([A-Z])/g, ' $1').trim();
+};
