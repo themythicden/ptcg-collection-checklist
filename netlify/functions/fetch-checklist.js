@@ -1,5 +1,7 @@
-import { SHEET_NAMES } from './utils/constants.js'; // ✅ Make sure constants file also uses ESM exports
-import fetch from 'node-fetch'; // ✅ ESM import
+// fetch-checklist.js
+const fetch = require('node-fetch');
+const { SHEET_NAMES } = require('./utils/constants'); // adjust as needed
+
 
 export async function handler(event) {
   const set = event.queryStringParameters.set;
