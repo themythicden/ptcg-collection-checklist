@@ -1,14 +1,10 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Card from '../components/Card';
-
 import {
+  SET_CODES,
   BASE_COUNTS,
   MASTER_COUNTS,
-  SET_CODES,
-  SET_NAME_MAP,
-  SHEET_NAMES,
-  DISPLAY_NAMES,
   formatSetName
 } from '../../shared/constants';
 
@@ -16,120 +12,118 @@ export default function ChecklistPage() {
   const { setName } = useParams();
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [view, setView] = useState('base'); // base | master
+  const [setType, setSetType] = useState('base'); // base, parallel, master
   const [hideCollected, setHideCollected] = useState(false);
-  const [filterRarity, setFilterRarity] = useState('');
 
-  const baseCount = BASE_COUNTS[setName];
-  const masterCount = MASTER_COUNTS[setName];
+  const baseCount = BASE_COUNTS[setName] || 0;
+  const masterCount = MASTER_COUNTS[setName] || 0;
   const setCode = SET_CODES[setName];
 
   useEffect(() => {
-    const fetchCards = async () => {
+    const fetchData = async () => {
       setLoading(true);
       try {
         const res = await fetch(`/.netlify/functions/fetch-checklist?set=${setName}`);
         const data = await res.json();
         setCards(data.filter(card => !card.name?.startsWith('__progress_')));
       } catch (err) {
-        console.error('Failed to load cards:', err);
-        setCards([]);
+        console.error(`Failed to fetch data for ${setName}`, err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
-    fetchCards();
+
+    fetchData();
   }, [setName]);
 
-  const filtered = cards.filter(card => {
-    const number = parseInt(card.number);
-    const isBase = number <= baseCount;
-    const isMaster = number <= masterCount;
+  const isCollected = (card) => {
+    if (setType === 'base') return card.standard === '✓';
+    if (setType === 'parallel') return card.reverseHolo === '✓';
+    return (
+      card.standard === '✓' ||
+      card.reverseHolo === '✓' ||
+      card.holoFoil === '✓' ||
+      card.pokeball === '✓' ||
+      card.masterball === '✓'
+    );
+  };
 
-    const includeByView =
-      view === 'base' ? isBase :
-      view === 'master' ? isMaster :
-      true;
+  const filteredCards = cards.filter(card => {
+    const cardNumber = parseInt(card.number);
+    const includeInMaster = setType === 'master';
+    const includeInParallel = setType === 'parallel' && cardNumber <= baseCount;
+    const includeInBase = setType === 'base' && cardNumber <= baseCount;
 
-    const collected = ['standard', 'reverseHolo', 'holoFoil', 'pokeball', 'masterball']
-      .some(type => card[type]);
+    const shouldInclude =
+      includeInMaster || includeInParallel || includeInBase;
 
-    const matchesRarity = filterRarity ? card.rarity === filterRarity : true;
-
-    return includeByView && (!hideCollected || !collected) && matchesRarity;
+    return shouldInclude && (!hideCollected || !isCollected(card));
   });
 
-  const collectedCount = cards.reduce((sum, card) => {
-    const number = parseInt(card.number);
-    const withinRange = view === 'base' ? number <= baseCount : number <= masterCount;
-    if (!withinRange) return sum;
-    return sum + ['standard', 'reverseHolo', 'holoFoil', 'pokeball', 'masterball']
-      .reduce((s, type) => s + (card[type] ? 1 : 0), 0);
+  const collectedCount = cards.reduce((total, card) => {
+    const cardNumber = parseInt(card.number);
+    if (setType === 'base' && cardNumber <= baseCount && card.standard === '✓') return total + 1;
+    if (setType === 'parallel' && cardNumber <= baseCount && card.reverseHolo === '✓') return total + 1;
+    if (setType === 'master') {
+      return (
+        total +
+        ['standard', 'reverseHolo', 'holoFoil', 'pokeball', 'masterball'].reduce(
+          (sum, key) => sum + (card[key] === '✓' ? 1 : 0),
+          0
+        )
+      );
+    }
+    return total;
   }, 0);
 
-  const total = view === 'base' ? baseCount : masterCount;
-
   return (
-    <div className="p-4 max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold text-center mb-4">
-        {formatSetName(setName)} Checklist
+    <div className="p-4 max-w-5xl mx-auto">
+      <h1 className="text-xl font-bold mb-2 text-center">
+        {formatSetName(setName)} - {setType.charAt(0).toUpperCase() + setType.slice(1)} Set
       </h1>
 
-      <div className="flex flex-wrap gap-4 justify-between items-center mb-4">
-        <div className="flex gap-2">
-          <label>
-            <input
-              type="radio"
-              name="view"
-              value="base"
-              checked={view === 'base'}
-              onChange={() => setView('base')}
-            /> Base Set
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="view"
-              value="master"
-              checked={view === 'master'}
-              onChange={() => setView('master')}
-            /> Master Set
-          </label>
-        </div>
-
-        <div className="text-sm font-semibold">
-          Progress: {collectedCount} / {total}
-        </div>
-
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={hideCollected}
-              onChange={e => setHideCollected(e.target.checked)}
-            /> Hide Collected
-          </label>
-        </div>
-
-        <div>
-          <select
-            value={filterRarity}
-            onChange={e => setFilterRarity(e.target.value)}
-            className="border rounded p-1"
+      <div className="flex flex-wrap justify-center gap-4 mb-4">
+        {['base', 'parallel', 'master'].map(type => (
+          <button
+            key={type}
+            onClick={() => setSetType(type)}
+            className={`px-3 py-1 border rounded ${
+              setType === type ? 'bg-blue-500 text-white' : 'bg-white'
+            }`}
           >
-            <option value="">All Rarities</option>
-            {[...new Set(cards.map(c => c.rarity).filter(Boolean))].map(r => (
-              <option key={r} value={r}>{r}</option>
-            ))}
-          </select>
-        </div>
+            {type.charAt(0).toUpperCase() + type.slice(1)} Set
+          </button>
+        ))}
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={hideCollected}
+            onChange={() => setHideCollected(!hideCollected)}
+          />
+          Hide Collected
+        </label>
       </div>
 
+      <p className="text-center text-gray-600 mb-4">
+        {collectedCount} / {setType === 'base'
+          ? baseCount
+          : setType === 'parallel'
+          ? baseCount
+          : masterCount} collected
+      </p>
+
       {loading ? (
-        <p className="text-center mt-10">Loading cards...</p>
+        <p className="text-center">Loading cards...</p>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
-          {filtered.map(card => (
-            <Card key={card.name + card.number} card={card} setCode={setCode} setName={setName} />
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {filteredCards.map((card) => (
+            <Card
+              key={card.name + card.number}
+              card={{ ...card, setCode, setName }}
+              setName={setName}
+              setCode={setCode}
+              setType={setType}
+            />
           ))}
         </div>
       )}
