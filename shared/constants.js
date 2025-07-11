@@ -60,7 +60,7 @@ export const SET_CODES = {
   ScarletViolet: 'sv1',
   SilverTempest: 'swsh12',
   Evolutions: 'xy12',
-  SteamSiege: 'xy11'
+  SteamSiege: 'xy11',
   FatesCollide: 'xy10'
 };
 
