@@ -64,6 +64,7 @@ export default function ChecklistPage() {
     const isAceSpec = rarity.includes('ace spec');
     const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
     const isRare = rarity === 'rare';
+    const isRareSecret = rariry === 'rare secret';
     const isPrismatic = setName === 'PrismaticEvolutions';
     const isSteamSiege = setName === 'SteamSiege';
     const isEvolutions = setName === 'Evolutions';
@@ -86,7 +87,7 @@ export default function ChecklistPage() {
       }
       if (isAceSpec) return card.holoFoil;
       if (isCommonOrUncommon || isTrainer) return card.standard;
-      if (isRare) return card.holoFoil;
+      else if (isRare) return card.holoFoil;
       return card.holoFoil;
     }
 
@@ -99,6 +100,23 @@ export default function ChecklistPage() {
           return card.reverseHolo && card.holoFoil && card.pokeball;
         }
         return card.holoFoil;
+      }
+      if(isSteamSiege || isEvolutions){
+        if (isCommonOrUncommon) {
+          return card.standard && card.reverseHolo;
+        }
+        if (rarity === 'rare') {
+          return card.standard && card.reverseHolo;
+        }
+        if (rarity === 'rare holo') {
+          return card.holoFoil && card.reverseHolo;
+        }
+        if (['rare break', 'rare holo ex', 'rare ultra'].includes(rarity)) {
+          return card.holoFoil;
+        }
+        if (isRareSecret) {
+          return card.standard;
+        }
       }
       if (isAceSpec) return card.holoFoil;
       if (isCommonOrUncommon || isTrainer) return card.standard && card.reverseHolo;
@@ -121,8 +139,21 @@ export default function ChecklistPage() {
         }
         return card.holoFoil;
       }
-      if (isSteamSiege || isEvolutions){
-        if (rarity === 'rare secret') {
+      
+      if(isSteamSiege || isEvolutions){
+        if (isCommonOrUncommon) {
+          return card.standard && card.reverseHolo;
+        }
+        if (rarity === 'rare') {
+          return card.standard && card.reverseHolo;
+        }
+        if (rarity === 'rare holo') {
+          return card.holoFoil && card.reverseHolo;
+        }
+        if (['rare break', 'rare holo ex', 'rare ultra'].includes(rarity)) {
+          return card.holoFoil;
+        }
+        if (isRareSecret) {
           return card.standard;
         }
       }
