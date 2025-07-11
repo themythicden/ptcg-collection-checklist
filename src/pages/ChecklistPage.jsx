@@ -159,16 +159,31 @@ export default function ChecklistPage() {
   };
 
   const handleCheckboxChange = async (name, key, value) => {
-    try {
-      await fetch('/.netlify/functions/save-checklist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, [key]: value, set: setName })
-      });
-    } catch (err) {
-      console.error('Save error:', err);
-    }
-  };
+  const set = setName;
+  const payload = { name, [key]: value, set };
+
+  // Defensive check
+  if (!name || !key || typeof value === 'undefined' || !set) {
+    console.error('❌ Invalid data being sent to save-checklist:', payload);
+    return;
+  }
+  
+      try {
+        console.log('✅ Sending to save-checklist:', payload);
+    
+        const response = await fetch('/.netlify/functions/save-checklist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+    
+        const result = await response.text();
+        console.log('✅ Save response:', result);
+      } catch (err) {
+        console.error('❌ Save error:', err);
+      }
+    };
+
 
   const getTotalFromProgress = () => {
     const row = progress[mode];
