@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useSetLogos from '../hooks/useSetLogos';
 import SearchBar from '../components/SearchBar';
+
 import {
   BASE_COUNTS,
   MASTER_COUNTS,
@@ -9,8 +10,6 @@ import {
   SET_NAME_MAP,
   formatSetName
 } from '../../shared/constants';
-
-const SET_NAME_LIST = Object.keys(SET_CODES);
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ export default function LandingPage() {
       const matches = [];
 
       await Promise.all(
-        SET_NAME_LIST.map(async (setName) => {
+        Object.values(SET_NAME_MAP).map(async (setName) => {
           try {
             const res = await fetch(`/.netlify/functions/fetch-checklist?set=${setName}`);
             const data = await res.json();
@@ -96,7 +95,7 @@ export default function LandingPage() {
                 onClick={() => navigate(`/set/${card.setName}`)}
               >
                 <img
-                  src={`https://images.pokemontcg.io/${card.setCode}/${card.number}.png`}
+                  src={card.setCode ? `https://images.pokemontcg.io/${card.setCode}/${card.number}.png` : '/fallback-card.png'}
                   alt={card.name}
                   className="w-24 h-auto mb-2"
                 />
@@ -113,27 +112,24 @@ export default function LandingPage() {
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
-          {SET_NAME_LIST.map((setName) => {
-            const setId = SET_CODES[setName];
-            return (
-              <div
-                key={setId}
-                className="border rounded-xl p-4 hover:shadow cursor-pointer text-center bg-white transition duration-200 hover:scale-105"
-                onClick={() => navigate(`/set/${setName}`)}
-              >
-                <img
-                  src={logos[setId] || '/fallback-logo.png'}
-                  alt={setName}
-                  className="mx-auto mb-2 h-12 w-auto object-contain"
-                />
-                <div className="font-semibold">{formatSetName(setName)}</div>
-                <img src={`https://images.pokemontcg.io/${setId}/symbol.png`} className="mx-auto" />
-                <p className="text-sm text-gray-600">
-                  {progress[setName] || 0} / {MASTER_COUNTS[setName]} cards
-                </p>
-              </div>
-            );
-          })}
+          {Object.entries(SET_NAME_MAP).map(([setCode, setName]) => (
+            <div
+              key={setCode}
+              className="border rounded-xl p-4 hover:shadow cursor-pointer text-center bg-white transition duration-200 hover:scale-105"
+              onClick={() => navigate(`/set/${setName}`)}
+            >
+              <img
+                src={logos[setCode] || '/fallback-logo.png'}
+                alt={setName}
+                className="mx-auto mb-2 h-12 w-auto object-contain"
+              />
+              <div className="font-semibold">{formatSetName(setName)}</div>
+              <img src={`https://images.pokemontcg.io/${setCode}/symbol.png`} className="mx-auto" />
+              <p className="text-sm text-gray-600">
+                {progress[setName] || 0} / {MASTER_COUNTS[setName]} cards
+              </p>
+            </div>
+          ))}
         </div>
       )}
     </div>
