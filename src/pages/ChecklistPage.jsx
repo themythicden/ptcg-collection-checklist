@@ -68,22 +68,6 @@ export default function ChecklistPage() {
     const isSteamSiege = setName === 'SteamSiege';
     const isEvolutions = setName === 'Evolutions';
 
-// ✅ Steam Siege logic override
-  if (setName === 'SteamSiege') {
-    if (rarity === 'rare holo') {
-      return card.holoFoil && card.reverseHolo;
-    }
-    if (rarity === 'rare') {
-      return card.standard && card.reverseHolo;
-    }
-    if (['rare break', 'rare holo ex', 'rare ultra'].includes(rarity)) {
-      return card.holoFoil;
-    }
-    if (rarity === 'rare secret') {
-      return card.standard;
-    }
-  }
-
     if (mode === 'base') {
       if (isPrismatic) {
         if (isCommonOrUncommon || isTrainer) return card.standard;
