@@ -7,11 +7,14 @@ function Card({ card, mode, onCheckboxChange }) {
   const number = parseInt(card.number);
   const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
   const isRare = rarity === 'rare';
+  const isRareHolo = rarity === 'rare holo';
+  const isRareHoloEX = rarity === 'rare holo ex';
+  const isBreak = rarity === 'rare break';
+  const isRareUltra = rarity === 'rare ultra';
   const isRareSecret = rarity === 'rare secret';
   const isAceSpec = rarity.includes('ace spec');
   const isTrainer = type.includes('trainer');
   const isPrismatic = card.setCode === 'sv8pt5';
-  
   const isEvolutions = card.setCode === 'xy12';
   const baseLimit = BASE_COUNTS[card.setName] || 0;
 
@@ -19,6 +22,7 @@ function Card({ card, mode, onCheckboxChange }) {
 
   const add = (key, label) => checkboxes.push({ key, label });
 
+  //BASE
   if (mode === 'base') {
   if (isPrismatic) {
     if (isCommonOrUncommon || isTrainer) {
@@ -48,7 +52,7 @@ function Card({ card, mode, onCheckboxChange }) {
   }
 }
 
-
+  //PARALLEL
   if (mode === 'parallel') {
     if (isPrismatic) {
       if (isCommonOrUncommon || isTrainer) {
@@ -62,19 +66,37 @@ function Card({ card, mode, onCheckboxChange }) {
       } else {
         add('holoFoil', 'Holo Foil');
       }
-    } else {
-      if (isAceSpec || (!isCommonOrUncommon && !isRare && !isTrainer)) {
-        add('holoFoil', 'Holo Foil');
-      } else if (isCommonOrUncommon || isTrainer) {
-        add('standard', 'Standard');
-        add('reverseHolo', 'Reverse Holo');
-      } else if (isRare) {
-        add('holoFoil', 'Holo Foil');
-        add('reverseHolo', 'Reverse Holo');
+    } else if (isEvolutions) {
+        if (isCommonOrUncommon){
+          add('standard', 'Standard');
+          add('reverseHolo', 'Reverse Holo');
+        } else if (isRare) {
+          add('standard', 'Standard');
+          add('reverseHolo', 'Reverse Holo');
+        } else if (isRareHolo){
+          add('holoFoil', 'Holo Foil');
+          add('reverseHolo', 'Reverse Holo');
+        } else if (isRareSecret) {
+          add('standard', 'Standard');
+        } else if (isBreak || isRareUltra || isRareHoloEX){
+          add('holoFoil', 'Holo Foil');
+        } else if (!isCommonOrUncommon && !isRare && !isRareSecret && !isRareHolo) {
+          add('holoFoil', 'Holo Foil');
+        }
+      }  else {
+        if (isAceSpec || (!isCommonOrUncommon && !isRare && !isTrainer)) {
+          add('holoFoil', 'Holo Foil');
+        } else if (isCommonOrUncommon || isTrainer) {
+          add('standard', 'Standard');
+          add('reverseHolo', 'Reverse Holo');
+        } else if (isRare) {
+          add('holoFoil', 'Holo Foil');
+          add('reverseHolo', 'Reverse Holo');
+        }
       }
-    }
   }
 
+  //MASTER
   if (mode === 'master') {
     if (isPrismatic) {
       if (isAceSpec || (!isCommonOrUncommon && !isRare && !isTrainer)) {
@@ -96,7 +118,24 @@ function Card({ card, mode, onCheckboxChange }) {
       } else {
         add('holoFoil', 'Holo Foil');
       }
-    } else {
+    } else if (isEvolutions) {
+        if (isCommonOrUncommon){
+          add('standard', 'Standard');
+          add('reverseHolo', 'Reverse Holo');
+        } else if (isRare) {
+          add('standard', 'Standard');
+          add('reverseHolo', 'Reverse Holo');
+        } else if (isRareHolo){
+          add('holoFoil', 'Holo Foil');
+          add('reverseHolo', 'Reverse Holo');
+        } else if (isRareSecret) {
+          add('standard', 'Standard');
+        } else if (isBreak || isRareUltra || isRareHoloEX){
+          add('holoFoil', 'Holo Foil');
+        } else if (!isCommonOrUncommon && !isRare && !isRareSecret && !isRareHolo) {
+          add('holoFoil', 'Holo Foil');
+        }
+      } else {
       if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
         add('standard', 'Standard');
         add('reverseHolo', 'Reverse Holo');
