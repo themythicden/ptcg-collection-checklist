@@ -20,35 +20,34 @@ function Card({ card, mode, onCheckboxChange }) {
   const add = (key, label) => checkboxes.push({ key, label });
 
   if (mode === 'base') {
-    if (isPrismatic) {
-      if (isCommonOrUncommon || isTrainer) {
-        add('standard', 'Standard');
-      } else {
-        add('holoFoil', 'Holo Foil');
-      }
+  if (isPrismatic) {
+    if (isCommonOrUncommon || isTrainer) {
+      add('standard', 'Standard');
+    } else {
+      add('holoFoil', 'Holo Foil');
     }
-    if (isEvolutions) {
-      if (isCommonOrUncommon) {
-        add('standard', 'Standard');
-      } 
-      if (isRare) {
-        add('standard', 'Standard');
-      } 
-      if (isRareSecret) {
-        add('standard', 'Standard');
-      } else {
-        add('holoFoil', 'Holo Foil');
-      }
-    }else {
-      if (isAceSpec || (!isCommonOrUncommon && !isRare && !isTrainer)) {
-        add('holoFoil', 'Holo Foil');
-      } else if (isCommonOrUncommon || isTrainer) {
-        add('standard', 'Standard');
-      } else if (isRare) {
-        add('holoFoil', 'Holo Foil');
-      }
+  } else if (isEvolutions) {
+    if (isRareSecret) {
+      add('standard', 'Standard');
+    } else if (isRare) {
+      add('standard', 'Standard');
+    } else if (isCommonOrUncommon) {
+      add('standard', 'Standard');
+    } else if (!isCommonOrUncommon && !isRare && !isRareSecret) {
+      add('holoFoil', 'Holo Foil');
+    }
+    // Otherwise, do not add Holo Foil for Commons/Rares
+  } else {
+    if (isAceSpec || (!isCommonOrUncommon && !isRare && !isTrainer)) {
+      add('holoFoil', 'Holo Foil');
+    } else if (isCommonOrUncommon || isTrainer) {
+      add('standard', 'Standard');
+    } else if (isRare) {
+      add('holoFoil', 'Holo Foil');
     }
   }
+}
+
 
   if (mode === 'parallel') {
     if (isPrismatic) {
