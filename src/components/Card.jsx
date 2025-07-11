@@ -7,7 +7,7 @@ function Card({ card, mode, onCheckboxChange }) {
   const number = parseInt(card.number);
   const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
   const isRare = rarity === 'rare';
-  const isRare = rarity === 'rare secret';
+  const isRareSecret = rarity === 'rare secret';
   const isAceSpec = rarity.includes('ace spec');
   const isTrainer = type.includes('trainer');
   const isPrismatic = card.setCode === 'sv8pt5';
