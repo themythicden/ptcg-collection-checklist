@@ -1,3 +1,4 @@
+const fetch = require('node-fetch'); // ✅ Import fetch for Node
 exports.handler = async function (event) {
   try {
     const data = JSON.parse(event.body);
