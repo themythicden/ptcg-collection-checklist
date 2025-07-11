@@ -64,7 +64,7 @@ export default function ChecklistPage() {
     const isAceSpec = rarity.includes('ace spec');
     const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
     const isRare = rarity === 'rare';
-    const isRareSecret = rariry === 'rare secret';
+    const isRareSecret = rarity === 'rare secret';
     const isPrismatic = setName === 'PrismaticEvolutions';
     const isSteamSiege = setName === 'SteamSiege';
     const isEvolutions = setName === 'Evolutions';
