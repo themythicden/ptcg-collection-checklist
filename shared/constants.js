@@ -17,6 +17,7 @@ export const BASE_COUNTS = {
   PaldeaEvolved: 193,
   ScarletViolet: 198,
   SilverTempest: 195,
+  Evolutions: 108,
   SteamSiege: 114
 };
 
@@ -36,6 +37,7 @@ export const MASTER_COUNTS = {
   PaldeaEvolved: 279,
   ScarletViolet: 258,
   SilverTempest: 215,
+  Evolutions: 113,
   SteamSiege: 116
 };
 
@@ -55,6 +57,7 @@ export const SET_CODES = {
   PaldeaEvolved: 'sv2',
   ScarletViolet: 'sv1',
   SilverTempest: 'swsh12',
+  Evolutions: 'xy12',
   SteamSiege: 'xy11'
 };
 
