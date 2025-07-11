@@ -124,7 +124,7 @@ export default function LandingPage() {
                 className="mx-auto mb-2 h-12 w-auto object-contain"
               />
               <div className="font-semibold">{formatSetName(setName)}</div>
-              <img src={`https://images.pokemontcg.io/${setCode}/symbol.png`} className="mx-auto" />
+              <img src={`https://images.pokemontcg.io/${setCode}/symbol.png`} className="mx-auto w-10" />
               <p className="text-sm text-gray-600">
                 {progress[setName] || 0} / {MASTER_COUNTS[setName]} cards
               </p>
