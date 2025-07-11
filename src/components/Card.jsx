@@ -7,9 +7,12 @@ function Card({ card, mode, onCheckboxChange }) {
   const number = parseInt(card.number);
   const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
   const isRare = rarity === 'rare';
+  const isRare = rarity === 'rare secret';
   const isAceSpec = rarity.includes('ace spec');
   const isTrainer = type.includes('trainer');
   const isPrismatic = card.setCode === 'sv8pt5';
+  
+  const isEvolutions = card.setCode === 'xy12';
   const baseLimit = BASE_COUNTS[card.setName] || 0;
 
   const checkboxes = [];
@@ -23,7 +26,20 @@ function Card({ card, mode, onCheckboxChange }) {
       } else {
         add('holoFoil', 'Holo Foil');
       }
-    } else {
+    }
+    if (isEvolutions) {
+      if (isCommonOrUncommon) {
+        add('standard', 'Standard');
+      } 
+      if (isRare) {
+        add('standard', 'Standard');
+      } 
+      if (isRareSecret) {
+        add('standard', 'Standard');
+      } else {
+        add('holoFoil', 'Holo Foil');
+      }
+    }else {
       if (isAceSpec || (!isCommonOrUncommon && !isRare && !isTrainer)) {
         add('holoFoil', 'Holo Foil');
       } else if (isCommonOrUncommon || isTrainer) {
