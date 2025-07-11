@@ -119,7 +119,7 @@ function Card({ card, mode, onCheckboxChange }) {
       } else {
         add('holoFoil', 'Holo Foil');
       }
-    } else if (isEvolutions) {
+    } else if (isXY) {
         if (isCommonOrUncommon){
           add('standard', 'Standard');
           add('reverseHolo', 'Reverse Holo');
