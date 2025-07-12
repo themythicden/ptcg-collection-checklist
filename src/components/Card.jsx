@@ -145,13 +145,9 @@ function Card({ card, mode, onCheckboxChange }) {
       if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
         add('standard', 'Standard');
         add('reverseHolo', 'Reverse Holo');
-        add('pokeball', 'Poké Ball');
-        add('masterball', 'Master Ball');
       } else if (isRare) {
         add('holoFoil', 'Holo Foil');
         add('reverseHolo', 'Reverse Holo');
-        add('pokeball', 'Poké Ball');
-        add('masterball', 'Master Ball');
       } else if (isTrainer && number <= baseLimit) {
         add('standard', 'Standard');
         add('reverseHolo', 'Reverse Holo');
