@@ -17,8 +17,8 @@ function Card({ card, mode, onCheckboxChange }) {
   const isPrismatic = card.setCode === 'sv8pt5';
   
   //USE THE BELOW 2 LINES WHEN THE XY SETS EXPAND
-  const XY_SETS = ['xy8', 'xy9', 'xy10', 'xy11', 'xy12'];
-  const isXY = XY_SETS.includes(card.setCode);
+  //const XY_SETS = ['xy8', 'xy9', 'xy10', 'xy11', 'xy12'];
+  //const isXY = XY_SETS.includes(card.setCode);
 
   const isXY = card.setCode ==='xy8' || card.setCode ==='xy9' || card.setCode ==='xy10' || card.setCode ==='xy11' || card.setCode === 'xy12';
   const isEvolutions = card.setCode === 'xy12';
