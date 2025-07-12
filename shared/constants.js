@@ -19,7 +19,9 @@ export const BASE_COUNTS = {
   SilverTempest: 195,
   Evolutions: 108,
   SteamSiege: 114,
-  FatesCollide: 124
+  FatesCollide: 124,
+  BreakPoint: 122,
+  BreakThrough: 162
 };
 
 export const MASTER_COUNTS = {
@@ -40,7 +42,9 @@ export const MASTER_COUNTS = {
   SilverTempest: 215,
   Evolutions: 113,
   SteamSiege: 116,
-  FatesCollide: 125
+  FatesCollide: 125,
+  BreakPoint: 123,
+  BreakThrough: 164
 };
 
 export const SET_CODES = {
@@ -61,7 +65,9 @@ export const SET_CODES = {
   SilverTempest: 'swsh12',
   Evolutions: 'xy12',
   SteamSiege: 'xy11',
-  FatesCollide: 'xy10'
+  FatesCollide: 'xy10',
+  BreakPoint: 'xy9',
+  BreakThrough: 'xy8'
 };
 
 export const SET_NAME_MAP = Object.fromEntries(
