@@ -2,6 +2,8 @@
 
 // 1. === shared/constants.js ===
 export const BASE_COUNTS = {
+  WhiteFlare: 86, 
+  BlackBolt: 86,
   DestinedRivals: 182,
   JourneyTogether: 159,
   PrismaticEvolutions: 131,
@@ -25,6 +27,8 @@ export const BASE_COUNTS = {
 };
 
 export const MASTER_COUNTS = {
+  WhiteFlare: 173, 
+  BlackBolt: 172,
   DestinedRivals: 244,
   JourneyTogether: 190,
   PrismaticEvolutions: 180,
@@ -48,6 +52,8 @@ export const MASTER_COUNTS = {
 };
 
 export const SET_CODES = {
+  WhiteFlare: 'rsv10pt5', 
+  BlackBolt: 'zsv10pt5',
   DestinedRivals: 'sv10',
   JourneyTogether: 'sv9',
   PrismaticEvolutions: 'sv8pt5',
