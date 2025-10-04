@@ -2,6 +2,7 @@
 
 // 1. === shared/constants.js ===
 export const BASE_COUNTS = {
+  MegaEvolution: 132,
   WhiteFlare: 86, 
   BlackBolt: 86,
   DestinedRivals: 182,
@@ -27,6 +28,7 @@ export const BASE_COUNTS = {
 };
 
 export const MASTER_COUNTS = {
+  MegaEvolution: 188,
   WhiteFlare: 173, 
   BlackBolt: 172,
   DestinedRivals: 244,
@@ -52,6 +54,7 @@ export const MASTER_COUNTS = {
 };
 
 export const SET_CODES = {
+  MegaEvolution: 'me1',
   WhiteFlare: 'rsv10pt5', 
   BlackBolt: 'zsv10pt5',
   DestinedRivals: 'sv10',
