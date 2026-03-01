@@ -164,10 +164,12 @@ export default function ChecklistPage() {
       if (isRare) {
         return card.holoFoil && card.reverseHolo;
       }
+      if (number > baseLimit) {
+        return card.holoFoil;
+      }
       if (isTrainer && number <= baseLimit) {
         return card.standard && card.reverseHolo;
       }
-      return card.holoFoil;
     }
 
     return false;
