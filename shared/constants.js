@@ -2,6 +2,7 @@
 
 // 1. === shared/constants.js ===
 export const BASE_COUNTS = {
+  PhantasmalFlames: 94,
   MegaEvolution: 132,
   WhiteFlare: 86, 
   BlackBolt: 86,
@@ -28,6 +29,7 @@ export const BASE_COUNTS = {
 };
 
 export const MASTER_COUNTS = {
+  PhantasmalFlames: 130,
   MegaEvolution: 188,
   WhiteFlare: 173, 
   BlackBolt: 172,
