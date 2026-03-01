@@ -12,6 +12,7 @@ import {
 } from '../../shared/constants';
 
 export default function LandingPage() {
+  console.log("pages LandingPage");
   const navigate = useNavigate();
   const { logos, loading: loadingLogos } = useSetLogos();
 
