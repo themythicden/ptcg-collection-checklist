@@ -65,6 +65,7 @@ export default function ChecklistPage() {
     const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
     const isRare = rarity === 'rare';
     const isRareSecret = rarity === 'rare secret';
+    const isOtherRare = rarity === 'mega hyper rare' || rarity === 'special illustration rare' || rarity === 'ultra rare'|| rarity === 'illustration rare' || rarity = 'double rare';
     const isPrismatic = setName === 'PrismaticEvolutions';
     const isSteamSiege = setName === 'SteamSiege';
     const isEvolutions = setName === 'Evolutions';
@@ -168,7 +169,7 @@ export default function ChecklistPage() {
   if (isRare && number <= baseLimit)
     return card.holoFoil && card.reverseHolo;
 
-  if (number > baseLimit)
+  if (isOtherRare)
     return card.holoFoil;
 
   return false; // VERY IMPORTANT
