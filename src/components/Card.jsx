@@ -161,9 +161,9 @@ function Card({ card, mode, onCheckboxChange }) {
             add('holoFoil', 'Holo Foil');
             return;
           }
-        }
-    }
+      }
   }
+  
 
   return (
     <div className="bg-white shadow rounded-xl p-4 flex gap-4 card">
@@ -198,4 +198,3 @@ function Card({ card, mode, onCheckboxChange }) {
 }
 
 export default Card;
-
