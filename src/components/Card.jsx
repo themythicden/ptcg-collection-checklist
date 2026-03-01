@@ -7,7 +7,7 @@ function Card({ card, mode, onCheckboxChange }) {
   const number = parseInt(card.number);
   const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
   const isRare = rarity === 'rare';
-  const isOtherRare = rarity === 'mega hyper rare' || rarity === 'special illustration rare' || rarity === 'ultra rare'|| rarity === 'illustration rare' || rarity = 'double rare';
+  const isOtherRare = rarity === 'mega hyper rare' || rarity === 'special illustration rare' || rarity === 'ultra rare'|| rarity === 'illustration rare' || rarity === 'double rare';
   const isRareHolo = rarity === 'rare holo';
   const isRareHoloEX = rarity === 'rare holo ex';
   const isBreak = rarity === 'rare break';
@@ -200,5 +200,6 @@ function Card({ card, mode, onCheckboxChange }) {
 }
 
 export default Card;
+
 
 
