@@ -20,6 +20,7 @@ export default function LandingPage() {
   const [progress, setProgress] = useState({});
   const [matchingCards, setMatchingCards] = useState([]);
   const [loadingCards, setLoadingCards] = useState(false);
+  const [allData, setAllData] = useState({});
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -70,7 +71,7 @@ export default function LandingPage() {
     };
 
     fetchAllData();
-  }, [search]);
+  }, []);
 
   return (
     <div className="p-4 max-w-5xl mx-auto">
