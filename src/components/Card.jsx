@@ -148,20 +148,15 @@ function Card({ card, mode, onCheckboxChange }) {
           if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
             add('standard', 'Standard');
             add('reverseHolo', 'Reverse Holo');
-            return;
           }
-        
           // RARE (base set only)
-          if (isRare) {
+          else if (isRare) {
             add('holoFoil', 'Holo Foil');
             add('reverseHolo', 'Reverse Holo');
-            return;
           }
-        
           // SECRET / FULL ART / ABOVE BASE LIMIT
-          if (isOtherRare) {
+          else if (isOtherRare) {
             add('holoFoil', 'Holo Foil');
-            return;
           }
       }
   }
@@ -200,6 +195,7 @@ function Card({ card, mode, onCheckboxChange }) {
 }
 
 export default Card;
+
 
 
 
