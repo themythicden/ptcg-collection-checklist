@@ -30,6 +30,7 @@ function Card({ card, mode, onCheckboxChange }) {
 
   //BASE
   if (mode === 'base') {
+    console.log("Card from Components ran");
   if (isPrismatic) {
     if (isCommonOrUncommon || isTrainer) {
       add('standard', 'Standard');
@@ -198,3 +199,4 @@ function Card({ card, mode, onCheckboxChange }) {
 }
 
 export default Card;
+
