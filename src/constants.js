@@ -1,4 +1,8 @@
 export const BASE_COUNTS = {
+  PhantasmalFlames: 94,
+  MegaEvolution: 132,
+  WhiteFlare: 86, 
+  BlackBolt: 86,
   DestinedRivals: 182,
   JourneyTogether: 159,
   PrismaticEvolutions: 131,
@@ -18,6 +22,10 @@ export const BASE_COUNTS = {
 };
 
 export const MASTER_COUNTS = {
+  PhantasmalFlames: 130,
+  MegaEvolution: 188,
+  WhiteFlare: 173, 
+  BlackBolt: 172,
   DestinedRivals: 244,
   JourneyTogether: 190,
   PrismaticEvolutions: 180,
@@ -37,6 +45,10 @@ export const MASTER_COUNTS = {
 };
 
 export const SET_CODES = {
+  PhantasmalFlames: 'me2',
+  MegaEvolution: 'me1',
+  WhiteFlare: 'rsv10pt5', 
+  BlackBolt: 'zsv10pt5',
   DestinedRivals: 'sv10',
   JourneyTogether: 'sv9',
   PrismaticEvolutions: 'sv8pt5',
@@ -56,6 +68,10 @@ export const SET_CODES = {
 };
 
 export const SET_NAME_MAP = {
+  me2: 'PhantasmalFlames',
+  me1: 'MegaEvolution',
+  rsv10pt5: 'WhiteFlare', 
+  zsv10pt5: 'BlackBolt',
   sv10: 'DestinedRivals',
   sv9: 'JourneyTogether',
   sv8pt5: 'PrismaticEvolutions',
@@ -75,6 +91,10 @@ export const SET_NAME_MAP = {
 };
 
 export const SHEET_NAMES = {
+  PhantasmalFlames: 'PhantasmalFlames',
+  MegaEvolution: 'MegaEvolution',
+  WhiteFlare: 'WhiteFlare', 
+  BlackBolt: 'BlackBolt',
   DestinedRivals: 'DestinedRivals',
   JourneyTogether: 'JourneyTogether',
   PrismaticEvolutions: 'PrismaticEvolutions',
@@ -110,3 +130,4 @@ module.exports = {
   DISPLAY_NAMES,
   formatSetName
 };
+
