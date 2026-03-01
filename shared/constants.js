@@ -56,6 +56,7 @@ export const MASTER_COUNTS = {
 };
 
 export const SET_CODES = {
+  PhantasmalFlames: 'me2',
   MegaEvolution: 'me1',
   WhiteFlare: 'rsv10pt5', 
   BlackBolt: 'zsv10pt5',
