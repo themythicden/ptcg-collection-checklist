@@ -142,19 +142,26 @@ function Card({ card, mode, onCheckboxChange }) {
           add('holoFoil', 'Holo Foil');
         }
       } else {
-      if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
-        add('standard', 'Standard');
-        add('reverseHolo', 'Reverse Holo');
-      } else if (isRare) {
-        add('holoFoil', 'Holo Foil');
-        add('reverseHolo', 'Reverse Holo');
-      } else if (isTrainer && number <= baseLimit) {
-        add('standard', 'Standard');
-        add('reverseHolo', 'Reverse Holo');
-        add('pokeball', 'Poké Ball'); // ❌ no masterball
-      } else {
-        add('holoFoil', 'Holo Foil');
-      }
+          // COMMON / UNCOMMON / TRAINER (base set only)
+          if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
+            add('standard', 'Standard');
+            add('reverseHolo', 'Reverse Holo');
+            return;
+          }
+        
+          // RARE (base set only)
+          if (isRare && number <= baseLimit) {
+            add('holoFoil', 'Holo Foil');
+            add('reverseHolo', 'Reverse Holo');
+            return;
+          }
+        
+          // SECRET / FULL ART / ABOVE BASE LIMIT
+          if (number > baseLimit) {
+            add('holoFoil', 'Holo Foil');
+            return;
+          }
+        }
     }
   }
 
@@ -191,3 +198,4 @@ function Card({ card, mode, onCheckboxChange }) {
 }
 
 export default Card;
+
