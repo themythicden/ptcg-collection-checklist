@@ -125,52 +125,54 @@ export default function ChecklistPage() {
     }
 
     if (mode === 'master') {
-      if (isAceSpec) return card.holoFoil;
+  if (isAceSpec) return card.holoFoil;
 
-      if (isPrismatic) {
-        if (isCommonOrUncommon) {
-          return card.standard && card.reverseHolo && card.pokeball && card.masterball;
-        }
-        if (isRare) {
-          return card.holoFoil && card.reverseHolo && card.pokeball && card.masterball;
-        }
-        if (isTrainer && number <= baseLimit) {
-          return card.standard && card.reverseHolo && card.pokeball;
-        }
-        return card.holoFoil;
-      }
-      
-      if(isSteamSiege || isEvolutions){
-        if (isCommonOrUncommon) {
-          return card.standard && card.reverseHolo;
-        }
-        if (rarity === 'rare') {
-          return card.standard && card.reverseHolo;
-        }
-        if (rarity === 'rare holo') {
-          return card.holoFoil && card.reverseHolo;
-        }
-        if (['rare break', 'rare holo ex', 'rare ultra'].includes(rarity)) {
-          return card.holoFoil;
-        }
-        if (isRareSecret) {
-          return card.standard;
-        }
-      }
+  // PRISMATIC
+  if (isPrismatic) {
+    if (isCommonOrUncommon)
+      return card.standard && card.reverseHolo && card.pokeball && card.masterball;
 
-      if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
-        return card.standard && card.reverseHolo;
-      }
-      if (isRare) {
-        return card.holoFoil && card.reverseHolo;
-      }
-      if (number > baseLimit) {
-        return card.holoFoil;
-      }
-      if (isTrainer && number <= baseLimit) {
-        return card.standard && card.reverseHolo;
-      }
-    }
+    if (isRare)
+      return card.holoFoil && card.reverseHolo && card.pokeball && card.masterball;
+
+    if (isTrainer && number <= baseLimit)
+      return card.standard && card.reverseHolo && card.pokeball;
+
+    return card.holoFoil;
+  }
+
+  // STEAM SIEGE / EVOLUTIONS
+  if (isSteamSiege || isEvolutions) {
+    if (isCommonOrUncommon)
+      return card.standard && card.reverseHolo;
+
+    if (rarity === 'rare')
+      return card.standard && card.reverseHolo;
+
+    if (rarity === 'rare holo')
+      return card.holoFoil && card.reverseHolo;
+
+    if (['rare break', 'rare holo ex', 'rare ultra'].includes(rarity))
+      return card.holoFoil;
+
+    if (isRareSecret)
+      return card.standard;
+
+    return false; // VERY IMPORTANT
+  }
+
+  // NORMAL SETS
+  if ((isCommonOrUncommon || isTrainer) && number <= baseLimit)
+    return card.standard && card.reverseHolo;
+
+  if (isRare && number <= baseLimit)
+    return card.holoFoil && card.reverseHolo;
+
+  if (number > baseLimit)
+    return card.holoFoil;
+
+  return false; // VERY IMPORTANT
+}
 
     return false;
   };
