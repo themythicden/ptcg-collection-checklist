@@ -1,4 +1,5 @@
 export const BASE_COUNTS = {
+  AscendedHeroes: 217,
   PhantasmalFlames: 94,
   MegaEvolution: 132,
   WhiteFlare: 86, 
@@ -22,6 +23,7 @@ export const BASE_COUNTS = {
 };
 
 export const MASTER_COUNTS = {
+  AscendedHeroes: 295,
   PhantasmalFlames: 130,
   MegaEvolution: 188,
   WhiteFlare: 173, 
@@ -45,6 +47,7 @@ export const MASTER_COUNTS = {
 };
 
 export const SET_CODES = {
+  AscendedHeroes: 'me2pt5',
   PhantasmalFlames: 'me2',
   MegaEvolution: 'me1',
   WhiteFlare: 'rsv10pt5', 
@@ -68,6 +71,7 @@ export const SET_CODES = {
 };
 
 export const SET_NAME_MAP = {
+  me2pt5: 'AscendedHeroes',
   me2: 'PhantasmalFlames',
   me1: 'MegaEvolution',
   rsv10pt5: 'WhiteFlare', 
@@ -91,6 +95,7 @@ export const SET_NAME_MAP = {
 };
 
 export const SHEET_NAMES = {
+  AscendedHeroes: 'AscendedHeroes',
   PhantasmalFlames: 'PhantasmalFlames',
   MegaEvolution: 'MegaEvolution',
   WhiteFlare: 'WhiteFlare', 
@@ -130,4 +135,5 @@ module.exports = {
   DISPLAY_NAMES,
   formatSetName
 };
+
 
