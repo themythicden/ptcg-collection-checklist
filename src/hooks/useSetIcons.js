@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
-const API_KEY = 'b2c1c990-395b-4ff2-a6d3-c5c458aa6e31';
+//const API_KEY = 'b2c1c990-395b-4ff2-a6d3-c5c458aa6e31';
+const API_KEY = 'e101c94e-abc2-43ce-9507-e5b74bd6c998';
+
 
 export default function useSetLogos() {
   const [logos, setLogos] = useState({});
@@ -36,3 +38,4 @@ export default function useSetLogos() {
 
   return { logos, loading };
 }
+
