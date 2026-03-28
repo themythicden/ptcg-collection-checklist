@@ -165,7 +165,11 @@ function Card({ card, mode, onCheckboxChange }) {
   return (
     <div className="bg-white shadow rounded-xl p-4 flex gap-4 card">
       <img
-        src={`https://images.pokemontcg.io/${card.setCode}/${card.number}.png`}
+        src={
+          card.setCode === "me2pt5" || card.setCode === "me3"
+          ? `https://images.scrydex.com/pokemon/${card.setCode}-${card.number}/medium`
+          : `https://images.pokemontcg.io/${card.setCode}/${card.number}.png`
+        }
         alt={card.name}
         className="w-24 h-auto"
       />
