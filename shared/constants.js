@@ -2,6 +2,8 @@
 
 // 1. === shared/constants.js ===
 export const BASE_COUNTS = {
+  PerfectOrder: 88,
+  AscendedHeroes: 217,
   PhantasmalFlames: 94,
   MegaEvolution: 132,
   WhiteFlare: 86, 
@@ -29,6 +31,8 @@ export const BASE_COUNTS = {
 };
 
 export const MASTER_COUNTS = {
+  PerfectOrder: 124,
+  AscendedHeroes: 295,
   PhantasmalFlames: 130,
   MegaEvolution: 188,
   WhiteFlare: 173, 
@@ -56,6 +60,8 @@ export const MASTER_COUNTS = {
 };
 
 export const SET_CODES = {
+  PerfectOrder: 'me3',
+  AscendedHeroes: 'me2pt5',
   PhantasmalFlames: 'me2',
   MegaEvolution: 'me1',
   WhiteFlare: 'rsv10pt5', 
