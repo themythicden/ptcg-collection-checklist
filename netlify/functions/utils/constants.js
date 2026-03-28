@@ -24,6 +24,12 @@ export const BASE_COUNTS = {
 };
 
 export const MASTER_COUNTS = {
+  PerfectOrder: 124,
+  AscendedHeroes: 295,
+  PhantasmalFlames: 130,
+  MegaEvolution: 188,
+  WhiteFlare: 173, 
+  BlackBolt: 172,
   DestinedRivals: 244,
   JourneyTogether: 190,
   PrismaticEvolutions: 180,
