@@ -49,6 +49,12 @@ export const MASTER_COUNTS = {
 };
 
 export const SET_CODES = {
+  PerfectOrder: 'me3',
+  AscendedHeroes: 'me2pt5',
+  PhantasmalFlames: 'me2',
+  MegaEvolution: 'me1',
+  WhiteFlare: 'rsv10pt5', 
+  BlackBolt: 'zsv10pt5',
   DestinedRivals: 'sv10',
   JourneyTogether: 'sv9',
   PrismaticEvolutions: 'sv8pt5',
