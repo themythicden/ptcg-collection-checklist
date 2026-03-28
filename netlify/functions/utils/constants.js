@@ -1,4 +1,10 @@
 export const BASE_COUNTS = {
+  PerfectOrder: 88,
+  AscendedHeroes: 217,
+  PhantasmalFlames: 94,
+  MegaEvolution: 132,
+  WhiteFlare: 86, 
+  BlackBolt: 86,
   DestinedRivals: 182,
   JourneyTogether: 159,
   PrismaticEvolutions: 131,
