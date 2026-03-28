@@ -1,4 +1,5 @@
 export const BASE_COUNTS = {
+  PerfectOrder: 86,
   AscendedHeroes: 217,
   PhantasmalFlames: 94,
   MegaEvolution: 132,
@@ -23,6 +24,7 @@ export const BASE_COUNTS = {
 };
 
 export const MASTER_COUNTS = {
+  PerfectOrder: 124,
   AscendedHeroes: 295,
   PhantasmalFlames: 130,
   MegaEvolution: 188,
@@ -47,6 +49,7 @@ export const MASTER_COUNTS = {
 };
 
 export const SET_CODES = {
+  PerfectOrder: 'me3',
   AscendedHeroes: 'me2pt5',
   PhantasmalFlames: 'me2',
   MegaEvolution: 'me1',
