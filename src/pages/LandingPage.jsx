@@ -98,11 +98,7 @@ export default function LandingPage() {
               >
                 <img
                   
-                  src={
-                        card.setCode
-                        ? `https://images.scrydex.com/pokemon/${card.setCode}-symbol/symbol`
-                        : `https://images.pokemontcg.io/${card.setCode}/${card.number}.png`
-                      }
+                  src={card.setCode ? `https://images.pokemontcg.io/${card.setCode}/${card.number}.png` : '/fallback-card.png'}
                   alt={card.name}
                   className="w-24 h-auto mb-2"
                 />
@@ -126,7 +122,11 @@ export default function LandingPage() {
               onClick={() => navigate(`/set/${setName}`)}
             >
               <img
-                src={logos[setCode] || '/fallback-logo.png'}
+                src={
+                        card.setCode
+                        ? `https://images.scrydex.com/pokemon/${card.setCode}-symbol/symbol`
+                        : `https://images.pokemontcg.io/${card.setCode}/${card.number}.png`
+                      }
                 alt={setName}
                 className="mx-auto mb-2 h-12 w-auto object-contain"
               />
