@@ -97,7 +97,12 @@ export default function LandingPage() {
                 onClick={() => navigate(`/set/${card.setName}`)}
               >
                 <img
-                  src={card.setCode ? `https://images.pokemontcg.io/${card.setCode}/${card.number}.png` : '/fallback-card.png'}
+                  
+                  src={
+                        card.setCode
+                        ? `https://images.scrydex.com/pokemon/${card.setCode}-symbol/symbol`
+                        : `https://images.pokemontcg.io/${card.setCode}/${card.number}.png`
+                      }
                   alt={card.name}
                   className="w-24 h-auto mb-2"
                 />
