@@ -75,7 +75,7 @@ export default function LandingPage() {
 
   return (
     <div className="p-4 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4 text-center">Pokémon Master Set Checklist</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">Pokémon Master Sets</h1>
 
       <SearchBar
         value={search}
