@@ -32,7 +32,7 @@ export const BASE_COUNTS = {
 
 export const MAX_COUNTS = {
   PerfectOrder: 203,
-  AscendedHeroes: 295,
+  AscendedHeroes: 613,
   PhantasmalFlames: 130,
   MegaEvolution: 188,
   WhiteFlare: 173, 
