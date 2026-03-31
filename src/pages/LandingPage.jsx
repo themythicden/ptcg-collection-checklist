@@ -6,6 +6,7 @@ import SearchBar from '../components/SearchBar';
 import {
   BASE_COUNTS,
   MASTER_COUNTS,
+  MAX_COUNTS,
   SET_CODES,
   SET_NAME_MAP,
   formatSetName
@@ -129,7 +130,7 @@ export default function LandingPage() {
               <div className="font-semibold">{formatSetName(setName)}</div>
               <img src={`https://images.pokemontcg.io/${setCode}/symbol.png`} className="mx-auto w-10" />
               <p className="text-sm text-gray-600">
-                {progress[setName] || 0} / {MASTER_COUNTS[setName]} cards
+                {progress[setName] || 0} / {MAX_COUNTS[setName]} cards
               </p>
             </div>
           ))}
