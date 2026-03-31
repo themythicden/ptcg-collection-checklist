@@ -30,6 +30,35 @@ export const BASE_COUNTS = {
   BreakThrough: 162
 };
 
+export const MAX_COUNTS = {
+  PerfectOrder: 203,
+  AscendedHeroes: 295,
+  PhantasmalFlames: 130,
+  MegaEvolution: 188,
+  WhiteFlare: 173, 
+  BlackBolt: 172,
+  DestinedRivals: 244,
+  JourneyTogether: 190,
+  PrismaticEvolutions: 180,
+  SurgingSparks: 252,
+  StellarCrown: 175,
+  ShroudedFable: 95,
+  TwilightMasquerade: 226,
+  TemporalForces: 218,
+  PaldeanFates: 123,
+  ParadoxRift: 266,
+  "151": 207,
+  ObsidianFlames: 230,
+  PaldeaEvolved: 279,
+  ScarletViolet: 258,
+  SilverTempest: 215,
+  Evolutions: 113,
+  SteamSiege: 116,
+  FatesCollide: 125,
+  BreakPoint: 123,
+  BreakThrough: 164
+};
+
 export const MASTER_COUNTS = {
   PerfectOrder: 124,
   AscendedHeroes: 295,
