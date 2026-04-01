@@ -16,6 +16,7 @@ function Card({ card, mode, onCheckboxChange }) {
   const isAceSpec = rarity.includes('ace spec');
   const isTrainer = type.includes('trainer');
   const isPrismatic = card.setCode === 'sv8pt5';
+  const isAscendedHeroes = card.setCode === 'me2pt5';
   
   //USE THE BELOW 2 LINES WHEN THE XY SETS EXPAND
   //const XY_SETS = ['xy8', 'xy9', 'xy10', 'xy11', 'xy12'];
@@ -143,7 +144,24 @@ function Card({ card, mode, onCheckboxChange }) {
         } else if (!isCommonOrUncommon && !isRare && !isRareSecret && !isRareHolo) {
           add('holoFoil', 'Holo Foil');
         }
-      } else {
+      } else if (isPrismatic) {
+        if (isAceSpec || (!isCommonOrUncommon && !isRare && !isTrainer)) {
+          add('holoFoil', 'Holo Foil');
+        } else if (isCommonOrUncommon) {
+          add('standard', 'Standard');
+          add('reverseHolo', 'Energy Reverse');
+          add('pokeball', 'Poké Ball');
+        } else if (isRare) {
+          add('holoFoil', 'Holo Foil');
+          add('reverseHolo', 'Energy Reverse');
+          add('pokeball', 'Poké Ball');
+        } else if (isTrainer && number <= baseLimit) {
+          add('standard', 'Standard');
+          add('reverseHolo', 'Reverse Holo');
+        } else {
+          add('holoFoil', 'Holo Foil');
+        }
+      }else {
           // COMMON / UNCOMMON / TRAINER (base set only)
           if ((isCommonOrUncommon || isTrainer) && number <= baseLimit) {
             add('standard', 'Standard');
