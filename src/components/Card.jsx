@@ -144,7 +144,7 @@ function Card({ card, mode, onCheckboxChange }) {
         } else if (!isCommonOrUncommon && !isRare && !isRareSecret && !isRareHolo) {
           add('holoFoil', 'Holo Foil');
         }
-      } else if (isPrismatic) {
+      } else if (isAscendedHeroes) {
         if (isAceSpec || (!isCommonOrUncommon && !isRare && !isTrainer)) {
           add('holoFoil', 'Holo Foil');
         } else if (isCommonOrUncommon) {
