@@ -190,7 +190,7 @@ export default function ChecklistPage() {
     if (hideCompleted && collected) return false;
     if (search && !card.name.toLowerCase().includes(search.toLowerCase())) return false;
     if ((mode === 'base' || mode === 'parallel') && parseInt(card.number) > BASE_COUNTS[setName]) return false;
-    if (mode ==='ex' &&  (isCommonOrUncommon || isRare) return false;
+    if (mode ==='ex') &&  (isCommonOrUncommon || isRare) return false;
     return true;
   });
 
