@@ -22,9 +22,10 @@ function Card({ card, mode, onCheckboxChange }) {
     const type = card.type?.toLowerCase() || '';
     const name = card.name?.toLowerCase() || '';
     const isNotBasicRarity = !['common', 'uncommon', 'rare'].includes(rarity);
-    const isPokemon = type.includes('pokemon');
-    const isEXName = name.endsWith(' ex');
-    return isNotBasicRarity && isPokemon && isEXName;
+    //const isPokemon = type.includes('pokemon');
+    //const isEXName = name.endsWith(' ex');
+    //return isNotBasicRarity && isPokemon && isEXName;
+    return isNotBasicRarity;
   };
   
   //USE THE BELOW 2 LINES WHEN THE XY SETS EXPAND
@@ -200,8 +201,10 @@ function Card({ card, mode, onCheckboxChange }) {
   return (
     
     <div className={`bg-white shadow rounded-xl p-4 flex gap-4 card
-      ${ex ? 'ring-2 ring-yellow-400 shadow-yellow-200 shadow-md' : ''}
-    `}>
+      
+      ${ex ? 'ring-2 ring-yellow-400 shadow-yellow-200 shadow-md bg-gray-400' : ''}
+    `}
+      >
       <img
         src={
           card.setCode === "me2pt5" || card.setCode === "me3"
