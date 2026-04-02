@@ -175,10 +175,12 @@ export default function ChecklistPage() {
   return false; // VERY IMPORTANT
 }
 
-    if (mode === 'ex') {////
-      if (!isCommonOrUncommon || !isRare){
-        return card.holoFoil;
-      }
+    if (mode === 'ex') {
+      
+       if (rarity !=== 'common' || rarity !=== 'uncommon' ) {
+         alert("this ran")
+          return card.holoFoil;
+        }
       return false; // VERY IMPORTANT
     }
 
@@ -187,6 +189,10 @@ export default function ChecklistPage() {
 
   const filteredCards = cards.filter(card => {
     const collected = isCollected(card);
+    const rarity = card.rarity?.toLowerCase() || '';
+    const isCommonOrUncommon = rarity === 'common' || rarity === 'uncommon';
+    const isRare = rarity === 'rare';
+    ////////
     if (hideCompleted && collected) return false;
     if (search && !card.name.toLowerCase().includes(search.toLowerCase())) return false;
     if ((mode === 'base' || mode === 'parallel') && parseInt(card.number) > BASE_COUNTS[setName]) return false;
