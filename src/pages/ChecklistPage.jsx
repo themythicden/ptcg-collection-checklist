@@ -10,6 +10,16 @@ import Card from '../components/Card';
 
 export default function ChecklistPage() {
   const { setName: routeSetName } = useParams();
+  // ✅ ADD IT HERE
+  const isEXCard = (card) => {
+    const rarity = card.rarity?.toLowerCase() || '';
+    const type = card.type?.toLowerCase() || '';
+    const name = card.name?.toLowerCase() || '';
+    const isNotBasicRarity = !['common', 'uncommon', 'rare'].includes(rarity);
+    const isPokemon = type.includes('pokemon');
+    const isEXName = name.endsWith(' ex');
+    return isNotBasicRarity && isPokemon && isEXName;
+  };
   const [setName, setSetName] = useState(routeSetName || 'JourneyTogether');
   const [cards, setCards] = useState([]);
   const [progress, setProgress] = useState({});
@@ -176,13 +186,8 @@ export default function ChecklistPage() {
 }
 
     if (mode === 'ex') {
-      
-       if (rarity !=== 'common' || rarity !=== 'uncommon' ) {
-         alert("this ran")
-          return card.holoFoil;
-        }
-      return false; // VERY IMPORTANT
-    }
+  return isEXCard(card) ? card.holoFoil : false;
+}
 
     return false;
   };
@@ -196,7 +201,7 @@ export default function ChecklistPage() {
     if (hideCompleted && collected) return false;
     if (search && !card.name.toLowerCase().includes(search.toLowerCase())) return false;
     if ((mode === 'base' || mode === 'parallel') && parseInt(card.number) > BASE_COUNTS[setName]) return false;
-    if (mode ==='ex') &&  (isCommonOrUncommon || isRare) return false;
+    if (mode === 'ex' && !isEXCard(card)) return false;
     return true;
   });
 
