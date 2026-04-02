@@ -191,7 +191,7 @@ function Card({ card, mode, onCheckboxChange }) {
   }
 
   if (mode === 'ex') {
-    alert(mode);
+    //alert(mode);
     if(!isCommonOrUncommon || !isRare){
       add('holoFoil', 'Holo Foil');
     }
