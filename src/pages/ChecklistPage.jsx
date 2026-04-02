@@ -230,27 +230,36 @@ export default function ChecklistPage() {
     }
 
     if (mode === 'bulk') {
-      if (!isCUR(card)) return false;
-    
       if (isPrismatic) {
-          if (isCommonOrUncommon || isTrainer) return card.standard;
+        if (isCommonOrUncommon || isTrainer) {
+          return card.standard && card.reverseHolo && card.pokeball;
+        }
+        if (isRare) {
+          return card.reverseHolo && card.holoFoil && card.pokeball;
+        }
+        return card.holoFoil;
+      }
+      if(isSteamSiege || isEvolutions){
+        if (isCommonOrUncommon) {
+          return card.standard && card.reverseHolo;
+        }
+        if (rarity === 'rare') {
+          return card.standard && card.reverseHolo;
+        }
+        if (rarity === 'rare holo') {
+          return card.holoFoil && card.reverseHolo;
+        }
+        if (['rare break', 'rare holo ex', 'rare ultra'].includes(rarity)) {
           return card.holoFoil;
         }
-        if(isSteamSiege || isEvolutions){
-          if (rarity === 'rare holo') {
-            return card.holoFoil && card.reverseHolo;
-          }
-          if (rarity === 'rare') {
-            return card.standard && card.reverseHolo;
-          }
-          if (['rare break', 'rare holo ex', 'rare ultra'].includes(rarity)) {
-            return card.holoFoil;
-          }
+        if (isRareSecret) {
+          return card.standard;
         }
-        if (isAceSpec) return card.holoFoil;
-        if (isCommonOrUncommon || isTrainer) return card.standard;
-        else if (isRare) return card.holoFoil;
-        return card.holoFoil;
+      }
+      if (isAceSpec) return card.holoFoil;
+      if (isCommonOrUncommon || isTrainer) return card.standard && card.reverseHolo;
+      if (isRare) return card.reverseHolo && card.holoFoil;
+      return card.holoFoil;
     }
     
     return false;
