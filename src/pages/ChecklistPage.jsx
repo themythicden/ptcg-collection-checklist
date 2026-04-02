@@ -31,6 +31,11 @@ export default function ChecklistPage() {
     return isBasicRarity;
     //return isPokemon;
   };
+  const isBulk = (card) => {
+    const rarity = card.rarity?.toLowerCase() || '';
+    const isBasicRarity = ['common', 'uncommon', 'rare'].includes(rarity);
+    return isBasicRarity;
+  };
   const [setName, setSetName] = useState(routeSetName || 'JourneyTogether');
   const [cards, setCards] = useState([]);
   const [progress, setProgress] = useState({});
@@ -201,28 +206,52 @@ export default function ChecklistPage() {
 }
 
     if (mode === 'cur') {
-    if (!isCUR(card)) return false;
-  
-    if (isPrismatic) {
-        if (isCommonOrUncommon || isTrainer) return card.standard;
-        return card.holoFoil;
-      }
-      if(isSteamSiege || isEvolutions){
-        if (rarity === 'rare holo') {
-          return card.holoFoil && card.reverseHolo;
-        }
-        if (rarity === 'rare') {
-          return card.standard && card.reverseHolo;
-        }
-        if (['rare break', 'rare holo ex', 'rare ultra'].includes(rarity)) {
+      if (!isCUR(card)) return false;
+    
+      if (isPrismatic) {
+          if (isCommonOrUncommon || isTrainer) return card.standard;
           return card.holoFoil;
         }
-      }
-      if (isAceSpec) return card.holoFoil;
-      if (isCommonOrUncommon || isTrainer) return card.standard;
-      else if (isRare) return card.holoFoil;
-      return card.holoFoil;
-  }
+        if(isSteamSiege || isEvolutions){
+          if (rarity === 'rare holo') {
+            return card.holoFoil && card.reverseHolo;
+          }
+          if (rarity === 'rare') {
+            return card.standard && card.reverseHolo;
+          }
+          if (['rare break', 'rare holo ex', 'rare ultra'].includes(rarity)) {
+            return card.holoFoil;
+          }
+        }
+        if (isAceSpec) return card.holoFoil;
+        if (isCommonOrUncommon || isTrainer) return card.standard;
+        else if (isRare) return card.holoFoil;
+        return card.holoFoil;
+    }
+
+    if (mode === 'bulk') {
+      if (!isCUR(card)) return false;
+    
+      if (isPrismatic) {
+          if (isCommonOrUncommon || isTrainer) return card.standard;
+          return card.holoFoil;
+        }
+        if(isSteamSiege || isEvolutions){
+          if (rarity === 'rare holo') {
+            return card.holoFoil && card.reverseHolo;
+          }
+          if (rarity === 'rare') {
+            return card.standard && card.reverseHolo;
+          }
+          if (['rare break', 'rare holo ex', 'rare ultra'].includes(rarity)) {
+            return card.holoFoil;
+          }
+        }
+        if (isAceSpec) return card.holoFoil;
+        if (isCommonOrUncommon || isTrainer) return card.standard;
+        else if (isRare) return card.holoFoil;
+        return card.holoFoil;
+    }
     
     return false;
   };
@@ -237,7 +266,8 @@ export default function ChecklistPage() {
     if (search && !card.name.toLowerCase().includes(search.toLowerCase())) return false;
     if ((mode === 'base' || mode === 'parallel') && parseInt(card.number) > BASE_COUNTS[setName]) return false;
     if (mode === 'ex' && !isEXCard(card)) return false;
-    if (mode === 'cur' && !isCUR(card)) return false;
+    if ((mode === 'cur' || mode =='bulk') && !isCUR(card)) return false;
+    //if (mode === 'bulk' && !isCUR(card)) return false;
     
     return true;
   });
@@ -312,7 +342,7 @@ export default function ChecklistPage() {
 
           <div>
             <label className="mr-2">Mode:</label>
-            {['base', 'parallel', 'master', 'ex', 'cur'].map(opt => (
+            {['base', 'parallel', 'master', 'ex', 'cur', 'bulk'].map(opt => (
               <label key={opt} className="mr-2">
                 <input
                   type="radio"
