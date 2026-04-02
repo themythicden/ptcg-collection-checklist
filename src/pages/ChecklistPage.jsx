@@ -16,7 +16,7 @@ export default function ChecklistPage() {
     const type = card.type?.toLowerCase() || '';
     //const name = card.name?.toLowerCase() || '';
     //const isNotBasicRarity = !['common', 'uncommon', 'rare'].includes(rarity);
-    const isPokemon = type.includes('pokemon');
+    const isPokemon = type.includes('pokémon');
     //const isEXName = name.endsWith(' ex');
     //return isNotBasicRarity && isPokemon && isEXName;
     return isPokemon;
