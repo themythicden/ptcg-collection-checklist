@@ -20,11 +20,12 @@ function Card({ card, mode, onCheckboxChange }) {
   const isEXCard = (card) => {
     const rarity = card.rarity?.toLowerCase() || '';
     const type = card.type?.toLowerCase() || '';
-    const name = card.name?.toLowerCase() || '';
+    //const name = card.name?.toLowerCase() || '';
     const isNotBasicRarity = !['common', 'uncommon', 'rare'].includes(rarity);
     const isPokemon = type.includes('pokemon');
-    const isEXName = name.endsWith(' ex');
-    return isNotBasicRarity && isPokemon && isEXName;
+    //const isEXName = name.endsWith(' ex');
+    //return isNotBasicRarity && isPokemon && isEXName;
+    return isNotBasicRarity && isPokemon;
     //return isNotBasicRarity;
   };
   
