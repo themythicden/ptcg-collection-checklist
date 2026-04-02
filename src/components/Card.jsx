@@ -22,10 +22,10 @@ function Card({ card, mode, onCheckboxChange }) {
     const type = card.type?.toLowerCase() || '';
     const name = card.name?.toLowerCase() || '';
     const isNotBasicRarity = !['common', 'uncommon', 'rare'].includes(rarity);
-    //const isPokemon = type.includes('pokemon');
-    //const isEXName = name.endsWith(' ex');
-    //return isNotBasicRarity && isPokemon && isEXName;
-    return isNotBasicRarity;
+    const isPokemon = type.includes('pokemon');
+    const isEXName = name.endsWith(' ex');
+    return isNotBasicRarity && isPokemon && isEXName;
+    //return isNotBasicRarity;
   };
   
   //USE THE BELOW 2 LINES WHEN THE XY SETS EXPAND
