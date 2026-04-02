@@ -175,6 +175,13 @@ export default function ChecklistPage() {
   return false; // VERY IMPORTANT
 }
 
+    if (mode === 'ex') {////
+      if (!isCommonOrUncommon || !isRare){
+        return card.holoFoil;
+      }
+      return false; // VERY IMPORTANT
+    }
+
     return false;
   };
 
@@ -256,7 +263,7 @@ export default function ChecklistPage() {
 
           <div>
             <label className="mr-2">Mode:</label>
-            {['base', 'parallel', 'master'].map(opt => (
+            {['base', 'parallel', 'master', 'ex'].map(opt => (
               <label key={opt} className="mr-2">
                 <input
                   type="radio"
