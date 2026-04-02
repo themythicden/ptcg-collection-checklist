@@ -28,7 +28,7 @@ export default function ChecklistPage() {
     const isBasicRarity = ['common', 'uncommon', 'rare'].includes(rarity);
     //const isPokemon = type.includes('pokémon');
     //const isEXName = name.endsWith(' ex');
-    return isBasicRarity'
+    return isBasicRarity;
     //return isPokemon;
   };
   const [setName, setSetName] = useState(routeSetName || 'JourneyTogether');
