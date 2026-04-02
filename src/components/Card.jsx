@@ -72,7 +72,7 @@ function Card({ card, mode, onCheckboxChange }) {
     }
   }
 
-  //BASE
+  //CUR
   if (mode === 'cur') {
     console.log("Card from Components ran");
     if (isPrismatic) {
@@ -105,6 +105,50 @@ function Card({ card, mode, onCheckboxChange }) {
 
   //PARALLEL
   if (mode === 'parallel') {
+    if (isPrismatic) {
+      if (isCommonOrUncommon || isTrainer) {
+        add('standard', 'Standard');
+        add('reverseHolo', 'Reverse Holo');
+        add('pokeball', 'Poké Ball');
+      } else if (isRare) {
+        add('holoFoil', 'Holo Foil');
+        add('reverseHolo', 'Reverse Holo');
+        add('pokeball', 'Poké Ball');
+      } else {
+        add('holoFoil', 'Holo Foil');
+      }
+    } else if (isXY) {
+        if (isCommonOrUncommon){
+          add('standard', 'Standard');
+          add('reverseHolo', 'Reverse Holo');
+        } else if (isRare) {
+          add('standard', 'Standard');
+          add('reverseHolo', 'Reverse Holo');
+        } else if (isRareHolo){
+          add('holoFoil', 'Holo Foil');
+          add('reverseHolo', 'Reverse Holo');
+        } else if (isRareSecret) {
+          add('standard', 'Standard');
+        } else if (isBreak || isRareUltra || isRareHoloEX){
+          add('holoFoil', 'Holo Foil');
+        } else if (!isCommonOrUncommon && !isRare && !isRareSecret && !isRareHolo) {
+          add('holoFoil', 'Holo Foil');
+        }
+      }  else {
+        if (isAceSpec || (!isCommonOrUncommon && !isRare && !isTrainer)) {
+          add('holoFoil', 'Holo Foil');
+        } else if (isCommonOrUncommon || isTrainer) {
+          add('standard', 'Standard');
+          add('reverseHolo', 'Reverse Holo');
+        } else if (isRare) {
+          add('holoFoil', 'Holo Foil');
+          add('reverseHolo', 'Reverse Holo');
+        }
+      }
+  }
+
+  //BULK
+  if (mode === 'bulk') {
     if (isPrismatic) {
       if (isCommonOrUncommon || isTrainer) {
         add('standard', 'Standard');
