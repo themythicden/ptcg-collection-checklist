@@ -12,13 +12,14 @@ export default function ChecklistPage() {
   const { setName: routeSetName } = useParams();
   // ✅ ADD IT HERE
   const isEXCard = (card) => {
-    const rarity = card.rarity?.toLowerCase() || '';
+    //const rarity = card.rarity?.toLowerCase() || '';
     const type = card.type?.toLowerCase() || '';
-    const name = card.name?.toLowerCase() || '';
-    const isNotBasicRarity = !['common', 'uncommon', 'rare'].includes(rarity);
+    //const name = card.name?.toLowerCase() || '';
+    //const isNotBasicRarity = !['common', 'uncommon', 'rare'].includes(rarity);
     const isPokemon = type.includes('pokemon');
-    const isEXName = name.endsWith(' ex');
-    return isNotBasicRarity && isPokemon && isEXName;
+    //const isEXName = name.endsWith(' ex');
+    //return isNotBasicRarity && isPokemon && isEXName;
+    return isPokemon;
   };
   const [setName, setSetName] = useState(routeSetName || 'JourneyTogether');
   const [cards, setCards] = useState([]);
